@@ -72,14 +72,43 @@
             </ul>
 
             <ul *ngIf="isLoggedIn" class="navbar-nav navbar-right">
+                <li>
+                    <a aria-expanded="false" aria-haspopup="true"
+                    class="d-flex justify-content-end pr-3"
+                    data-toggle="modal" data-target="#myModal" role="button">
+                        <img src="/assets/img/campanita.png" alt="campanita">
+                        <span class="badge bg-danger ms-1 mb-3 text-center">1</span>   
+                    </a>
+                    <div class="modal fade miModal" id="myModal">
+                        <div class="modal-dialog diag" role="document">
+                        <div class="modal-content">
+                      
+                            <div class="modal-header diagHead">
+                                <h4 class="modal-title diagTit">Notificación</h4>
+                                <button type="button" class="btn-close" style="background-color:aliceblue" data-dismiss="modal"></button>
+                            </div>
+                            <div class="modal-body">
+                            </div>
+                            <div class ="modal-footer">
+                                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    
+                    
+
+
+
+                </li>
                 <li class="nav-item dropdown">
 
                     <a aria-expanded="false" aria-haspopup="true"
                        class="nav-link dropdown-toggle d-flex justify-content-end pr-3"
                        data-toggle="dropdown" href="#" id="navbarDropdownMenuLink" role="button">
                         <div class="d-flex flex-column align-items-end justify-content-center mr-2">
-              <span title="{{ usuarioService.usuario.additionalInfoPlain }}">{{ usuarioService.usuario.nombre }} {{
-                  usuarioService.usuario.apellidos }}</span>
+                            <span title="{{ usuarioService.usuario.additionalInfoPlain }}">{{ usuarioService.usuario.nombre }} {{
+                            usuarioService.usuario.apellidos }}</span>
                             <span><strong>{{ usuarioService.usuario.displayRol }}</strong></span>
                         </div>
 
