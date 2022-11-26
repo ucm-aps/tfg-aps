@@ -59,6 +59,9 @@ import { PartenariadoCrearProfesorComponent } from './pages/partenariados-crear/
 import { ProyectosComponent } from './pages/proyectos/proyectos.component';
 import { ProyectosVerComponent } from './pages/proyectos-ver/proyectos-ver.component';
 
+//Notificacion
+import { NotificacionComponent } from './pages/notificacion/notificacion.component';
+
 // varios y error pages routes
 import { CondicionesComponent } from './pages/condiciones/condiciones.component';
 import { Code404Component } from './errors/code404/code404.component';
@@ -185,6 +188,11 @@ const routes: Routes = [
 
             //Resumen
             { path: 'mi-resumen', component: ResumenComponent, data: { titulo: 'Resumen' } },
+            
+            
+            
+            //Notificacion
+            { path: 'mi-notificacion', component: NotificacionComponent, data: { titulo: 'Notificacion'}},
 
             // varios
             {
@@ -199,7 +207,7 @@ const routes: Routes = [
 
 @NgModule({
     imports: [
-        RouterModule.forRoot(routes, { useHash: true })
+    RouterModule.forRoot(routes, { useHash: true })
     ],
     exports: [RouterModule]
 })
