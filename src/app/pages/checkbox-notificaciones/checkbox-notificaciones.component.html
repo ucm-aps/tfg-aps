@@ -1,8 +1,21 @@
 <div class="btn-group btn-group-toggle" data-toggle="buttons">
     <label class="btn btn-secondary active">
-      <input type="radio" name="options" id="active" autocomplete="off" checked> Active
+      <input (change)="cargarNotificacion()" type="radio" name="options" id="active" autocomplete="off" checked> Active
     </label>
     <label class="btn btn-secondary">
-      <input type="radio" name="options" id="disable" autocomplete="off"> Disabled
+      <input (change)="cargarNotificacion()" type="radio" name="options" id="disable" autocomplete="off"> Disabled
     </label> 
+
+    <h6 class="title mb-0">
+      Notificaciones
+      <span
+          *ngIf="!cargando"
+          class="leading-none"
+      >
+          <small class="font-weight-bold"
+              >(total: {{ totalNotificaciones }})</small
+          >
+      </span>
+  </h6>
+  
   </div>
