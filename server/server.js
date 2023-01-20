@@ -30,6 +30,7 @@ app.use("/api/partenariados", require("./routes/partenariados"));
 app.use("/api/proyectos", require("./routes/proyectos"));
 app.use("/api/upload", require("./routes/uploads"));
 app.use("/api/tags", require("./routes/tags"));
+app.use("/api/notificaciones", require("./routes/notificaciones"));
 
 // Cuando la peticion no es para el backend, servimos el frontend
 app.use(express.static(__dirname + "/../dist/portal-aps"));

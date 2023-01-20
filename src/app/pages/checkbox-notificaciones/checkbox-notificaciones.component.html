@@ -1,9 +1,10 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css">
 <div class="btn-group btn-group-toggle" data-toggle="buttons">
     <label class="btn btn-secondary active">
       <input (change)="cargarNotificacion()" type="radio" name="options" id="active" autocomplete="off" checked> Active
     </label>
     <label class="btn btn-secondary">
-      <input (change)="cargarNotificacion()" type="radio" name="options" id="disable" autocomplete="off"> Disabled
+      <input (change)="cargarNotificacion()" type="radio" name="options" id="active" autocomplete="off"> Disabled
     </label> 
 
     <h6 class="title mb-0">
@@ -13,9 +14,26 @@
           class="leading-none"
       >
           <small class="font-weight-bold"
-              >(total: {{ totalNotificaciones }})</small
-          >
+              >(total: {{ totalNotificaciones }})</small>
       </span>
   </h6>
   
   </div>
+
+  
+  <div class="Listanotificaciones">
+    <div class="row" *ngFor="let notificacion of notificaciones" >
+      <div class="row"
+      *ngIf="!notificacion.leido">
+        <div class="col">titulo</div>
+        <div class="col">mensaje</div>
+        <div class="col">fecha</div>
+
+      </div>
+    </div>
+  </div>
+<div class="row">
+    <app-proyectos-card class="col-sm-6 col-lg-4 mb-3" ></app-proyectos-card>  
+    <app-proyectos-card class="col-sm-6 col-lg-4 mb-3" ></app-proyectos-card>  
+    <app-proyectos-card class="col-sm-6 col-lg-4 mb-3" ></app-proyectos-card>  
+</div> 

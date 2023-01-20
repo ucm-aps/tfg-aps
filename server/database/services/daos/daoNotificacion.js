@@ -1,5 +1,5 @@
 const knex = require("../../config");
-import { filter } from 'rxjs/operators';
+
 const daoUsuario = require("./daoUsuario");
 const transferNotificacion = require('../transfers/TNotificacion')
 
@@ -13,7 +13,7 @@ function obtenerNotificaciones(idUser){
         notificaciones =[]
         for(n of resultado){
             n2 = Object.assign({}, n)
-            n3 = new transferNotificacion(n2['id'], n2['idDestino', n2['leido']])
+            n3 = new transferNotificacion(n2['id'], n2['idDestino'], n2['leido'])
             notificaciones.push(n3);
         }
         return notificaciones;

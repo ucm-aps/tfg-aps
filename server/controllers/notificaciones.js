@@ -10,7 +10,7 @@ const obtenerNotificaciones = async(req, res = response) =>{
         return res.status(200).json({
             ok:true,
             notificaciones,
-            total:total
+            total:notificaciones.length
         });
     }
     catch(error){
