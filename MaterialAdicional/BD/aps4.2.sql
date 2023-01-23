@@ -2679,6 +2679,13 @@ ALTER TABLE `upload`
 ALTER TABLE `usuario`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=137;
 
+
+--
+-- AUTO_INCREMENT de la tabla `notificaciones`
+--
+ALTER TABLE `notificaciones`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=200;
+  
 --
 -- Restricciones para tablas volcadas
 --
@@ -2930,7 +2937,7 @@ ALTER TABLE `ofertaaceptada`
 -- Filtros para la tabla `notificaciones`
 --
 ALTER TABLE `notificaciones`
-  ADD CONSTRAINT `notificaciones_ibfk_1` FOREIGN KEY (`id`) REFERENCES `usuario` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `notificaciones_ibfk_1` FOREIGN KEY (`idDestino`) REFERENCES `usuario` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Filtros para la tabla `aceptacionrechazado`
