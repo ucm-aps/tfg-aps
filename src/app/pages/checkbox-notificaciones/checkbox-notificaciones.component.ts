@@ -3,7 +3,7 @@ import { faGrinTongueSquint } from '@fortawesome/free-solid-svg-icons';
 import { NotificacionService } from 'src/app/services/notificacion.service'
 import { Usuario } from './../../models/usuario.model';
 import { Notificacion } from './../../models/notificacion.model';
-
+import { UsuarioService } from '../../services/usuario.service';
 
 @Component({
   selector: 'app-checkbox-notificaciones',
@@ -19,9 +19,12 @@ export class CheckboxNotificacionesComponent implements OnInit {
   public totalNotificacionesBuscadas = 0
   public cargando = false
 
+  
 
   constructor(
-    public notificacionService:NotificacionService
+    public notificacionService:NotificacionService,
+    public usuarioService: UsuarioService
+
   ) { }
 
   ngOnInit(): void {
@@ -34,7 +37,7 @@ export class CheckboxNotificacionesComponent implements OnInit {
   }
   cargarNotificacion(): void {
     this.notificacionService
-    .cargarNotificion(this.offset, this.limit, this.getFiltros())
+    .cargarNotificion(this.offset, this.limit, this.getFiltros(), this.usuarioService.usuario.uid)
       .subscribe(({ total, filtradas, notificaciones }) => {
         this.totalNotificaciones = total.valueOf()
         this.totalNotificacionesBuscadas = filtradas.valueOf()

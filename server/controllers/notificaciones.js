@@ -6,7 +6,7 @@ const TNotificacion = require("./../database/services/transfers/TNotificacion");
 const obtenerNotificaciones = async(req, res = response) =>{
     try{
         let notificaciones = await daoNotificacion.obtenerNotificaciones(req.query.idUser);
-        console.log(notificaciones);
+        console.log(req.query.idUser);
         return res.status(200).json({
             ok:true,
             notificaciones,

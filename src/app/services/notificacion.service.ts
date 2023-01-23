@@ -28,8 +28,8 @@ export class NotificacionService {
             )
         );
     }
-    cargarNotificion(skip: number, limit: number, filtros: Object) {
-        return this.http.get<{ total: Number, filtradas: Number, notificaciones: Notificacion[] }>(`${base_url}/notificaciones?skip=${skip}&limit=${limit}&filtros=${encodeURIComponent(JSON.stringify(filtros))}&idUser=33`, this.usuarioService.headers)
+    cargarNotificion(skip: number, limit: number, filtros: Object, uid: string) {
+        return this.http.get<{ total: Number, filtradas: Number, notificaciones: Notificacion[] }>(`${base_url}/notificaciones?skip=${skip}&limit=${limit}&filtros=${encodeURIComponent(JSON.stringify(filtros))}&idUser=${uid}`, this.usuarioService.headers)
             .pipe(
                 map(resp => {
                     return {total: resp.total, filtradas: limit, notificaciones: this.mapearNotificaciones(resp.notificaciones)};
