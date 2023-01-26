@@ -1,12 +1,11 @@
+
 <div class="btn-group btn-group-toggle" data-toggle="buttons">
     <label class="btn btn-secondary active">
-      <input type="radio" name="options" id="active" autocomplete="off" checked> Active
+      <input (change)="cargarNotificacion()" type="radio" name="options" id="active" autocomplete="off" checked> Active
     </label>
     <label class="btn btn-secondary">
-      <input type="radio" name="options" id="disable" autocomplete="off"> Disabled
+      <input (change)="cargarNotificacion()" type="radio" name="options" id="active" autocomplete="off"> Disabled
     </label> 
-<<<<<<< Updated upstream
-=======
 
     <h6 class="title mb-0">
       Notificaciones
@@ -24,17 +23,13 @@
   
 <div class="Listanotificaciones ml-3">
 
-    <div class="bg-white" *ngFor="let notificacion of notificaciones" >
-      <a href="">
-      <div class="row font-weight-bolder notificacion"
+    <div class="row bg-white" *ngFor="let notificacion of notificaciones" >
+      <div class="row font-weight-bold"
       *ngIf="!notificacion.leido">
-        <div class="col-lg-3 col-md-2 col-sm-2 ">titulo</div>
-        <div class="col-lg-8 col-md-4 col-sm-3">mensaje</div>
-        <div class="col-1">fecha</div>
+        <div class="col">titulo</div>
+        <div class="col">mensaje</div>
+        <div class="col">fecha</div>
 
       </div>
-      </a>
     </div>
-
->>>>>>> Stashed changes
   </div>

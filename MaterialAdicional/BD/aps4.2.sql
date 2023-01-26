@@ -34,6 +34,34 @@ CREATE TABLE `admin` (
 
 -- --------------------------------------------------------
 
+CREATE TABLE `aceptacionaceptada` (
+  `idNotificacion` int(11) NOT NULL,
+  `idPartenariado` int(11) NOT NULL,
+  PRIMARY KEY (`idNotificacion`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE `notificaciones` (
+  `id` int(11) NOT NULL,
+  `idDestino` int(11) NOT NULL,
+  `leido` tinyint(1) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE `ofertaaceptada` (
+  `idNotificacion` int(11) NOT NULL,
+  `idOferta` int(11) NOT NULL,
+  `idSocio` int(11) NOT NULL,
+  PRIMARY KEY (`idNotificacion`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE `aceptacionrechazado` (
+  `idNotificacion` int(11) NOT NULL,
+  `idNotificacionOferta` int(11) NOT NULL,
+  PRIMARY KEY (`idNotificacion`, `idNotificacionOferta`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
 --
 -- Estructura de tabla para la tabla `anuncio_servicio`
 --
@@ -2651,6 +2679,13 @@ ALTER TABLE `upload`
 ALTER TABLE `usuario`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=137;
 
+
+--
+-- AUTO_INCREMENT de la tabla `notificaciones`
+--
+ALTER TABLE `notificaciones`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=200;
+  
 --
 -- Restricciones para tablas volcadas
 --
@@ -2884,6 +2919,33 @@ ALTER TABLE `uploads_colaboracion`
 ALTER TABLE `upload_anuncioservicio`
   ADD CONSTRAINT `upload_anuncioservicio_ibfk_1` FOREIGN KEY (`id_upload`) REFERENCES `upload` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `upload_anuncioservicio_ibfk_2` FOREIGN KEY (`id_anuncio`) REFERENCES `anuncio_servicio` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `aceptacionaceptada`
+--
+ALTER TABLE `aceptacionaceptada`
+  ADD CONSTRAINT `aceptacionaceptada_ibfk_1` FOREIGN KEY (`idNotificacion`) REFERENCES `notificaciones` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `aceptacionaceptada_ibfk_2` FOREIGN KEY (`idPartenariado`) REFERENCES `partenariado` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  
+--
+-- Filtros para la tabla `ofertaaceptada`
+--
+ALTER TABLE `ofertaaceptada`
+  ADD CONSTRAINT `ofertaaceptada_ibfk_1` FOREIGN KEY (`idNotificacion`) REFERENCES `aceptacionrechazado` (`idNotificacion`) ON DELETE CASCADE ON UPDATE CASCADE;
+  
+--
+-- Filtros para la tabla `notificaciones`
+--
+ALTER TABLE `notificaciones`
+  ADD CONSTRAINT `notificaciones_ibfk_1` FOREIGN KEY (`idDestino`) REFERENCES `usuario` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `aceptacionrechazado`
+--
+ALTER TABLE `aceptacionrechazado`
+  ADD CONSTRAINT `aceptacionrechazado_ibfk_1` FOREIGN KEY (`idNotificacion`) REFERENCES `notificaciones` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `aceptacionrechazado_ibfk_2` FOREIGN KEY (`idNotificacionOferta`) REFERENCES `ofertaaceptada` (`idNotificacion`) ON DELETE CASCADE ON UPDATE CASCADE;
+  
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

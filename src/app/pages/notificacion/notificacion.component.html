@@ -1,6 +1,8 @@
 <app-navbar></app-navbar>
-<div class="container">
-
-    <h1></h1>
+<div class="foto-nombre">
+    <img alt="user-image" aria-label="Image URL" class="rounded-circle" height="40" src="{{usuarioService.usuario.imagenUrl}}" width="40">
+    <span title="{{ usuarioService.usuario.additionalInfoPlain }}">{{ usuarioService.usuario.nombre }} {{
+        usuarioService.usuario.apellidos }}</span>
+    <span><strong>{{ usuarioService.usuario.displayRol }}</strong></span>
 </div>
 <app-footer></app-footer>

@@ -296,7 +296,7 @@ function contarPartenariados() {
 }
 
 function contarIniciativas() {
-  return knex("iniciativa")
+  return knex("oferta_servicio")
     .count("*")
     .then((result) => {
       return result[0]["count(*)"];
