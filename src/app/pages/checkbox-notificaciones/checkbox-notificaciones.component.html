@@ -5,4 +5,36 @@
     <label class="btn btn-secondary">
       <input type="radio" name="options" id="disable" autocomplete="off"> Disabled
     </label> 
+<<<<<<< Updated upstream
+=======
+
+    <h6 class="title mb-0">
+      Notificaciones
+      <span
+          *ngIf="!cargando"
+          class="leading-none"
+      >
+          <small class="font-weight-bold"
+              >(total: {{ totalNotificaciones }})</small>
+      </span>
+  </h6>
+  
+  </div>
+
+  
+<div class="Listanotificaciones ml-3">
+
+    <div class="bg-white" *ngFor="let notificacion of notificaciones" >
+      <a href="">
+      <div class="row font-weight-bolder notificacion"
+      *ngIf="!notificacion.leido">
+        <div class="col-lg-3 col-md-2 col-sm-2 ">titulo</div>
+        <div class="col-lg-8 col-md-4 col-sm-3">mensaje</div>
+        <div class="col-1">fecha</div>
+
+      </div>
+      </a>
+    </div>
+
+>>>>>>> Stashed changes
   </div>
