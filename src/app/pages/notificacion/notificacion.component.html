@@ -1,8 +1,9 @@
 <app-navbar></app-navbar>
-<div class="foto-nombre">
-    <img alt="user-image" aria-label="Image URL" class="rounded-circle" height="40" src="{{usuarioService.usuario.imagenUrl}}" width="40">
-    <span title="{{ usuarioService.usuario.additionalInfoPlain }}">{{ usuarioService.usuario.nombre }} {{
-        usuarioService.usuario.apellidos }}</span>
-    <span><strong>{{ usuarioService.usuario.displayRol }}</strong></span>
+<div class="container cargarNotificacion(200)">
+
+    <h4>{{notificacion.titulo}}</h4>
+    <div class="mensaje">
+        {{notificacion.emailOrigen}} ha enviado {{notificacion.mensaje}} del anuncio {{notificacion.idAnuncio}}
+    </div>
 </div>
 <app-footer></app-footer>

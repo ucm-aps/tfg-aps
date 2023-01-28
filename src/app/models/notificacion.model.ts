@@ -9,10 +9,12 @@ export class Notificacion{
     constructor(
         public id: string,
         public idDestino:string,
-        public idOrigen:string,
+        public leido: string,
         public titulo:string,
-        public texto:string,
-        public fechaCrear:string
+        public mensaje:string,
+        public fechaCrear:string,
+        public emailOrigen:string,
+        public idAnuncio:string
     ){}
 
     get parsedDateCrear(){

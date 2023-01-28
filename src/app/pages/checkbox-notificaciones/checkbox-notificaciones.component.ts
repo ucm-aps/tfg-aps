@@ -37,7 +37,7 @@ export class CheckboxNotificacionesComponent implements OnInit {
   }
   cargarNotificacion(): void {
     this.notificacionService
-    .cargarNotificion(this.offset, this.limit, this.getFiltros(), this.usuarioService.usuario.uid)
+    .cargarNotificaciones(this.offset, this.limit, this.getFiltros(), this.usuarioService.usuario.uid)
       .subscribe(({ total, filtradas, notificaciones }) => {
         this.totalNotificaciones = total.valueOf()
         this.totalNotificacionesBuscadas = filtradas.valueOf()

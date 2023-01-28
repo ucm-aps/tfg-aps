@@ -2934,7 +2934,7 @@ ALTER TABLE `aceptacionaceptada`
 -- Filtros para la tabla `ofertaaceptada`
 --
 ALTER TABLE `ofertaaceptada`
-  ADD CONSTRAINT `ofertaaceptada_ibfk_1` FOREIGN KEY (`idNotificacion`) REFERENCES `aceptacionrechazado` (`idNotificacion`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `ofertaaceptada_ibfk_1` FOREIGN KEY (`idNotificacion`) REFERENCES `notificaciones` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
   
 --
 -- Filtros para la tabla `notificaciones`

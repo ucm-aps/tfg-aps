@@ -192,7 +192,7 @@ const routes: Routes = [
             
             
             //Notificacion
-            { path: 'mi-notificacion', component: NotificacionComponent, data: { titulo: 'Notificacion'}},
+            { path: 'mi-notificacion/:id', component: NotificacionComponent, data: { titulo: 'Notificacion'}},
 
             // varios
             {

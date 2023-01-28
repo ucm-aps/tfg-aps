@@ -21,15 +21,17 @@
   </div>
 
   
-<div class="Listanotificaciones ml-3">
+  <div class="Listanotificaciones ml-3">
 
-    <div class="row bg-white" *ngFor="let notificacion of notificaciones" >
-      <div class="row font-weight-bold"
+    <div class="bg-white" *ngFor="let notificacion of notificaciones" >
+      <a [routerLink]="['/mi-notificacion/', notificacion.id]">
+      <div class="row font-weight-bolder notificacion"
       *ngIf="!notificacion.leido">
-        <div class="col">titulo</div>
-        <div class="col">mensaje</div>
-        <div class="col">fecha</div>
+        <div class="col-lg-3 col-md-2 col-sm-2 ">titulo</div>
+        <div class="col-lg-8 col-md-4 col-sm-3">mensaje</div>
+        <div class="col-1">fecha</div>
 
       </div>
+      </a>
     </div>
   </div>
