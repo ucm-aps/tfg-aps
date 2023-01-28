@@ -43,7 +43,10 @@ CREATE TABLE `aceptacionaceptada` (
 CREATE TABLE `notificaciones` (
   `id` int(11) NOT NULL,
   `idDestino` int(11) NOT NULL,
-  `leido` tinyint(1) NOT NULL,
+  `leido` tinyint(1) NOT NULL DEFAULT 0,
+  `titulo` varchar(200) NOT NULL,
+  `mensaje` varchar(1200) NOT NULL,
+  `fecha_fin` date DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
