@@ -106,6 +106,7 @@ import { ProyectosCardComponent } from './pages/proyectos-card/proyectos-card.co
 import { ServicioOfertadoComponent } from './pages/servicio-ofertado/servicio-ofertado.component';
 import {OfertaRespaldadaComponent} from './pages/oferta-respaldada/oferta-respaldada.component';
 import {NotificacionComponent} from './pages/notificacion/notificacion.component';
+import { PerfilComponent } from './pages/perfil/perfil.component';
 
 TagInputModule.withDefaults({
     tagInput: {
@@ -198,6 +199,7 @@ TagInputModule.withDefaults({
         ProyectosCardComponent,
         ServicioOfertadoComponent,
         NotificacionComponent,
+        PerfilComponent,
     ],
     imports: [
     BrowserModule,

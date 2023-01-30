@@ -7,7 +7,8 @@ class TNotificacion{
     fecha;
     emailOrigen;
     idAnuncio;
-    constructor(id, idDestino, leido, titulo, mensaje, fecha, emailOrigen, idAnuncio){
+    tituloAnuncio
+    constructor(id, idDestino, leido, titulo, mensaje, fecha, emailOrigen, idAnuncio, tituloAnuncio){
         this.id=id;
         this.idDestino=idDestino;
         this.leido=leido;
@@ -15,7 +16,8 @@ class TNotificacion{
         this.mensaje= mensaje;
         this.fecha = fecha;
         this.emailOrigen = emailOrigen;
-        this.idAnuncio = idAnuncio
+        this.idAnuncio = idAnuncio;
+        this.tituloAnuncio = tituloAnuncio
     }
 
     getId(){

@@ -14,7 +14,8 @@ export class Notificacion{
         public mensaje:string,
         public fechaCrear:string,
         public emailOrigen:string,
-        public idAnuncio:string
+        public idAnuncio:string,
+        public tituloAnuncio:string
     ){}
 
     get parsedDateCrear(){

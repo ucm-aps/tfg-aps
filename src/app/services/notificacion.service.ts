@@ -27,6 +27,7 @@ export class NotificacionService {
                 notificacion.fechaCrear,
                 notificacion.emailOrigen,
                 notificacion.idAnuncio,
+                notificacion.tituloAnuncio
             )
         );
     }

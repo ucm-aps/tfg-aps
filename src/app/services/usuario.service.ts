@@ -53,6 +53,13 @@ export class UsuarioService {
                );
   }
 
+  cargarUsuarioPorEmail(email:string){
+    return this.http.get<{ ok: boolean, usuario: Usuario}>(`${ base_url}/usuarios/email/${email}`, this.headers)
+                    .pipe(
+                      map((resp: {ok:boolean, usuario: Usuario}) => resp.usuario)
+                    );
+  }
+
   actualizarUsuario(usuario: Usuario) {
     return this.http.put(`${ base_url }/usuarios/${ usuario.uid }`, usuario, this.headers);
   }
