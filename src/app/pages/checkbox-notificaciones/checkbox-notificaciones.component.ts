@@ -46,4 +46,8 @@ export class CheckboxNotificacionesComponent implements OnInit {
       })
   }
 
+  DesactivarNotificacion(): void{
+    this.notificaciones = [];
+  }
+
 }

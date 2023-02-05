@@ -102,6 +102,7 @@ export class PartenariadoCrearProfesorComponent implements OnInit {
 
     async obtenerOferta(id: number) {
 
+
         await this.ofertaService.obtenerOferta(id).pipe(first()).toPromise().then((resp: any) => {
             let value = resp.oferta;
             let arrayP = [];

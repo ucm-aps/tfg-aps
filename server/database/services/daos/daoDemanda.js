@@ -172,6 +172,7 @@ function crearDemanda(demanda) {
                                 'Se ha introducido la demanda con id ',
                                 id_anuncio[0]
                             );
+                            return id_anuncio[0];
                         });
                 })
                 .catch((err) => {

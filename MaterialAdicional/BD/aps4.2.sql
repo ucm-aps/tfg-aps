@@ -47,6 +47,7 @@ CREATE TABLE `notificaciones` (
   `titulo` varchar(200) NOT NULL,
   `mensaje` varchar(1200) NOT NULL,
   `fecha_fin` date DEFAULT NULL,
+  `pendiente` tinyint(1) NOT NULL DEFAULT 1, 
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

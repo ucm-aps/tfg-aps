@@ -29,11 +29,29 @@ export class NotificacionComponent implements OnInit{
     cargarNotificacion(id: string){
         this.notificacionService.cargarNotificacion(id).subscribe((notificacion : Notificacion) =>{
             if(!notificacion){
-                alert('hello world in TypeScript!');
                 return this.router.navigateByUrl(`/mi-resumen`);
             }
             this.notificacion = this.notificacionService.mapearNotificaciones([notificacion])[0];
         });
     }
+
+    AceptacionRechazada(){
+        this.notificacion.pendiente = '0';
+        this.notificacionService.rechazarSocio(this.notificacion.id).subscribe((ok: boolean)=>{
+            if(ok){
+                this.ngOnInit();
+            }
+        });
+        
+    }
+
+    AceptacionAceptada(){
+        this.notificacion.pendiente = "0";
+
+    }
+
+
+
+
     
 }

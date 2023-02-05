@@ -12,14 +12,15 @@ export class Notificacion{
         public leido: string,
         public titulo:string,
         public mensaje:string,
-        public fechaCrear:string,
+        public fecha:string,
         public emailOrigen:string,
         public idAnuncio:string,
-        public tituloAnuncio:string
+        public tituloAnuncio:string,
+        public pendiente:string
     ){}
 
     get parsedDateCrear(){
-        return moment(this.fechaCrear).format('DD-MM-YYYY');
+        return moment(this.fecha).format('DD-MM-YYYY');
     }
 
     

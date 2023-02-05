@@ -27,7 +27,8 @@ export class NotificacionService {
                 notificacion.fechaCrear,
                 notificacion.emailOrigen,
                 notificacion.idAnuncio,
-                notificacion.tituloAnuncio
+                notificacion.tituloAnuncio,
+                notificacion.pendiente
             )
         );
     }
@@ -41,11 +42,32 @@ export class NotificacionService {
     }
 
     cargarNotificacion(id:string){
-        return this.http.get<{ok: boolean, notificacion:Notificacion}>(`${base_url}/notificaciones/${id}`, this.usuarioService.headers)
+        return this.http.get<{ok: boolean, notificacion:Notificacion}>(`${base_url}/notificaciones/ver/${id}`, this.usuarioService.headers)
         .pipe(
             map((resp:{ok:boolean, notificacion: Notificacion}) =>resp.notificacion)
 
         );
     }
+
+    crearNotificacionOfertaAceptada(idOferta:string, uid:string){
+        return this.http.get<{ok: boolean, notificacion:Notificacion}>(`${base_url}/notificaciones/crearOfertaAceptada?idOferta=${idOferta}&idSocio=${uid}`, this.usuarioService.headers)
+        .pipe(
+            map((resp:{ok:boolean, notificacion:Notificacion}) => resp.ok)
+        );
+    }
+
+    rechazarSocio(idNotificacion){
+        return this.http.get<{ok: boolean}>(`${base_url}/notificaciones/respuesta/rechazar?idNotificacion=${idNotificacion}`,this.usuarioService.headers)
+        .pipe(
+            map((resp: {ok:boolean}) => resp.ok)
+        );
+    }
+    AceptarSocio(idNotificacion){
+        return this.http.get<{ok: boolean}>(`${base_url}/notificaciones/respuesta/aceptar?idNotificacion=${idNotificacion}`,this.usuarioService.headers)
+        .pipe(
+            map((resp: {ok:boolean}) => resp.ok)
+        );
+    }
+
 
 }

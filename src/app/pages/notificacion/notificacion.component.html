@@ -34,10 +34,11 @@
                 <p><strong>Anuncio: </strong> <a [routerLink]="['/ofertas/ver/', notificacion.idAnuncio]">{{ notificacion.tituloAnuncio }} </a></p>
             </div>
             <div style='display: flex; justify-content: space-evenly'>
-                <button  class='btn btn-info' style='width: 200px' type='button'>Volver
+                <button [routerLink]="['/mi-resumen']" class='btn btn-info' style='width: 200px' type='button'>Volver
                     al listado
                 </button>
-                <button  class='btn btn-info' style='width: 200px' type='button'>Aceptar oferta</button>
+                <button (click)='AceptacionRechazada()'*ngIf="notificacion.pendiente" class="btn btn-info" style='width: 200px' type='button'>Rechazar</button>
+                <button (click)='AceptacionAceptada()' *ngIf="notificacion.pendiente" class='btn btn-info' style='width: 200px' type='button'>Aceptar</button>
             </div>
         </div>
     </div>
