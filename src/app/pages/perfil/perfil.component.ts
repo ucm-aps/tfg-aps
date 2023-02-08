@@ -57,10 +57,10 @@ export class PerfilComponent implements OnInit {
     cargarUsuario(email: string):void{
         this.usuarioService.cargarUsuarioPorEmail(email).subscribe((usuario : Usuario) =>{
             if(!usuario){
-                alert('hello world in TypeScript!');
                 return this.router.navigateByUrl(`/mi-resumen`);
             }
             this.usuario = this.usuarioService.mapearUsuarios([usuario])[0];
+            console.log(this.usuario);
         });
     }
 

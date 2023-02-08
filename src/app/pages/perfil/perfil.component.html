@@ -11,9 +11,9 @@
             </div>
             <div>
                 <div class="form-group  mr-2">
-                    <label for="nombre"><strong>Nombre: </strong></label>
+                    <label ><strong>Nombre: </strong></label>
                     <div>
-                        <label for="">{{usuario.nombre}}</label>
+                        <label >{{usuario.nombre}}</label>
                     </div>
                 </div>
     
@@ -108,22 +108,22 @@
 
         <div class="form-group" *ngIf="['ROL_GESTOR', 'ROL_SOCIO_COMUNITARIO'].includes(usuario.rol)">
             <label for="sector">Sector</label>
-            <input name="sector" type="text" id="sector" class="form-control" autocorrect="off" autocapitalize="none" spellcheck="false" placeholder="Introduzca su sector" formControlName="sector">
+            <input name="sector" type="text" id="sector" class="form-control" autocorrect="off" autocapitalize="none" spellcheck="false" placeholder="{{usuario.sector}}" formControlName="sector" readonly>
         </div>
 
         <div class="form-group" *ngIf="['ROL_GESTOR', 'ROL_SOCIO_COMUNITARIO'].includes(usuario.rol)">
             <label for="url">URL</label>
-            <input name="url" type="text" id="url" [readOnly]="usuario.origin_login !== 'Portal ApS'" class="form-control" autocorrect="off" autocapitalize="none" spellcheck="false" placeholder="Introduzca su URL" formControlName="url">
+            <input name="url" type="text" id="url" class="form-control" autocorrect="off" autocapitalize="none" spellcheck="false" placeholder="{{usuario.url}}" formControlName="url" readonly>
         </div>
 
         <div class="form-group" *ngIf="['ROL_GESTOR', 'ROL_SOCIO_COMUNITARIO'].includes(usuario.rol)">
             <label for="mision">Mision</label>
-            {{usuario.mision}}
+            <input name="sector" type="text" id="sector" class="form-control" autocorrect="off" autocapitalize="none" spellcheck="false" placeholder="{{usuario.mision}}" formControlName="sector" readonly>
         </div>
 
         <div class="form-group" *ngIf="['ROL_GESTOR', 'ROL_SOCIO_COMUNITARIO'].includes(usuario.rol)">
             <label for="nombreSocioComunitario">Nombre socio comunitario</label>
-            <input name="nombreSocioComunitario" type="text" id="nombreSocioComunitario" class="form-control" autocorrect="off" autocapitalize="none" spellcheck="false" placeholder="Introduzca el nombre del socio comunitario" formControlName="nombreSocioComunitario">
+            <input name="nombreSocioComunitario" type="text" id="nombreSocioComunitario" class="form-control" autocorrect="off" autocapitalize="none" spellcheck="false" placeholder="{{usuario.nombreSocioComunitario}}" formControlName="nombreSocioComunitario" readonly>
         </div>
     </fieldset>
 </div>

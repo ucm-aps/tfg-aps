@@ -148,7 +148,25 @@ googleInit() {
     return usuarios.map(
       (user) => {
         if(!user) { return null; }
-        return new Usuario(user.uid || user.id || user._id, user.rol, user.email, user.nombre, user.apellidos, user.origin_login, user.origin_img || '', user.universidad || '', user.titulacion || '', user.sector || '',user.nombreS || '', user.terminos_aceptados || false, user.telefono || null);
+        //return new Usuario(user.uid || user.id || user._id, user.rol, user.email, user.nombre, user.apellidos, user.origin_login, user.origin_img || '', user.universidad || '', user.titulacion || '', user.sector || '',user.nombreS || '', user.terminos_aceptados || false, user.telefono || null);
+        return new Usuario(user.uid || user.id || user._id,
+          user.rol,
+          user.correo,
+          user.nombre, 
+          user.apellidos,
+          user.origin_login || '',
+          user.origin_img || undefined,
+          user.universidad || null,
+          user.titulacion || null,
+          user.sector || null,
+          user.facultad || null,
+          user.areaConocimiento || null,
+          user.nombre_socioComunitario || null,
+          user.terminos_aceptados,
+          user.telefono || null,
+          user.url || null,
+          user.mision || null,
+          user.avatar || null);
       }
 
     );
