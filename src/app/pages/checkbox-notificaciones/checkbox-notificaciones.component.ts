@@ -28,6 +28,7 @@ export class CheckboxNotificacionesComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.cargarNotificacion();
   }
 
   getFiltros(){
