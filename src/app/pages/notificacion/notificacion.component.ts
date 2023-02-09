@@ -3,6 +3,7 @@ import {UsuarioService} from '../../services/usuario.service';
 import { Notificacion } from 'src/app/models/notificacion.model';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NotificacionService } from 'src/app/services/notificacion.service';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -36,7 +37,6 @@ export class NotificacionComponent implements OnInit{
     }
 
     AceptacionRechazada(){
-        this.notificacion.pendiente = '0';
         this.notificacionService.rechazarSocio(this.notificacion.id).subscribe((ok: boolean)=>{
             if(ok){
                 this.ngOnInit();
@@ -46,7 +46,12 @@ export class NotificacionComponent implements OnInit{
     }
 
     AceptacionAceptada(){
-        this.notificacion.pendiente = "0";
+        Swal.fire(
+            'Atención',
+            'Antes de crear un partenariado debes completar los datos de oferta',
+            'warning'
+        );
+        return this.router.navigate(['partenariados/profesor/crear'], { queryParams: { oferta: this.notificacion.idAnuncio } });
 
     }
 

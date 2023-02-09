@@ -12,6 +12,7 @@ import { OfertaService } from '../../../../app/services/oferta.service';
 import { DemandaService } from '../../../../app/services/demanda.service';
 import { first } from 'rxjs/operators';
 import { Demanda } from '../../../../app/models/demanda.model';
+import { NotificacionService } from 'src/app/services/notificacion.service';
 
 @Component({
     selector: 'app-partenariado-crear-profesor',
@@ -33,7 +34,8 @@ export class PartenariadoCrearProfesorComponent implements OnInit {
     public responsable_data: any;
     public crearPartenariadoProfesorForm: FormGroup;
 
-    constructor(public fb: FormBuilder, public demandaService: DemandaService, public ofertaService: OfertaService, public partenariadoService: PartenariadoService, public usuarioService: UsuarioService, public fileUploadService: FileUploadService, public router: Router, public activatedRoute: ActivatedRoute) {
+    constructor(public fb: FormBuilder, public demandaService: DemandaService, public ofertaService: OfertaService, public partenariadoService: PartenariadoService, public usuarioService: UsuarioService, public fileUploadService: FileUploadService, public router: Router, public activatedRoute: ActivatedRoute
+        ,public notificacionService : NotificacionService) {
     }
 
     dropdownSettings: any = {};
@@ -42,7 +44,7 @@ export class PartenariadoCrearProfesorComponent implements OnInit {
 
     async ngOnInit() {
         this.activatedRoute.params.subscribe(({ id }) => {
-            this.load(this.activatedRoute.snapshot.queryParams.demanda, this.activatedRoute.snapshot.queryParams.oferta);
+            this.load(101, this.activatedRoute.snapshot.queryParams.oferta);
         });
     }
 
@@ -60,28 +62,28 @@ export class PartenariadoCrearProfesorComponent implements OnInit {
             titulo: [this.demanda.titulo + ' | ' + this.oferta.titulo || '', Validators.required],
             descripcion: [this.demanda.descripcion + ' | ' + this.oferta.descripcion || '', Validators.required],
             socio: [this.demanda.creador || ''],
-            necesidadSocial: [this.demanda.necesidad_social],
-            finalidad: [this.demanda.objetivo],
-            comunidadBeneficiaria: [this.demanda.comunidadBeneficiaria],
+            necesidadSocial: [this.demanda.necesidad_social || ''],
+            finalidad: [this.demanda.objetivo || ''],
+            comunidadBeneficiaria: [this.demanda.comunidadBeneficiaria || ''],
             cuatrimestre: [this.oferta.cuatrimestre || '', Validators.required],
             responsable: ['', Validators.required],
-            ciudad: [this.demanda.ciudad],
+            ciudad: [this.demanda.ciudad || ''],
             externos: [false],
-            id_demanda: [this.demanda.id],
+            id_demanda: [this.demanda.id || ''],
             id_oferta: [this.oferta.id || ''],
             ofertaObservacionesTemporales: [this.oferta.observaciones, Validators.required],
-            demandaObservacionesTemporales: [this.demanda.observacionesTemporales],
-            asignaturaObjetivo: [this.oferta.asignatura_objetivo, Validators.required],
-            titulacionesLocales: [this.demanda.titulacion_local],
+            demandaObservacionesTemporales: [this.demanda.observacionesTemporales || ''],
+            asignaturaObjetivo: [this.oferta.asignatura_objetivo || 'Nada', Validators.required],
+            titulacionesLocales: [this.demanda.titulacion_local || ''],
             ofertaAreaServicio: [this.oferta.area_servicio, Validators.required],
-            demandaAreaServicio: [this.demanda.area_servicio],
-            periodo_definicion_fin: [this.demanda.periodoDefinicionFin],
-            periodo_definicion_ini: [this.demanda.periodoDefinicionIni],
-            periodo_ejecucion_fin: [this.demanda.periodoEjecucionFin],
-            periodo_ejecucion_ini: [this.demanda.periodoEjecucionIni],
+            demandaAreaServicio: [this.demanda.area_servicio || ''],
+            periodo_definicion_fin: [this.demanda.periodoDefinicionFin || ''],
+            periodo_definicion_ini: [this.demanda.periodoDefinicionIni || ''],
+            periodo_ejecucion_fin: [this.demanda.periodoEjecucionFin || ''],
+            periodo_ejecucion_ini: [this.demanda.periodoEjecucionIni || ''],
             profesores: [new FormControl(''), Validators.required],
             fecha_limite: [this.oferta.fecha_limite, Validators.required],
-            fecha_fin: [this.demanda.fechaFin]
+            fecha_fin: [this.demanda.fechaFin || '']
         });
 
         this.dropdownSettings = {
@@ -178,12 +180,14 @@ export class PartenariadoCrearProfesorComponent implements OnInit {
             .subscribe(resp => {
                 Swal.fire('Ok', 'Partenariado creado correctamente', 'success');
 
+                
                 this.router.routeReuseStrategy.shouldReuseRoute = () => false;
                 this.router.onSameUrlNavigation = 'reload';
                 this.router.navigate(['/']);
 
                 this.formSubmitted = false;
                 this.formSending = false;
+                
             }, err => {
                 console.log(err);
 
