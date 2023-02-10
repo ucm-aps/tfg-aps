@@ -13,6 +13,7 @@ import { DemandaService } from '../../../../app/services/demanda.service';
 import { first } from 'rxjs/operators';
 import { Demanda } from '../../../../app/models/demanda.model';
 import { NotificacionService } from 'src/app/services/notificacion.service';
+import { Notificacion } from './../../../models/notificacion.model';
 
 @Component({
     selector: 'app-partenariado-crear-profesor',
@@ -29,10 +30,12 @@ export class PartenariadoCrearProfesorComponent implements OnInit {
     public partenariado: Partenariado;
     public oferta: Oferta;
     public demanda: Demanda;
+    public notificacion: Notificacion;
     public imagenSubir: File;
     public imagenPreview: any = null;
     public responsable_data: any;
     public crearPartenariadoProfesorForm: FormGroup;
+
 
     constructor(public fb: FormBuilder, public demandaService: DemandaService, public ofertaService: OfertaService, public partenariadoService: PartenariadoService, public usuarioService: UsuarioService, public fileUploadService: FileUploadService, public router: Router, public activatedRoute: ActivatedRoute
         ,public notificacionService : NotificacionService) {
@@ -44,8 +47,22 @@ export class PartenariadoCrearProfesorComponent implements OnInit {
 
     async ngOnInit() {
         this.activatedRoute.params.subscribe(({ id }) => {
-            this.load(101, this.activatedRoute.snapshot.queryParams.oferta);
+            if(this.activatedRoute.snapshot.queryParams.notificacion != undefined){
+                this.load_oferta(this.activatedRoute.snapshot.queryParams.notificacion)
+                
+            }
+            else{
+                this.load(101, this.activatedRoute.snapshot.queryParams.oferta);
+            }
         });
+    }
+
+    async load_oferta(notificacion: string){
+        this.notificacionService.cargarNotificacion(notificacion).subscribe((notificacion: Notificacion)=>{
+            this.notificacion = this.notificacionService.mapearNotificaciones([notificacion])[0];
+            this.obtenerOferta(Number(this.notificacion.idAnuncio));
+        });
+        console.log(this.oferta);
     }
 
     async load(demanda: number, oferta: number) {
