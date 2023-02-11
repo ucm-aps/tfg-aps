@@ -56,16 +56,15 @@ const crearPartenariadoProfesor = async (req, res = response) => {
             data.externos,
             data.responsable,
             profesores,
-            data.id_demanda,
+            null,
             id_oferta,
             'EN_CREACION'
         );
-        await dao_colaboracion.crearPartenariado(partenariado);
-        dao_colaboracion.crearPrevioPartenariado(data.id_demanda, id_oferta, 1, 0);
+        let id = await dao_colaboracion.crearPartenariado(partenariado);
 
         return res.status(200).json({
             ok: true,
-            partenariado: partenariado
+            id: id
         });
     } catch (error) {
         console.error(error);

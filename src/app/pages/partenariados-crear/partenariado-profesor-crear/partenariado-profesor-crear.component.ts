@@ -58,11 +58,38 @@ export class PartenariadoCrearProfesorComponent implements OnInit {
     }
 
     async load_oferta(notificacion: string){
-        this.notificacionService.cargarNotificacion(notificacion).subscribe((notificacion: Notificacion)=>{
-            this.notificacion = this.notificacionService.mapearNotificaciones([notificacion])[0];
-            this.obtenerOferta(Number(this.notificacion.idAnuncio));
+        await this.notificacionService.cargarNotificacion(notificacion).pipe(first()).toPromise().then((resp: any) =>{
+            this.notificacion = this.notificacionService.mapearNotificaciones([resp])[0];
         });
-        console.log(this.oferta);
+        await this.obtenerOferta(Number(this.notificacion.idAnuncio));
+
+        this.oferta.area_servicio = ['1'];
+
+        this.crearPartenariadoProfesorForm = this.fb.group({
+            anioAcademico: [this.oferta.anio_academico || '', Validators.required],
+            titulo: [this.oferta.titulo || '', Validators.required],
+            descripcion: [this.oferta.descripcion || '', Validators.required],
+            cuatrimestre: [this.oferta.cuatrimestre || '', Validators.required],
+            responsable: ['', Validators.required],
+            externos: [false],
+            id_oferta: [this.oferta.id || ''],
+            ofertaObservacionesTemporales: [this.oferta.observaciones, Validators.required],
+            asignaturaObjetivo: [this.oferta.asignatura_objetivo || 'Nada', Validators.required],
+            ofertaAreaServicio: [this.oferta.area_servicio, Validators.required],
+            profesores: [new FormControl(''), Validators.required],
+            fecha_limite: [this.oferta.fecha_limite, Validators.required],
+        });
+
+        this.dropdownSettings = {
+            singleSelection: false,
+            idField: 'id',
+            textField: 'nombreCompleto',
+            selectAllText: 'Select All',
+            unSelectAllText: 'UnSelect All',
+            itemsShowLimit: 10,
+            allowSearchFilter: true
+        };
+        
     }
 
     async load(demanda: number, oferta: number) {
@@ -137,6 +164,7 @@ export class PartenariadoCrearProfesorComponent implements OnInit {
             this.oferta = new Oferta(value.id, value.titulo, value.descripcion, value.imagen, value.created_at, value.upload_at, value.cuatrimestre,
                 value.anio_academico, fecha_fin, value.observaciones_temporales, value.creador, value.area_servicio, value.asignatura_objetivo, value.profesores, value.tags)
             ;
+            console.log(this.oferta);
         });
     }
 
@@ -196,7 +224,6 @@ export class PartenariadoCrearProfesorComponent implements OnInit {
         this.observableEnviarPartenariado()
             .subscribe(resp => {
                 Swal.fire('Ok', 'Partenariado creado correctamente', 'success');
-
                 
                 this.router.routeReuseStrategy.shouldReuseRoute = () => false;
                 this.router.onSameUrlNavigation = 'reload';
@@ -204,6 +231,7 @@ export class PartenariadoCrearProfesorComponent implements OnInit {
 
                 this.formSubmitted = false;
                 this.formSending = false;
+
                 
             }, err => {
                 console.log(err);

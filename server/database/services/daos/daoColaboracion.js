@@ -56,7 +56,7 @@ function crearPartenariado(partenariado) {
             "Se ha producido un error al crear el partenariado que tiene id ",
             id
           );
-          return knex("colaboracion").where("id", id).del();
+          return id;
         });
     })
     .catch((err) => {

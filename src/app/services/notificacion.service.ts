@@ -62,8 +62,8 @@ export class NotificacionService {
             map((resp: {ok:boolean}) => resp.ok)
         );
     }
-    AceptarSocio(idNotificacion){
-        return this.http.get<{ok: boolean}>(`${base_url}/notificaciones/respuesta/aceptar?idNotificacion=${idNotificacion}`,this.usuarioService.headers)
+    AceptarSocio(idNotificacion, idPartenariado){
+        return this.http.get<{ok: boolean}>(`${base_url}/notificaciones/respuesta/aceptar?idNotificacion=${idNotificacion}&idPartenariado=${idPartenariado}`,this.usuarioService.headers)
         .pipe(
             map((resp: {ok:boolean}) => resp.ok)
         );

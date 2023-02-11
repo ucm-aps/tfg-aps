@@ -101,9 +101,41 @@ const rechazarSocio = async(req, res = response) =>{
     }
 }
 
+const aceptarSocio = async(req, res = response) =>{
+    try{
+        let notificacionResponder = await daoNotificacion.obtenerNotificacionOfertaAceptada(req.query.idNotificacion);
+        console.log(notificacionResponder);
+        const notificacion = new TNotificacion(
+            null,
+            notificacionResponder[0].idSocio,
+            null,
+            'Pedicion aceptada',
+            'Enhorabuena su pedicion ha sido aceptada',
+            null,
+            null,
+            notificacionResponder[0].idOferta,
+            null,
+            1
+        )
+        console.log(notificacion);
+        let newNotificacion = await daoNotificacion.crearNotificacionAceptadacionAceptada(notificacion, req.query.idNotificacion, req.query.idPartenariado);
+
+        return res.status(200).json({
+            ok:true
+        });
+    }catch(err){
+        console.error(err);
+        return res.status(500).json({
+            ok:false,
+            msg:'Error inesperado(al intentar aceptarSocio)'
+        });
+    }
+}
+
 module.exports ={
     obtenerNotificaciones,
     obtenerNotificacion,
     crearNotificacionOfertaAceptada,
     rechazarSocio,
+    aceptarSocio,
 }

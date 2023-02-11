@@ -5,6 +5,7 @@ const daoUsuario = require("./daoUsuario");
 const daoOferta = require("./daoOferta");
 const transferNotificacion = require('../transfers/TNotificacion');
 const { ConsoleReporter } = require("jasmine");
+const { not } = require("@angular/compiler/src/output/output_ast");
 
 //Obtener toda las notificaciones
 
@@ -117,6 +118,23 @@ function crearNotificacionAceptadacionRechazada(notificacion, idNotificacionOfer
 
 }
 
+function crearNotificacionAceptadacionAceptada(notificacion, idNotificacionOferta, idPartenariado){
+    return crearNotificacion(notificacion).then(idNotificacion =>{
+        return knex('aceptacionaceptada').insert({
+            idNotificacion:idNotificacion,
+            idPartenariado:idPartenariado
+        }).then(result=>{
+            FinalizarPendienteNotificacion(idNotificacionOferta);
+            return result;
+        })
+    })
+    .catch(err =>{
+        console.log(err)
+        console.log("Se ha producido un error al intenta crear una notificacion en aceptacionAceptacion");
+    })
+
+}
+
 function FinalizarPendienteNotificacion(idNotificacion){
     return knex('notificaciones').where({
         id:idNotificacion
@@ -134,4 +152,5 @@ module.exports ={
     crearNotificacionOfertaAceptada,
     obtenerNotificacionOfertaAceptada,
     crearNotificacionAceptadacionRechazada,
+    crearNotificacionAceptadacionAceptada,
 }
