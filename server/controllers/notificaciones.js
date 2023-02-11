@@ -26,7 +26,7 @@ const obtenerNotificaciones = async(req, res = response) =>{
 const obtenerNotificacion = async (req, res) =>{
     try{
         const id = req.params.id;
-        const notificacion = await daoNotificacion.obtenerOfertaAceptadaServicio(id);
+        const notificacion = await daoNotificacion.cargarNotificacion(id);
         return res.status(200).json({
             ok:true,
             notificacion,
@@ -104,7 +104,6 @@ const rechazarSocio = async(req, res = response) =>{
 const aceptarSocio = async(req, res = response) =>{
     try{
         let notificacionResponder = await daoNotificacion.obtenerNotificacionOfertaAceptada(req.query.idNotificacion);
-        console.log(notificacionResponder);
         const notificacion = new TNotificacion(
             null,
             notificacionResponder[0].idSocio,

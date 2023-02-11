@@ -28,7 +28,8 @@ export class NotificacionService {
                 notificacion.emailOrigen,
                 notificacion.idAnuncio,
                 notificacion.tituloAnuncio,
-                notificacion.pendiente
+                notificacion.pendiente,
+                notificacion.idPartenariado
             )
         );
     }

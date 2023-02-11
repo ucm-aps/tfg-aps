@@ -30,10 +30,22 @@ function obtenerNotificaciones(idUser){
 
 }
 
+function cargarNotificacion(idNotificacion){
+    return obtenerOfertaAceptadaServicio(idNotificacion).then(result =>{
+        if(result == undefined){
+            return obtenerNotificacionAceptacionAceptada(idNotificacion).then(result =>{
+                return result;
+            });
+        }
+        return result;
+    })
+}
+
 function obtenerOfertaAceptadaServicio(idNotificacion){
     return knex('notificaciones').join("ofertaaceptada", "notificaciones.id","=", "ofertaAceptada.idNotificacion")
     .where({id: idNotificacion})
     .select('*').then((resultado) => {
+        if(resultado.length == 0) return;
         return daoUsuario.obtenerUsuarioSinRolPorId(resultado[0].idSocio)
         .then(Origen =>{
             return daoOferta.obtenerAnuncioServicio(resultado[0].idOferta).then(Anuncio =>{
@@ -48,9 +60,43 @@ function obtenerOfertaAceptadaServicio(idNotificacion){
                     resultado[0].idOferta,
                     Anuncio.titulo, 
                     resultado[0]['pendiente'],
+                    null
                 );
             })
         })
+
+    })
+    .catch((err)=>{
+        console.log(err)
+        console.log("Se ha producido un error al intentar obtener de la base la notificacion con el id ", idNotificacion);
+    })
+}
+
+function obtenerNotificacionAceptacionAceptada(idNotificacion){
+    return knex('notificaciones').join("aceptacionaceptada", "notificaciones.id","=", "aceptacionaceptada.idNotificacion")
+    .join('ofertaaceptada', 'aceptacionaceptada.idNotificacionAceptada', '=', 'ofertaaceptada.idNotificacion')
+    .where({'aceptacionaceptada.idNotificacion': idNotificacion})
+    .select('*').then((resultado) => {
+        console.log(resultado);
+        return daoOferta.obtenerAnuncioServicio(resultado[0].idOferta).then(Anuncio =>{
+            return daoUsuario.obtenerUsuarioSinRolPorId(resultado[0].idSocio)
+            .then(Origen =>{
+                return new transferNotificacion(
+                    resultado[0]["id"],
+                    resultado[0]["idDestino"],
+                    resultado[0]["leido"],
+                    resultado[0]["titulo"],
+                    resultado[0]["mensaje"],
+                    resultado[0]["fecha_fin"],
+                    Origen["correo"],
+                    resultado[0].idOferta,
+                    Anuncio.titulo, 
+                    resultado[0]['pendiente'],
+                    resultado[0]['idPartenariado']
+                );
+            })
+        })
+        
 
     })
     .catch((err)=>{
@@ -122,7 +168,8 @@ function crearNotificacionAceptadacionAceptada(notificacion, idNotificacionOfert
     return crearNotificacion(notificacion).then(idNotificacion =>{
         return knex('aceptacionaceptada').insert({
             idNotificacion:idNotificacion,
-            idPartenariado:idPartenariado
+            idPartenariado:idPartenariado,
+            idNotificacionAceptada:idNotificacionOferta
         }).then(result=>{
             FinalizarPendienteNotificacion(idNotificacionOferta);
             return result;
@@ -148,9 +195,11 @@ function FinalizarPendienteNotificacion(idNotificacion){
 
 module.exports ={
     obtenerNotificaciones,
+    cargarNotificacion,
     obtenerOfertaAceptadaServicio,
     crearNotificacionOfertaAceptada,
     obtenerNotificacionOfertaAceptada,
     crearNotificacionAceptadacionRechazada,
     crearNotificacionAceptadacionAceptada,
+
 }

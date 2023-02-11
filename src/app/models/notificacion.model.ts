@@ -16,7 +16,8 @@ export class Notificacion{
         public emailOrigen:string,
         public idAnuncio:string,
         public tituloAnuncio:string,
-        public pendiente:string
+        public pendiente:string,
+        public idPartenariado:string
     ){}
 
     get parsedDateCrear(){
