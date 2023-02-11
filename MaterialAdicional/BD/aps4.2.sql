@@ -37,6 +37,7 @@ CREATE TABLE `admin` (
 CREATE TABLE `aceptacionaceptada` (
   `idNotificacion` int(11) NOT NULL,
   `idPartenariado` int(11) NOT NULL,
+  `idNotificacionAceptada` int(11) NOT NULL,
   PRIMARY KEY (`idNotificacion`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -46,7 +47,8 @@ CREATE TABLE `notificaciones` (
   `leido` tinyint(1) NOT NULL DEFAULT 0,
   `titulo` varchar(200) NOT NULL,
   `mensaje` varchar(1200) NOT NULL,
-  `fecha_fin` date DEFAULT NULL,
+  `fecha_fin` date NOT NULL DEFAULT current_timestamp(),
+  `pendiente` tinyint(1) NOT NULL DEFAULT 1, 
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -55,7 +57,7 @@ CREATE TABLE `ofertaaceptada` (
   `idNotificacion` int(11) NOT NULL,
   `idOferta` int(11) NOT NULL,
   `idSocio` int(11) NOT NULL,
-  PRIMARY KEY (`idNotificacion`)
+  PRIMARY KEY (`idNotificacion`,`idOferta`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `aceptacionrechazado` (
@@ -64,6 +66,17 @@ CREATE TABLE `aceptacionrechazado` (
   PRIMARY KEY (`idNotificacion`, `idNotificacionOferta`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+CREATE TABLE `demandarespalda` (
+  `idNotificacion` int(11) NOT NULL,
+  `idPartenariado` int(11) NOT NULL,
+  PRIMARY KEY (`idNotificacion`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE `partenariadorellenado` (
+  `idNotificacion` int(11) NOT NULL,
+  `idPartenariado` int(11) NOT NULL,
+  PRIMARY KEY (`idNotificacion`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Estructura de tabla para la tabla `anuncio_servicio`
@@ -2934,7 +2947,8 @@ ALTER TABLE `aceptacionaceptada`
 -- Filtros para la tabla `ofertaaceptada`
 --
 ALTER TABLE `ofertaaceptada`
-  ADD CONSTRAINT `ofertaaceptada_ibfk_1` FOREIGN KEY (`idNotificacion`) REFERENCES `aceptacionrechazado` (`idNotificacion`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `ofertaaceptada_ibfk_1` FOREIGN KEY (`idNotificacion`) REFERENCES `notificaciones` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `ofertaaceptada_ibfk_2` FOREIGN KEY (`idOferta`) REFERENCES `oferta_servicio` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
   
 --
 -- Filtros para la tabla `notificaciones`
@@ -2948,6 +2962,20 @@ ALTER TABLE `notificaciones`
 ALTER TABLE `aceptacionrechazado`
   ADD CONSTRAINT `aceptacionrechazado_ibfk_1` FOREIGN KEY (`idNotificacion`) REFERENCES `notificaciones` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `aceptacionrechazado_ibfk_2` FOREIGN KEY (`idNotificacionOferta`) REFERENCES `ofertaaceptada` (`idNotificacion`) ON DELETE CASCADE ON UPDATE CASCADE;
+  
+--
+-- Filtros para la tabla `demandarespalda`
+--
+ALTER TABLE `demandarespalda`
+  ADD CONSTRAINT `demandarespalda_ibfk_1` FOREIGN KEY (`idNotificacion`) REFERENCES `notificaciones` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `demandarespalda_ibfk_2` FOREIGN KEY (`idPartenariado`) REFERENCES `partenariado` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  
+--
+-- Filtros para la tabla `partenariadorellenado`
+--
+ALTER TABLE `partenariadorellenado`
+  ADD CONSTRAINT `partenariadorellenado_ibfk_1` FOREIGN KEY (`idNotificacion`) REFERENCES `notificaciones` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `partenariadorellenado_ibfk_2` FOREIGN KEY (`idPartenariado`) REFERENCES `partenariado` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
   
 COMMIT;
 
