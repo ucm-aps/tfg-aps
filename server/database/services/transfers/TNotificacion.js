@@ -2,10 +2,26 @@ class TNotificacion{
     id;
     idDestino;
     leido;
-    constructor(id, idDestino, leido){
+    titulo;
+    mensaje;
+    fecha;
+    emailOrigen;
+    idAnuncio;
+    tituloAnuncio;
+    pendiente;
+    idPartenariado;
+    constructor(id, idDestino, leido, titulo, mensaje, fecha, emailOrigen, idAnuncio, tituloAnuncio, pendiente, idPartenariado){
         this.id=id;
         this.idDestino=idDestino;
         this.leido=leido;
+        this.titulo = titulo;
+        this.mensaje= mensaje;
+        this.fecha = fecha;
+        this.emailOrigen = emailOrigen;
+        this.idAnuncio = idAnuncio;
+        this.tituloAnuncio = tituloAnuncio;
+        this.pendiente = pendiente;
+        this.idPartenariado = idPartenariado;
     }
 
     getId(){

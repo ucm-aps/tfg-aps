@@ -2,9 +2,10 @@ import {Injectable} from '@angular/core';
 import {environment} from '../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {Notificacion} from '../models/notificacion.model';
-import {map} from 'rxjs/operators';
+import {map, skip} from 'rxjs/operators';
 import {UsuarioService} from './usuario.service';
 import {FileUploadService} from './file-upload.service';
+
 
 const base_url = environment.base_url;
 
@@ -20,15 +21,19 @@ export class NotificacionService {
             notificacion => new Notificacion(
                 notificacion.id,
                 notificacion.idDestino,
-                notificacion.idOrigen,
+                notificacion.leido,
                 notificacion.titulo,
-                notificacion.texto,
+                notificacion.mensaje,
                 notificacion.fechaCrear,
-
+                notificacion.emailOrigen,
+                notificacion.idAnuncio,
+                notificacion.tituloAnuncio,
+                notificacion.pendiente,
+                notificacion.idPartenariado
             )
         );
     }
-    cargarNotificion(skip: number, limit: number, filtros: Object, uid: string) {
+    cargarNotificaciones(skip: number, limit: number, filtros: Object, uid: string) {
         return this.http.get<{ total: Number, filtradas: Number, notificaciones: Notificacion[] }>(`${base_url}/notificaciones?skip=${skip}&limit=${limit}&filtros=${encodeURIComponent(JSON.stringify(filtros))}&idUser=${uid}`, this.usuarioService.headers)
             .pipe(
                 map(resp => {
@@ -36,5 +41,34 @@ export class NotificacionService {
                 })
             );
     }
+
+    cargarNotificacion(id:string){
+        return this.http.get<{ok: boolean, notificacion:Notificacion}>(`${base_url}/notificaciones/ver/${id}`, this.usuarioService.headers)
+        .pipe(
+            map((resp:{ok:boolean, notificacion: Notificacion}) =>resp.notificacion)
+
+        );
+    }
+
+    crearNotificacionOfertaAceptada(idOferta:string, uid:string){
+        return this.http.get<{ok: boolean, notificacion:Notificacion}>(`${base_url}/notificaciones/crearOfertaAceptada?idOferta=${idOferta}&idSocio=${uid}`, this.usuarioService.headers)
+        .pipe(
+            map((resp:{ok:boolean, notificacion:Notificacion}) => resp.ok)
+        );
+    }
+
+    rechazarSocio(idNotificacion){
+        return this.http.get<{ok: boolean}>(`${base_url}/notificaciones/respuesta/rechazar?idNotificacion=${idNotificacion}`,this.usuarioService.headers)
+        .pipe(
+            map((resp: {ok:boolean}) => resp.ok)
+        );
+    }
+    AceptarSocio(idNotificacion, idPartenariado){
+        return this.http.get<{ok: boolean}>(`${base_url}/notificaciones/respuesta/aceptar?idNotificacion=${idNotificacion}&idPartenariado=${idPartenariado}`,this.usuarioService.headers)
+        .pipe(
+            map((resp: {ok:boolean}) => resp.ok)
+        );
+    }
+
 
 }

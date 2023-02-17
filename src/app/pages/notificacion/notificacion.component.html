@@ -1,8 +1,47 @@
 <app-navbar></app-navbar>
-<div class="foto-nombre">
-    <img alt="user-image" aria-label="Image URL" class="rounded-circle" height="40" src="{{usuarioService.usuario.imagenUrl}}" width="40">
-    <span title="{{ usuarioService.usuario.additionalInfoPlain }}">{{ usuarioService.usuario.nombre }} {{
-        usuarioService.usuario.apellidos }}</span>
-    <span><strong>{{ usuarioService.usuario.displayRol }}</strong></span>
+
+<div class='container mt-4 animate__animated animate__fadeIn animate__faster'>
+
+    <h5 class='px-4 py-2 mb-4 text-white display-block bg-secondary d-flex justify-content-between align-items-center'>
+        <strong>Ver Notificacion</strong>
+    </h5>
+
+    <!-- Info de cargando -->
+    <div *ngIf='!notificacion' class='mb-0 alert alert-info text-center animate__animated animate__fadeIn animate__fast'
+         role='alert'>
+        <h4>Cargando notificacion...</h4>
+        <fa-icon [icon]="['fas', 'sync']" [spin]='true'></fa-icon>
+        <p class='mb-'>Por favor, espere</p>
+    </div>
+
+
+    <div *ngIf='notificacion' class='row'>
+
+        <div class='col-12'>
+
+            <header class='card-header mb-2 border d-flex justify-content-between align-items-center'>
+                <h6 class='title mb-0'><strong>Notificacion: {{ notificacion.titulo }}</strong></h6>
+            </header>
+
+            <div class='card my-2 p-3'>
+                <div class='d-flex justify-content-between'>
+                    <div><strong>Cuatrimestre:</strong> {{ 'hola' }}</div>
+                    <div><strong>Fecha:</strong> {{ notificacion.fechaCrear || "dd-MM-yyyy" }}</div>
+                </div>
+                <hr />
+                <p><strong>Enviado por: </strong> <a [routerLink]="['/ver-perfil/', notificacion.emailOrigen]">{{ notificacion.emailOrigen }}</a></p>
+                <p><strong>Mensaje: </strong> {{ notificacion.mensaje }}</p>
+                <p><strong>Anuncio: </strong> <a [routerLink]="['/ofertas/ver/', notificacion.idAnuncio]">{{ notificacion.tituloAnuncio }} </a></p>
+            </div>
+            <div style='display: flex; justify-content: space-evenly'>
+                <button [routerLink]="['/mi-resumen']" class='btn btn-info' style='width: 200px' type='button'>Volver
+                    al listado
+                </button>
+                <button (click)='AceptacionRechazada()'*ngIf="notificacion.pendiente && notificacion.idPartenariado == undefined" class="btn btn-info" style='width: 200px' type='button'>Rechazar al socio</button>
+                <button (click)='AceptacionAceptada()' *ngIf="notificacion.pendiente && notificacion.idPartenariado == undefined" class='btn btn-info' style='width: 200px' type='button'>Aceptar al socio</button>
+                <button (click)='CompletarPartenariado()' *ngIf="notificacion.pendiente && notificacion.idPartenariado != undefined" class='btn btn-info' style='width: 200px' type='button'>Completar Partenariado</button>
+            </div>
+        </div>
+    </div>
 </div>
 <app-footer></app-footer>

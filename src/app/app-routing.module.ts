@@ -67,6 +67,8 @@ import { CondicionesComponent } from './pages/condiciones/condiciones.component'
 import { Code404Component } from './errors/code404/code404.component';
 import { ResumenComponent } from './pages/resumen/resumen.component';
 
+//Perfil
+import {PerfilComponent } from './pages/perfil/perfil.component';
 
 const routes: Routes = [
 
@@ -192,8 +194,9 @@ const routes: Routes = [
             
             
             //Notificacion
-            { path: 'mi-notificacion', component: NotificacionComponent, data: { titulo: 'Notificacion'}},
-
+            { path: 'mi-notificacion/:id', component: NotificacionComponent, data: { titulo: 'Notificacion'}},
+            //Ver-Perfil
+            { path: 'ver-perfil/:email', component:PerfilComponent, data :{ titulo: 'Ver Perfil'}},
             // varios
             {
                 path: 'registro/condiciones-de-uso',

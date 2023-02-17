@@ -12,6 +12,8 @@ import { OfertaService } from '../../../../app/services/oferta.service';
 import { DemandaService } from '../../../../app/services/demanda.service';
 import { first } from 'rxjs/operators';
 import { Demanda } from '../../../../app/models/demanda.model';
+import { NotificacionService } from 'src/app/services/notificacion.service';
+import { Notificacion } from './../../../models/notificacion.model';
 
 @Component({
     selector: 'app-partenariado-crear-profesor',
@@ -28,12 +30,15 @@ export class PartenariadoCrearProfesorComponent implements OnInit {
     public partenariado: Partenariado;
     public oferta: Oferta;
     public demanda: Demanda;
+    public notificacion: Notificacion;
     public imagenSubir: File;
     public imagenPreview: any = null;
     public responsable_data: any;
     public crearPartenariadoProfesorForm: FormGroup;
 
-    constructor(public fb: FormBuilder, public demandaService: DemandaService, public ofertaService: OfertaService, public partenariadoService: PartenariadoService, public usuarioService: UsuarioService, public fileUploadService: FileUploadService, public router: Router, public activatedRoute: ActivatedRoute) {
+
+    constructor(public fb: FormBuilder, public demandaService: DemandaService, public ofertaService: OfertaService, public partenariadoService: PartenariadoService, public usuarioService: UsuarioService, public fileUploadService: FileUploadService, public router: Router, public activatedRoute: ActivatedRoute
+        ,public notificacionService : NotificacionService) {
     }
 
     dropdownSettings: any = {};
@@ -42,8 +47,49 @@ export class PartenariadoCrearProfesorComponent implements OnInit {
 
     async ngOnInit() {
         this.activatedRoute.params.subscribe(({ id }) => {
-            this.load(this.activatedRoute.snapshot.queryParams.demanda, this.activatedRoute.snapshot.queryParams.oferta);
+            if(this.activatedRoute.snapshot.queryParams.notificacion != undefined){
+                this.load_oferta(this.activatedRoute.snapshot.queryParams.notificacion)
+                
+            }
+            else{
+                this.load(101, this.activatedRoute.snapshot.queryParams.oferta);
+            }
         });
+    }
+
+    async load_oferta(notificacion: string){
+        await this.notificacionService.cargarNotificacion(notificacion).pipe(first()).toPromise().then((resp: any) =>{
+            this.notificacion = this.notificacionService.mapearNotificaciones([resp])[0];
+        });
+        await this.obtenerOferta(Number(this.notificacion.idAnuncio));
+
+        this.oferta.area_servicio = ['1'];
+
+        this.crearPartenariadoProfesorForm = this.fb.group({
+            anioAcademico: [this.oferta.anio_academico || '', Validators.required],
+            titulo: [this.oferta.titulo || '', Validators.required],
+            descripcion: [this.oferta.descripcion || '', Validators.required],
+            cuatrimestre: [this.oferta.cuatrimestre || '', Validators.required],
+            responsable: ['', Validators.required],
+            externos: [false],
+            id_oferta: [this.oferta.id || ''],
+            ofertaObservacionesTemporales: [this.oferta.observaciones, Validators.required],
+            asignaturaObjetivo: [this.oferta.asignatura_objetivo || 'Nada', Validators.required],
+            ofertaAreaServicio: [this.oferta.area_servicio, Validators.required],
+            profesores: [new FormControl(''), Validators.required],
+            fecha_limite: [this.oferta.fecha_limite, Validators.required],
+        });
+
+        this.dropdownSettings = {
+            singleSelection: false,
+            idField: 'id',
+            textField: 'nombreCompleto',
+            selectAllText: 'Select All',
+            unSelectAllText: 'UnSelect All',
+            itemsShowLimit: 10,
+            allowSearchFilter: true
+        };
+        
     }
 
     async load(demanda: number, oferta: number) {
@@ -60,28 +106,28 @@ export class PartenariadoCrearProfesorComponent implements OnInit {
             titulo: [this.demanda.titulo + ' | ' + this.oferta.titulo || '', Validators.required],
             descripcion: [this.demanda.descripcion + ' | ' + this.oferta.descripcion || '', Validators.required],
             socio: [this.demanda.creador || ''],
-            necesidadSocial: [this.demanda.necesidad_social],
-            finalidad: [this.demanda.objetivo],
-            comunidadBeneficiaria: [this.demanda.comunidadBeneficiaria],
+            necesidadSocial: [this.demanda.necesidad_social || ''],
+            finalidad: [this.demanda.objetivo || ''],
+            comunidadBeneficiaria: [this.demanda.comunidadBeneficiaria || ''],
             cuatrimestre: [this.oferta.cuatrimestre || '', Validators.required],
             responsable: ['', Validators.required],
-            ciudad: [this.demanda.ciudad],
+            ciudad: [this.demanda.ciudad || ''],
             externos: [false],
-            id_demanda: [this.demanda.id],
+            id_demanda: [this.demanda.id || ''],
             id_oferta: [this.oferta.id || ''],
             ofertaObservacionesTemporales: [this.oferta.observaciones, Validators.required],
-            demandaObservacionesTemporales: [this.demanda.observacionesTemporales],
-            asignaturaObjetivo: [this.oferta.asignatura_objetivo, Validators.required],
-            titulacionesLocales: [this.demanda.titulacion_local],
+            demandaObservacionesTemporales: [this.demanda.observacionesTemporales || ''],
+            asignaturaObjetivo: [this.oferta.asignatura_objetivo || 'Nada', Validators.required],
+            titulacionesLocales: [this.demanda.titulacion_local || ''],
             ofertaAreaServicio: [this.oferta.area_servicio, Validators.required],
-            demandaAreaServicio: [this.demanda.area_servicio],
-            periodo_definicion_fin: [this.demanda.periodoDefinicionFin],
-            periodo_definicion_ini: [this.demanda.periodoDefinicionIni],
-            periodo_ejecucion_fin: [this.demanda.periodoEjecucionFin],
-            periodo_ejecucion_ini: [this.demanda.periodoEjecucionIni],
+            demandaAreaServicio: [this.demanda.area_servicio || ''],
+            periodo_definicion_fin: [this.demanda.periodoDefinicionFin || ''],
+            periodo_definicion_ini: [this.demanda.periodoDefinicionIni || ''],
+            periodo_ejecucion_fin: [this.demanda.periodoEjecucionFin || ''],
+            periodo_ejecucion_ini: [this.demanda.periodoEjecucionIni || ''],
             profesores: [new FormControl(''), Validators.required],
             fecha_limite: [this.oferta.fecha_limite, Validators.required],
-            fecha_fin: [this.demanda.fechaFin]
+            fecha_fin: [this.demanda.fechaFin || '']
         });
 
         this.dropdownSettings = {
@@ -102,6 +148,7 @@ export class PartenariadoCrearProfesorComponent implements OnInit {
 
     async obtenerOferta(id: number) {
 
+
         await this.ofertaService.obtenerOferta(id).pipe(first()).toPromise().then((resp: any) => {
             let value = resp.oferta;
             let arrayP = [];
@@ -117,6 +164,7 @@ export class PartenariadoCrearProfesorComponent implements OnInit {
             this.oferta = new Oferta(value.id, value.titulo, value.descripcion, value.imagen, value.created_at, value.upload_at, value.cuatrimestre,
                 value.anio_academico, fecha_fin, value.observaciones_temporales, value.creador, value.area_servicio, value.asignatura_objetivo, value.profesores, value.tags)
             ;
+            console.log(this.oferta);
         });
     }
 
@@ -176,13 +224,15 @@ export class PartenariadoCrearProfesorComponent implements OnInit {
         this.observableEnviarPartenariado()
             .subscribe(resp => {
                 Swal.fire('Ok', 'Partenariado creado correctamente', 'success');
-
+                
                 this.router.routeReuseStrategy.shouldReuseRoute = () => false;
                 this.router.onSameUrlNavigation = 'reload';
                 this.router.navigate(['/']);
 
                 this.formSubmitted = false;
                 this.formSending = false;
+
+                
             }, err => {
                 console.log(err);
 

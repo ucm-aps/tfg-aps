@@ -43,7 +43,7 @@ export class PartenariadoService {
   }  
 
   crearPartenariadoProfesor(body: Object) {
-    return this.http.post<{ ok: boolean, parteneriado: Partenariado}>(`${ base_url }/partenariados/crearProfesor`, body, this.usuarioService.headers)
+    return this.http.post<{ ok: boolean, id: string}>(`${ base_url }/partenariados/crearProfesor`, body, this.usuarioService.headers)
                     .pipe(
                       map( (resp) => { return resp; } )
                     );

@@ -9,14 +9,19 @@ export class Notificacion{
     constructor(
         public id: string,
         public idDestino:string,
-        public idOrigen:string,
+        public leido: string,
         public titulo:string,
-        public texto:string,
-        public fechaCrear:string
+        public mensaje:string,
+        public fecha:string,
+        public emailOrigen:string,
+        public idAnuncio:string,
+        public tituloAnuncio:string,
+        public pendiente:string,
+        public idPartenariado:string
     ){}
 
     get parsedDateCrear(){
-        return moment(this.fechaCrear).format('DD-MM-YYYY');
+        return moment(this.fecha).format('DD-MM-YYYY');
     }
 
     

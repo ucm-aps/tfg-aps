@@ -4,7 +4,7 @@ const { Router } = require('express');
 const { check } = require('express-validator');
 const { validarCampos } = require('./../middlewares/validar-campos');
 const { obtenerProfesores} = require('../controllers/usuarios');
-const { getUsuarios, getUsuario, getUsuarioPath,crearUsuario, actualizarUsuario, borrarUsuario } = require('./../controllers/usuarios');
+const { getUsuarios, getUsuario, getUsuarioPath,crearUsuario, actualizarUsuario, borrarUsuario, getUsuarioPorEmail  } = require('./../controllers/usuarios');
 const { opcionalJWT, validarJWT, validarEsGestor } = require('../middlewares/validar-jwt');
 
 const router = Router();
@@ -32,6 +32,8 @@ router.get(
 router.get(
     '/avatar/:uid',  [validarJWT, validarEsGestor], getUsuarioPath
 );
+
+router.get('/email/:email', [], getUsuarioPorEmail );
 
 // crear usuario, cualquiera (registro) - para crear gestor se debe ser gestor
 router.post(

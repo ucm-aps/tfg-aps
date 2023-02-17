@@ -28,6 +28,7 @@ export class CheckboxNotificacionesComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.cargarNotificacion();
   }
 
   getFiltros(){
@@ -37,13 +38,17 @@ export class CheckboxNotificacionesComponent implements OnInit {
   }
   cargarNotificacion(): void {
     this.notificacionService
-    .cargarNotificion(this.offset, this.limit, this.getFiltros(), this.usuarioService.usuario.uid)
+    .cargarNotificaciones(this.offset, this.limit, this.getFiltros(), this.usuarioService.usuario.uid)
       .subscribe(({ total, filtradas, notificaciones }) => {
         this.totalNotificaciones = total.valueOf()
         this.totalNotificacionesBuscadas = filtradas.valueOf()
         this.notificaciones = notificaciones
         this.cargando = false
       })
+  }
+
+  DesactivarNotificacion(): void{
+    this.notificaciones = [];
   }
 
 }

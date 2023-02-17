@@ -1,8 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import {UsuarioService} from '../../services/usuario.service';
 import { Notificacion } from 'src/app/models/notificacion.model';
+import { Router, ActivatedRoute } from '@angular/router';
 import { NotificacionService } from 'src/app/services/notificacion.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import Swal from 'sweetalert2';
+
 
 @Component({
     selector: 'app-notificacion',
@@ -12,9 +14,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class NotificacionComponent implements OnInit{
 
 
-    public notificacion:Notificacion;
+    public notificacion: Notificacion;
 
-    constructor(public notificacionService:NotificacionService, public activatedRoute:ActivatedRoute, public router:Router, public usuarioService: UsuarioService) {
+    constructor(public notificacionService: NotificacionService, public activatedRoute: ActivatedRoute, public router: Router, public usuarioService: UsuarioService) {
     }
 
 
@@ -25,8 +27,45 @@ export class NotificacionComponent implements OnInit{
         });
     }
 
-    cargarNotificacion(id: string) {
-        throw new Error('Method not implemented.');
+    cargarNotificacion(id: string){
+        this.notificacionService.cargarNotificacion(id).subscribe((notificacion : Notificacion) =>{
+            if(!notificacion){
+                return this.router.navigateByUrl(`/mi-resumen`);
+            }
+            this.notificacion = this.notificacionService.mapearNotificaciones([notificacion])[0];
+        });
     }
+
+    AceptacionRechazada(){
+        this.notificacionService.rechazarSocio(this.notificacion.id).subscribe((ok: boolean)=>{
+            if(ok){
+                this.ngOnInit();
+            }
+        });
+        
+    }
+
+    AceptacionAceptada(){
+        Swal.fire(
+            'Atención',
+            'Antes de crear un partenariado debes completar los datos de oferta',
+            'warning'
+        );
+        this.notificacionService.AceptarSocio(this.notificacion.id, '35').subscribe((ok:boolean)=>{
+            if(ok){
+                this.ngOnInit();
+            }
+        });
+        //return this.router.navigate(['partenariados/profesor/crear'], { queryParams: { notificacion: this.notificacion.id } });
+
+    }
+
+    CompletarPartenariado(){
+        return this.router.navigate(['partenariados/profesor/crear'], { queryParams: { idPartenariado: this.notificacion.idPartenariado } });
+    }
+
+
+
+
     
 }
