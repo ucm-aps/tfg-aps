@@ -51,12 +51,7 @@ export class NotificacionComponent implements OnInit{
             'Antes de crear un partenariado debes completar los datos de oferta',
             'warning'
         );
-        this.notificacionService.AceptarSocio(this.notificacion.id, '35').subscribe((ok:boolean)=>{
-            if(ok){
-                this.ngOnInit();
-            }
-        });
-        //return this.router.navigate(['partenariados/profesor/crear'], { queryParams: { notificacion: this.notificacion.id } });
+        return this.router.navigate(['partenariados/profesor/crear'], { queryParams: { notificacion: this.notificacion.id } });
 
     }
 

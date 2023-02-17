@@ -14,7 +14,6 @@ router.post(
     [
         validarJWT,
         validarEsProfesor,
-        check('id_demanda', 'El id_demanda es un campo obligatorio').not().isEmpty(),
         check('titulo', 'El titulo es un campo obligatorio').not().isEmpty(),
         check('descripcion', 'La descripcion es un campo obligatorio').not().isEmpty(),
         // check('responsable', 'El responsable es un campo obligatorio').not().isEmpty(),
