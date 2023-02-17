@@ -1712,7 +1712,7 @@ CREATE TABLE `oficinaaps` (
 
 CREATE TABLE `partenariado` (
   `id` int(11) NOT NULL,
-  `id_demanda` int(11) NOT NULL,
+  `id_demanda` int(11),
   `id_oferta` int(11) NOT NULL,
   `estado` enum('EN_NEGOCIACION','ACORDADO','SUSPENDIDO','EN_CREACION') NOT NULL DEFAULT 'EN_CREACION'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
