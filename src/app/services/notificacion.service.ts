@@ -70,5 +70,11 @@ export class NotificacionService {
         );
     }
 
+    crearpartenariadoRellenado(idPartenariado: string) {
+        return this.http.get<{ok: boolean}>(`${base_url}/notificaciones/partenariadohecho?idPartenariado=${idPartenariado}`,this.usuarioService.headers)
+        .pipe(
+            map((resp: {ok:boolean}) => resp.ok)
+        );
+    }
 
 }

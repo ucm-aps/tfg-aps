@@ -49,6 +49,7 @@ function crearPartenariado(partenariado) {
         })
         .then(() => {
           console.log("Se ha creado un partenariado con id ", id);
+          return id;
         })
         .catch((err) => {
           console.log(err);
@@ -435,10 +436,9 @@ function actualizarColaboracion(colaboracion) {
           .where("id_colaboracion", colaboracion.getId())
           .del()
           .then(() => {
-            const fieldsToInsert = colaboracion
-              .getProfesores()
+            const fieldsToInsert = colaboracion.getProfesores()
               .map((profes) => ({
-                id_profesor: profes,
+                id_profesor: profes.id,
                 id_colaboracion: colaboracion.getId(),
               }));
             return knex("profesor_colaboracion")
@@ -475,6 +475,7 @@ function actualizarPartenariado(partenariado) {
                 "Se ha actualizado correctamente el partenariado con id ",
                 partenariado.getId()
               );
+              return true;
             })
             .catch((err) => {
               console.log(err);

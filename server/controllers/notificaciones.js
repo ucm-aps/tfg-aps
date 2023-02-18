@@ -116,7 +116,6 @@ const aceptarSocio = async(req, res = response) =>{
             null,
             1
         )
-        console.log(notificacion);
         let newNotificacion = await daoNotificacion.crearNotificacionAceptadacionAceptada(notificacion, req.query.idNotificacion, req.query.idPartenariado);
 
         return res.status(200).json({
@@ -131,10 +130,35 @@ const aceptarSocio = async(req, res = response) =>{
     }
 }
 
+const notificarPartenariadoCreado = async(rep, res) =>{
+    try {
+        let notificacion = new TNotificacion(
+            "",
+            "",
+            "",
+            "Partenariado creado",
+            "Ehnorabuena se ha creado el partenariado",
+            "",
+            "",
+            "",
+            "",
+            "",
+            req.query.idPartenariado
+        )
+        daoNotificacion.notificarPartenariadoRellenado(notificacion)
+
+        
+    } catch (error) {
+        
+    }
+}
+
 module.exports ={
     obtenerNotificaciones,
     obtenerNotificacion,
     crearNotificacionOfertaAceptada,
     rechazarSocio,
     aceptarSocio,
+    notificarPartenariadoCreado,
+
 }

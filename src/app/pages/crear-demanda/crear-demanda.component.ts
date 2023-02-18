@@ -225,10 +225,9 @@ export class crearDemandaComponent implements OnInit {
                 ? Swal.fire('Ok', 'Demanda actualizada correctamente', 'success')
                 : Swal.fire('Ok', 'Demanda creada correctamente', 'success');
 
-            if (this.activatedRoute.snapshot.queryParams.oferta_id !== undefined) {
-                this.notificacionService.crearNotificacionOfertaAceptada(this.activatedRoute.snapshot.queryParams.oferta_id, this.usuarioService.usuario.uid).subscribe(res =>{
-                });
-                this.router.navigate(['/partenariados/profesor/crear'], { queryParams: { oferta: this.activatedRoute.snapshot.queryParams.oferta_id, demanda: resp.demanda.id } });
+            console.log(this.activatedRoute.snapshot.queryParams.idOferta);
+            if (this.activatedRoute.snapshot.queryParams.idOferta != undefined) {
+                this.router.navigate(['/partenariados/profesor/crear'], { queryParams: { oferta: this.activatedRoute.snapshot.queryParams.idOferta, demanda: resp.demanda.id, Partenariado: this.activatedRoute.snapshot.queryParams.idPartenariado} });
                 return;
             }
 
