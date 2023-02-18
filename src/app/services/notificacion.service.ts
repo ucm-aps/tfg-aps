@@ -24,7 +24,7 @@ export class NotificacionService {
                 notificacion.leido,
                 notificacion.titulo,
                 notificacion.mensaje,
-                notificacion.fechaCrear,
+                notificacion.fecha_fin,
                 notificacion.emailOrigen,
                 notificacion.idAnuncio,
                 notificacion.tituloAnuncio,
