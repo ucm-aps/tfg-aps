@@ -3,7 +3,7 @@
 
     <h5 class="px-4 py-2 mb-4 text-white display-block bg-secondary d-flex justify-content-between align-items-center">
         <strong>Ver Partenariado</strong>
-        <a [routerLink]="['/mis-partenariados']" class="btn btn-primary border-white btn-sm" role="button">Volver a Mis Partenariados</a>
+        
     </h5>
 
     <div *ngIf="partenariado?.proponedor.rol === 'ROL_SOCIO_COMUNITARIO' && this.usuarioService.usuario && this.usuarioService.usuario.esSocioComunitario" class="alert alert-warning" role="alert">

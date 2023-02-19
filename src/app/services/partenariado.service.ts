@@ -49,12 +49,12 @@ export class PartenariadoService {
                     );
   }
 
- /*  cargarPartenariado(id: string) {
+   cargarPartenariado(id: string) {
     return this.http.get<{ ok: boolean, partenariado: Partenariado}>(`${ base_url }/partenariados/${ id }`, this.usuarioService.headers)
                     .pipe(
                       map( (resp: {ok: boolean, partenariado: Partenariado}) => this.mapearPartenariados([resp.partenariado])[0] )
                     );
-  } */
+  } 
 
   cargarPartenariados(skip: number, limit: number, filtros: Object) {
     return this.http.get<{ total: Number, filtradas: Number, partenariados: Partenariado[]}>(`${ base_url }/partenariados?skip=${ skip }&limit=${ limit }&filtros=${ encodeURIComponent( JSON.stringify(filtros)) }`, this.usuarioService.headers)

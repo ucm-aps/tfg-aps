@@ -174,15 +174,17 @@
         <div class="col-9">
 
             <header class="card-header mb-2 rounded border d-flex justify-content-between">
-                <h6 class="title mb-0">Listado de Demandas <span *ngIf="totalDemandasBuscadas != totalDemandas" class="leading-none"><small class="font-weight-bold">(total: {{ totalDemandas }})</small></span></h6>
-
-                <span
-                    *ngIf="totalDemandasBuscadas != totalDemandas"
-                    class="leading-none">
-                    <small class="font-weight-bold">
-                        (total: {{totalDemandas}})
-                    </small>
-                </span>
+                <h6 class="title mb-0">
+                    Listado de Demandas
+                    <span
+                        *ngIf="totalDemandasBuscadas != totalDemandas"
+                        class="leading-none"
+                    >
+                        <small class="font-weight-bold"
+                            >(total: {{ totalDemandas }})</small
+                        >
+                    </span>
+                </h6>
                 <span
                     *ngIf="totalDemandasBuscadas == totalDemandas"
                     class="leading-none">
@@ -193,7 +195,8 @@
                     class="leading-none"
                 > Demandas que coinciden con el filtro:
                     {{ totalDemandasBuscadas }} (mostrando del
-                    {{ firstPageRecord }} al {{lastPageRecord }}) </span>
+                    {{ firstPageRecord }} al {{lastPageRecord }}) 
+                </span>
             </header>
 
 
