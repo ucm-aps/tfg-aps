@@ -12,7 +12,7 @@ export class Notificacion{
         public leido: string,
         public titulo:string,
         public mensaje:string,
-        public fecha:string,
+        public fecha_fin:string,
         public emailOrigen:string,
         public idAnuncio:string,
         public tituloAnuncio:string,
@@ -21,7 +21,7 @@ export class Notificacion{
     ){}
 
     get parsedDateCrear(){
-        return moment(this.fecha).format('DD-MM-YYYY');
+        return moment(this.fecha_fin).format('DD-MM-YYYY');
     }
 
     
