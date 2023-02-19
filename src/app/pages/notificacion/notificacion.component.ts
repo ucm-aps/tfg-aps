@@ -3,7 +3,9 @@ import {UsuarioService} from '../../services/usuario.service';
 import { Notificacion } from 'src/app/models/notificacion.model';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NotificacionService } from 'src/app/services/notificacion.service';
+import { PartenariadoService } from 'src/app/services/partenariado.service';
 import Swal from 'sweetalert2';
+import { Partenariado } from 'src/app/models/partenariado.model';
 
 
 @Component({
@@ -16,7 +18,7 @@ export class NotificacionComponent implements OnInit{
 
     public notificacion: Notificacion;
 
-    constructor(public notificacionService: NotificacionService, public activatedRoute: ActivatedRoute, public router: Router, public usuarioService: UsuarioService) {
+    constructor(public notificacionService: NotificacionService, public activatedRoute: ActivatedRoute, public router: Router, public usuarioService: UsuarioService, public PartenariadoService: PartenariadoService) {
     }
 
 
@@ -33,6 +35,16 @@ export class NotificacionComponent implements OnInit{
                 return this.router.navigateByUrl(`/mi-resumen`);
             }
             this.notificacion = this.notificacionService.mapearNotificaciones([notificacion])[0];
+            
+            if(this.notificacion.idPartenariado != null){
+                this.PartenariadoService.cargarPartenariado(this.notificacion.idPartenariado).subscribe((partenariado: Partenariado)=>{
+                    if(!partenariado){
+                        return this.router.navigateByUrl(`/mi-resumen`);
+                    }
+                    this.notificacion.mensaje +=' ' + partenariado.titulo;
+
+                })
+            }
         });
     }
 
@@ -58,6 +70,7 @@ export class NotificacionComponent implements OnInit{
     CompletarPartenariado(){
         return this.router.navigate(['demandas/crear'], { queryParams: { idPartenariado: this.notificacion.idPartenariado, idOferta: this.notificacion.idAnuncio } });
     }
+
 
 
 

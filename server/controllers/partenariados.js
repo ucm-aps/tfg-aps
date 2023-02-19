@@ -341,9 +341,10 @@ const actualizarPartenariado = async (req, res) =>{
         partenariado.admite_externos = data.externos;
         partenariado.profesores = data.profesores;
 
-        return dao_colaboracion.actualizarPartenariado(partenariado);
-        
-
+        await dao_colaboracion.actualizarPartenariado(partenariado);
+        return res.status(200).json({
+            ok: true
+        });
         
     } catch (error) {
         console.error(error);

@@ -299,7 +299,9 @@ export class PartenariadoCrearProfesorComponent implements OnInit {
     actualizarPartenariado() {
         this.partenariadoService.actualizarPartenariado(this.crearPartenariadoProfesorForm.value, this.partenariado._id).subscribe(async resp => {
             if(resp){
-                this.notificacionService.crearpartenariadoRellenado(this.partenariado._id);
+                this.notificacionService.crearpartenariadoRellenado(this.partenariado._id).subscribe(async ok =>{
+
+                });
                 Swal.fire('Ok', 'Partenariado actualizado correctamente', 'success');
                 this.router.routeReuseStrategy.shouldReuseRoute = () => false;
                 this.router.onSameUrlNavigation = 'reload';

@@ -21,6 +21,10 @@ export class PartenariadoVerGuard implements CanActivate {
         return false;
       }
 
+      if (this.usuarioService.usuario.esProfesor || this.usuarioService.usuario.esSocioComunitario){
+        return true;
+      }
+
       if(    ! this.usuarioService.usuario.esGestor
           && ! this.usuarioService.usuario.esProfesor
           && ! this.usuarioService.usuario.esSocioComunitario
