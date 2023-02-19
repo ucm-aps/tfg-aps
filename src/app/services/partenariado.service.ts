@@ -65,7 +65,7 @@ export class PartenariadoService {
 >>>>>>> Stashed changes
     return this.http.get<{ ok: boolean, partenariado: Partenariado}>(`${ base_url }/partenariados/${ id }`, this.usuarioService.headers)
                     .pipe(
-                      map( (resp: {ok: boolean, partenariado: Partenariado}) => this.mapearPartenariados([resp.partenariado])[0] )
+                      map( (resp: {ok: boolean, partenariado: Partenariado}) => {return this.mapearPartenariados([resp.partenariado])[0];} )
                     );
   } 
 
