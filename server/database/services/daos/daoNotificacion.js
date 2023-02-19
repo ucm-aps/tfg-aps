@@ -3,6 +3,7 @@ const knex = require("../../config");
 
 const daoUsuario = require("./daoUsuario");
 const daoOferta = require("./daoOferta");
+const daoColaboracion = require("./daoColaboracion")
 const transferNotificacion = require('../transfers/TNotificacion');
 const { ConsoleReporter } = require("jasmine");
 const { not } = require("@angular/compiler/src/output/output_ast");
@@ -227,6 +228,13 @@ function FinalizarPendienteNotificacion(idNotificacion){
         console.log(err)
         console.log("Se ha producido un error al intenta finalizar una notificacion");
     })
+}
+
+function notificarPartenariadoRellenado(notificacion){
+    let partenariado = daoColaboracion.obtenerPartenariado(notificacion.idPartenariado);
+    console.log(partenariado);
+    let oferta = daoOferta.obtenerOfertaServicio(partenariado.id)
+
 }
 
 module.exports ={

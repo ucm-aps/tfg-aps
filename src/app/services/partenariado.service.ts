@@ -21,7 +21,7 @@ export class PartenariadoService {
   
         return new Partenariado( 
           '',
-          partenariado._id,
+          partenariado.id,
           partenariado.estado,
           partenariado.titulo,
           partenariado.descripcion,
@@ -37,6 +37,7 @@ export class PartenariadoService {
           partenariado.createdAt,
           partenariado.id_demanda,
           partenariado.id_oferta,
+          partenariado.responsable,
 
         );
     });

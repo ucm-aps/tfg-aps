@@ -15,5 +15,7 @@ router.get('/respuesta/aceptar',[], aceptarSocio);
 
 router.get('/respuesta/rechazar',[], rechazarSocio);
 
+router.get('/partenariadohecho',[], );
+
 
 module.exports = router;

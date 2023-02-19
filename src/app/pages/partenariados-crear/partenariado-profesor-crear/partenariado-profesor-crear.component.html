@@ -55,7 +55,7 @@
                             <div>
                                 <div class='form-group'>
                                     <label for='responsable'>Responsable del partenariado</label>
-                                    <input name='responsable' type='text' id='responsable' list='selProfesores' formControlName='responsable' class='form-control' [class.is-invalid]="crearPartenariadoProfesorForm.get('responsable').invalid && crearPartenariadoProfesorForm.get('responsable').touched" placeholder='Elija un responsable'>
+                                    <input name='responsable' type='text' id='responsable' list='selProfesores' formControlName='responsable' class='form-control' [class.is-invalid]="crearPartenariadoProfesorForm.get('responsable').invalid && crearPartenariadoProfesorForm.get('responsable').touched" placeholder='Elija un responsable' [readonly] = 'writeProfesor'>
                                     <datalist id='selProfesores'>
                                         <option *ngFor='let c of selProfesores' [value]='c.nombreCompleto'></option>
                                     </datalist>
@@ -162,6 +162,177 @@
                                     </div>
                                 </div>
                             </div>
+                        </fieldset>
+                        <fieldset *ngIf="demanda != undefined" class='p-4 mb-2'>
+                            <legend class='mb-0 px-2'><strong>Información demanda</strong></legend>
+
+                            <div>
+                                <div class='row'>
+                                    <div class='col'>
+                                        <div class='form-group'>
+                                            <label for='socio'>Socio comunitario</label>
+                                            <input type='text' class='form-control' id='socio'
+                                                   formControlName='socio' readonly>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class='row'>
+                                    <div class='col'>
+                                        <div class='form-group'>
+                                            <label for='demandaObservacionesTemporales'>Requisito especial en cuanto a las fechas de la demanda.</label>
+                                            <input type='text' class='form-control' id='demandaObservacionesTemporales'
+                                                   formControlName='demandaObservacionesTemporales' readonly>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class='row'>
+                                    <div class='col'>
+                                        <div class='form-group'>
+                                            <input type='text' class='form-control' id='id_demanda'
+                                                   formControlName='id_demanda' hidden>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class='row'>
+                                    <div class='col'>
+                                        <div class='form-group'>
+                                            <label for='ciudad'>Localización/es donde se va/n a realizar el servicio</label>
+                                            <input name='ciudad' type='text' id='ciudad' class='form-control'
+                                                   autocorrect='off' autocapitalize='none' spellcheck='false'
+                                                   formControlName='ciudad' readonly>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class='row'>
+                                    <div class='col'>
+                                        <div class='form-group'>
+                                            <label for='necesidadSocial'>Necesidad social</label>
+                                            <input name='necesidadSocial' type='text' id='necesidadSocial' readonly
+                                                   class='form-control' autocorrect='off' autocapitalize='none'
+                                                   spellcheck='false' formControlName='necesidadSocial'>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class='row'>
+                                    <div class='col'>
+                                        <div class='form-group'>
+                                            <label for='finalidad'>Objetivo que va a cumplir la demanda</label>
+                                            <input name='finalidad' type='text' id='finalidad' readonly
+                                                   class='form-control' autocorrect='off' autocapitalize='none'
+                                                   spellcheck='false' formControlName='finalidad'>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class='row'>
+                                    <div class='col'>
+                                        <div class='form-group'>
+                                            <label for='comunidadBeneficiaria'>Comunidad beneficiaria</label>
+                                            <input name='comunidadBeneficiaria' type='text' readonly
+                                                   id='comunidadBeneficiaria' class='form-control' autocorrect='off'
+                                                   autocapitalize='none' spellcheck='false'
+                                                   formControlName='comunidadBeneficiaria'>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class='row'>
+                                    <div class='col'>
+                                        <div class='form-group'>
+                                            <label for='demandaAreaServicio'>Area de implementación</label>
+                                            <input name='demandaAreaServicio' readonly type='text'
+                                                   id='demandaAreaServicio' class='form-control' autocorrect='off'
+                                                   autocapitalize='none' spellcheck='false'
+                                                   formControlName='demandaAreaServicio'>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class='row'>
+                                    <div class='col'>
+                                        <div class='form-group'>
+                                            <label for='titulacionesLocales'>Titulaciones locales</label>
+                                            <input name='titulacionesLocales' readonly type='text'
+                                                   id='titulacionesLocales' class='form-control' autocorrect='off'
+                                                   autocapitalize='none' spellcheck='false'
+                                                   formControlName='titulacionesLocales'>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class='row'>
+                                    <div class='col'>
+                                        <div class='form-group'>
+                                            <label for='periodo_definicion_ini'>Comienzo del periodo de disponibilidad para trabajar en la definición
+                                                de un proyecto ApS</label>
+                                            <input name='periodo_definicion_ini' type='date' readonly
+                                                   id='periodo_definicion_ini' class='form-control' autocorrect='off'
+                                                   autocapitalize='none' spellcheck='false'
+                                                   formControlName='periodo_definicion_ini'>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class='row'>
+                                    <div class='col'>
+                                        <div class='form-group'>
+                                            <label for='periodo_definicion_fin'>Fin del periodo de disponibilidad para trabajar en la definición
+                                                de un proyecto ApS</label>
+                                            <input name='periodo_definicion_fin' type='date' readonly
+                                                   id='periodo_definicion_fin' class='form-control' autocorrect='off'
+                                                   autocapitalize='none' spellcheck='false'
+                                                   formControlName='periodo_definicion_fin'>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class='row'>
+                                    <div class='col'>
+                                        <div class='form-group'>
+                                            <label for='periodo_ejecucion_ini'>Comienzo del periodo de disponibilidad para trabajar en la realización
+                                                de un proyecto ApS</label>
+                                            <input name='periodo_ejecucion_ini' type='date' readonly
+                                                   id='periodo_ejecucion_ini' class='form-control' autocorrect='off'
+                                                   autocapitalize='none' spellcheck='false'
+                                                   formControlName='periodo_ejecucion_ini'>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class='row'>
+                                    <div class='col'>
+                                        <div class='form-group'>
+                                            <label for='periodo_ejecucion_fin'>Fin del periodo de disponibilidad para trabajar en la realización
+                                                de un proyecto ApS</label>
+                                            <input name='periodo_ejecucion_fin' type='date' readonly
+                                                   id='periodo_ejecucion_fin' class='form-control' autocorrect='off'
+                                                   autocapitalize='none' spellcheck='false'
+                                                   formControlName='periodo_ejecucion_fin'>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class='row'>
+                                    <div class='col'>
+                                        <div class='form-group'>
+                                            <label for='fecha_fin'>Fecha límite para el fin de la realización del proyecto ApS</label>
+                                            <input name='fecha_fin' type='date' readonly id='fecha_fin'
+                                                   class='form-control' autocorrect='off' autocapitalize='none'
+                                                   spellcheck='false' formControlName='fecha_fin'>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+
                         </fieldset>
 
 

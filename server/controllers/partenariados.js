@@ -61,6 +61,7 @@ const crearPartenariadoProfesor = async (req, res = response) => {
             'EN_CREACION'
         );
         let id = await dao_colaboracion.crearPartenariado(partenariado);
+        console.log(id);
 
         return res.status(200).json({
             ok: true,
@@ -184,6 +185,7 @@ const getPartenariados = async (req, res) => {
 const getPartenariado = async (req, res) => {
     try {
         const partenariado = await dao_colaboracion.obtenerPartenariado(req.params.id);
+        console.log(partenariado);
         return res.status(200).json({
             ok: true,
             partenariado
@@ -328,11 +330,37 @@ const enviarMensajePartenariado = async (req, res) => {
     }
 };
 
+
+const actualizarPartenariado = async (req, res) =>{
+    try {
+        let partenariado = await dao_colaboracion.obtenerPartenariado(req.params.id);
+        let data = req.body;
+        partenariado.id_demanda = data.id_demanda;
+        partenariado.titulo = data.titulo;
+        partenariado.descripcion = data.descripcion;
+        partenariado.admite_externos = data.externos;
+        partenariado.profesores = data.profesores;
+
+        return dao_colaboracion.actualizarPartenariado(partenariado);
+        
+
+        
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            ok: false,
+            msg: UNEXPECTED_ERROR
+        });
+        
+    }
+}
+
 module.exports = {
     getPartenariados,
     getPartenariado,
     cambiarEstadoPartenariado,
     enviarMensajePartenariado,
     crearPartenariadoProfesor,
-    crearPartenariadoSocioComunitario
+    crearPartenariadoSocioComunitario,
+    actualizarPartenariado
 };

@@ -3,7 +3,7 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
 const { validarCampos } = require('./../middlewares/validar-campos');
-const { crearPartenariadoProfesor, crearPartenariadoSocioComunitario, getPartenariados, getPartenariado } = require('../controllers/partenariados');
+const { crearPartenariadoProfesor, crearPartenariadoSocioComunitario, getPartenariados, getPartenariado, actualizarPartenariado } = require('../controllers/partenariados');
 const { validarJWT, validarEsProfesor, validarEsSocioComunitario } = require('../middlewares/validar-jwt');
 
 const router = Router();
@@ -13,7 +13,7 @@ router.post(
     '/crearProfesor',
     [
         validarJWT,
-        validarEsProfesor,
+        //validarEsProfesor,
         check('titulo', 'El titulo es un campo obligatorio').not().isEmpty(),
         check('descripcion', 'La descripcion es un campo obligatorio').not().isEmpty(),
         // check('responsable', 'El responsable es un campo obligatorio').not().isEmpty(),
@@ -39,6 +39,18 @@ router.post(
     ],
     crearPartenariadoSocioComunitario
 );
+
+router.post(
+    '/actualizar/:id',
+    [
+        validarJWT,
+        check('titulo', 'El titulo es un campo obligatorio').not().isEmpty(),
+        check('titulo', 'El titulo es un campo obligatorio').not().isEmpty(),
+        check('descripcion', 'La descripcion es un campo obligatorio').not().isEmpty(),
+        validarCampos
+    ],
+    actualizarPartenariado
+)
 // listar partenariados
 router.get('/', [],
     getPartenariados);
