@@ -475,6 +475,7 @@ function actualizarPartenariado(partenariado) {
                 "Se ha actualizado correctamente el partenariado con id ",
                 partenariado.getId()
               );
+              return true;
             })
             .catch((err) => {
               console.log(err);

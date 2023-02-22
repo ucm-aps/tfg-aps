@@ -237,7 +237,7 @@ function obtenerDemandaServicio(id_demanda) {
                                             anuncio.getImagen(),
                                             anuncio.getCreated_at(),
                                             anuncio.getUpdated_at(),
-                                            socio,
+                                            socio.getNombre() + ' ' + socio.getApellidos(),
                                             demanda[0]['ciudad'],
                                             demanda[0]['finalidad'],
                                             demanda[0]['periodo_definicion_ini'],

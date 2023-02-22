@@ -1,10 +1,8 @@
 const knex = require("../../config");
 
 
-
 const daoUsuario = require("./daoUsuario");
 const daoOferta = require("./daoOferta");
-const daoDemanda = require("./daoDemanda");
 const daoColaboracion = require("./daoColaboracion")
 const transferNotificacion = require('../transfers/TNotificacion');
 const { ConsoleReporter } = require("jasmine");
@@ -37,13 +35,9 @@ function cargarNotificacion(idNotificacion){
     return obtenerOfertaAceptadaServicio(idNotificacion).then(result =>{
         if(result == undefined){
             return obtenerNotificacionAceptacionAceptada(idNotificacion).then(result =>{
-                if(result == undefined){
-                    return obtenerNotificacionAceptacionRechazada(idNotificacion).then(result =>{
-                        if(result == undefined){
-                            return obtenerNotificacionPartenariadoHecho(idNotificacion);
-                        }
-                    });
-                }
+                return obtenerNotificacionAceptacionRechazada(idNotificacion).then(result =>{
+                    return result;
+                });
                 return result;
             });
         }
@@ -87,7 +81,7 @@ function obtenerNotificacionAceptacionAceptada(idNotificacion){
     .join('ofertaaceptada', 'aceptacionaceptada.idNotificacionAceptada', '=', 'ofertaaceptada.idNotificacion')
     .where({'aceptacionaceptada.idNotificacion': idNotificacion})
     .select('*').then((resultado) => {
-        if(resultado.length == 0) return;
+        console.log(resultado);
         return daoOferta.obtenerAnuncioServicio(resultado[0].idOferta).then(Anuncio =>{
             return daoUsuario.obtenerUsuarioSinRolPorId(resultado[0].idSocio)
             .then(Origen =>{
@@ -120,7 +114,7 @@ function obtenerNotificacionAceptacionRechazada(idNotificacion){
     .join('ofertaaceptada', 'aceptacionrechazado.idNotificacionOferta', '=', 'ofertaaceptada.idNotificacion')
     .where({'aceptacionrechazado.idNotificacion': idNotificacion})
     .select('*').then((resultado) => {
-        if(resultado.length == 0) return;
+        console.log(resultado);
         return daoOferta.obtenerAnuncioServicio(resultado[0].idOferta).then(Anuncio =>{
             return daoUsuario.obtenerUsuarioSinRolPorId(resultado[0].idSocio)
             .then(Origen =>{
@@ -148,39 +142,13 @@ function obtenerNotificacionAceptacionRechazada(idNotificacion){
     })
 }
 
-
-function obtenerNotificacionPartenariadoHecho(idnotificacion){
-    return knex('notificaciones').join("partenariadorellenado", "notificaciones.id","=", "partenariadorellenado.idNotificacion")
-    .where({idNotificacion: idnotificacion})
-    .select('*').then(resultado =>{
-        if(resultado.length == 0) return;
-        console.log(resultado);
-        return new transferNotificacion(
-            resultado[0].id,
-            resultado[0].idDestino,
-            resultado[0].leido,
-            resultado[0].titulo,
-            resultado[0].mensaje,
-            resultado[0].fecha_fin,
-            null,
-            null,
-            null,
-            resultado[0].pendiente,
-            resultado[0].idPartenariado
-        );
-    })
-    .catch(err =>{
-        console.log(err)
-        console.log("Se ha producido un error al intenta obtener notificacion de partenariadorellenado");
-    })
-}
-
 function crearNotificacion(notificacion){
     return knex('notificaciones')
         .insert({
             idDestino: notificacion.idDestino,
             titulo:notificacion.titulo,
             mensaje:notificacion.mensaje,
+            fecha_fin: '2023-01-28',
             pendiente: notificacion.pendiente
         }).then(idNotificacion => {
             return idNotificacion;
@@ -215,15 +183,6 @@ function obtenerNotificacionOfertaAceptada(idnotificacion){
         console.log("Se ha producido un error al intenta obtener notificacion de ofertaAceptada");
     })
 }
-
-function obtenerNotificacionAceptacionAceptadaPorIdPartenariado(idPartenariado){
-    return knex('aceptacionaceptada').select('*')
-    .where({idPartenariado:idPartenariado}).catch(err =>{
-        console.log(err)
-        console.log("Se ha producido un error al intenta obtener notificacion de aceptacionaceptada por idPartenariado");
-    });
-}
-
 
 
 function crearNotificacionAceptadacionRechazada(notificacion, idNotificacionOferta){
@@ -260,17 +219,6 @@ function crearNotificacionAceptadacionAceptada(notificacion, idNotificacionOfert
 
 }
 
-function crearNotificacionPartenariadoHecho(notificacion){
-    return crearNotificacion(notificacion).then(idNotificacion =>{
-        return knex('partenariadorellenado').insert({
-            idNotificacion: idNotificacion,
-            idPartenariado: notificacion.idPartenariado
-        }).then(result => {
-            //Suponiendo que No importa por que ruta va creando un partenariado para cada notificacion 
-            return result;
-        });
-    })
-}
 function FinalizarPendienteNotificacion(idNotificacion){
     return knex('notificaciones').where({
         id:idNotificacion
@@ -283,30 +231,9 @@ function FinalizarPendienteNotificacion(idNotificacion){
 }
 
 function notificarPartenariadoRellenado(notificacion){
-    return daoColaboracion.obtenerPartenariado(notificacion.idPartenariado).then(partenariado =>{
-        return daoOferta.obtenerOfertaServicio(partenariado.id_oferta).then(oferta =>{
-            notificacion.idDestino = oferta.creador.id;
-            return crearNotificacionPartenariadoHecho(notificacion).then((idNotificacion)=>{
-                return daoDemanda.obtenerDemandaServicio(partenariado.id_demanda).then(demanda =>{
-                    notificacion.idDestino = demanda.creador.id;
-                    return crearNotificacionPartenariadoHecho(notificacion).then(idNotificacion =>{
-                        //Suponiendo que No importa por que ruta va creando un partenariado para cada notificacion 
-                        return obtenerNotificacionAceptacionAceptadaPorIdPartenariado(notificacion.idPartenariado).then(notificacionFinalizado=>{
-                            console.log(notificacionFinalizado);
-                            return FinalizarPendienteNotificacion(notificacionFinalizado[0].idNotificacion);
-                        });
-
-                    });
-                });
-            });
-
-
-        });
-    })
-    .catch(err=>{
-        console.log(err)
-        console.log("Se ha producido un error al intenta notificar una notificacion de partenariadoRellenado");
-    })
+    let partenariado = daoColaboracion.obtenerPartenariado(notificacion.idPartenariado);
+    console.log(partenariado);
+    let oferta = daoOferta.obtenerOfertaServicio(partenariado.id)
 
 }
 
@@ -318,6 +245,5 @@ module.exports ={
     obtenerNotificacionOfertaAceptada,
     crearNotificacionAceptadacionRechazada,
     crearNotificacionAceptadacionAceptada,
-    notificarPartenariadoRellenado,
 
 }

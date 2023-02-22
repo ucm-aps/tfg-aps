@@ -50,7 +50,7 @@ router.post(
         validarCampos
     ],
     actualizarPartenariado
-);
+)
 // listar partenariados
 router.get('/', [],
     getPartenariados);
