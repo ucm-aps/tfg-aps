@@ -42,6 +42,7 @@ function cargarNotificacion(idNotificacion){
                         if(result == undefined){
                             return obtenerNotificacionPartenariadoHecho(idNotificacion);
                         }
+                        return result;
                     });
                 }
                 return result;
