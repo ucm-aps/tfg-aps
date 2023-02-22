@@ -130,25 +130,30 @@ const aceptarSocio = async(req, res = response) =>{
     }
 }
 
-const notificarPartenariadoCreado = async(rep, res) =>{
+const notificarPartenariadoCreado = async(req, res) =>{
     try {
         let notificacion = new TNotificacion(
             "",
             "",
             "",
             "Partenariado creado",
-            "Ehnorabuena se ha creado el partenariado",
+            "Enhorabuena se ha creado el partenariado",
             "",
             "",
             "",
             "",
-            "",
+            0,
             req.query.idPartenariado
         )
-        daoNotificacion.notificarPartenariadoRellenado(notificacion)
+        daoNotificacion.notificarPartenariadoRellenado(notificacion);
 
         
     } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            ok:false,
+            msg:'Error inesperado(al intentar crear notificacionPartenariadoCreado)'
+        });
         
     }
 }

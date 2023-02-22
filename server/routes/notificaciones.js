@@ -1,6 +1,6 @@
 
 const {Router} = require('express');
-const {obtenerNotificaciones, obtenerNotificacion, crearNotificacionOfertaAceptada, rechazarSocio, aceptarSocio} = require('../controllers/notificaciones');
+const {obtenerNotificaciones, obtenerNotificacion, crearNotificacionOfertaAceptada, rechazarSocio, aceptarSocio, notificarPartenariadoCreado} = require('../controllers/notificaciones');
 
 const router = Router();
 
@@ -15,7 +15,7 @@ router.get('/respuesta/aceptar',[], aceptarSocio);
 
 router.get('/respuesta/rechazar',[], rechazarSocio);
 
-router.get('/partenariadohecho',[], );
+router.get('/partenariadohecho',[], notificarPartenariadoCreado);
 
 
 module.exports = router;

@@ -29,9 +29,9 @@
                     <div><strong>Fecha:</strong> {{ notificacion.fecha_fin | date:"dd-MM-yyyy" }}</div>
                 </div>
                 <hr />
-                <p><strong>Enviado por: </strong> <a [routerLink]="['/ver-perfil/', notificacion.emailOrigen]">{{ notificacion.emailOrigen }}</a></p>
+                <p *ngIf="notificacion.emailOrigen != null"><strong>Enviado por: </strong> <a [routerLink]="['/ver-perfil/', notificacion.emailOrigen]">{{ notificacion.emailOrigen }}</a></p>
                 <p><strong>Mensaje: </strong> {{ notificacion.mensaje }}</p>
-                <p><strong>Anuncio: </strong> <a [routerLink]="['/ofertas/ver/', notificacion.idAnuncio]">{{ notificacion.tituloAnuncio }} </a></p>
+                <p *ngIf="notificacion.idAnuncio != null"><strong>Anuncio: </strong> <a [routerLink]="['/ofertas/ver/', notificacion.idAnuncio]">{{ notificacion.tituloAnuncio }} </a></p>
             </div>
             <div style='display: flex; justify-content: space-evenly'>
                 <button [routerLink]="['/mi-resumen']" class='btn btn-info' style='width: 200px' type='button'>Volver
@@ -40,6 +40,8 @@
                 <button (click)='AceptacionRechazada()'*ngIf="notificacion.pendiente && notificacion.idPartenariado == undefined" class="btn btn-info" style='width: 200px' type='button'>Rechazar al socio</button>
                 <button (click)='AceptacionAceptada()' *ngIf="notificacion.pendiente && notificacion.idPartenariado == undefined" class='btn btn-info' style='width: 200px' type='button'>Aceptar al socio</button>
                 <button (click)='CompletarPartenariado()' *ngIf="notificacion.pendiente && notificacion.idPartenariado != undefined" class='btn btn-info' style='width: 200px' type='button'>Completar Partenariado</button>
+                <button [routerLink]="['/partenariados/ver/', notificacion.idPartenariado]" *ngIf="!notificacion.pendiente && notificacion.idPartenariado != undefined" class='btn btn-info' style='width: 200px' type='button'>Ver Partenariado</button>
+
             </div>
         </div>
     </div>
