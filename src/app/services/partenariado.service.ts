@@ -50,9 +50,6 @@ export class PartenariadoService {
                     );
   }
 
-<<<<<<< Updated upstream
-   cargarPartenariado(id: string) {
-=======
   actualizarPartenariado(body: Object, idPartenariado) {
     return this.http.post<{ok:boolean}>(`${base_url}/partenariados/actualizar/${ idPartenariado }`, body, this.usuarioService.headers)
                     .pipe(
@@ -62,7 +59,6 @@ export class PartenariadoService {
 
 
   cargarPartenariado(id: string) {
->>>>>>> Stashed changes
     return this.http.get<{ ok: boolean, partenariado: Partenariado}>(`${ base_url }/partenariados/${ id }`, this.usuarioService.headers)
                     .pipe(
                       map( (resp: {ok: boolean, partenariado: Partenariado}) => {return this.mapearPartenariados([resp.partenariado])[0];} )
