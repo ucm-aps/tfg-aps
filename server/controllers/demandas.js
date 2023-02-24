@@ -129,6 +129,7 @@ const crearDemanda = async (req, res = response) => {//continuar
             req.body.comunidadBeneficiaria,
             0
         );
+        console.log(demanda);
         let demandaId = await daoDemanda.crearDemanda(demanda);
         demanda.id = demandaId;
 

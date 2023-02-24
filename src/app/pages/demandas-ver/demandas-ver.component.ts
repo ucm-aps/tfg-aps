@@ -40,6 +40,6 @@ export class DemandasVerComponent implements OnInit {
             'Antes de crear un partenariado debes completar los datos de la oferta',
             'warning'
         );
-        return this.router.navigate(['/ofertas/crear'], { queryParams: { demanda_id: this.demanda.id } });
+        return this.router.navigate(['/partenariados/profesor/crear'], { queryParams: { demanda_id: this.demanda.id } });
     }
 }

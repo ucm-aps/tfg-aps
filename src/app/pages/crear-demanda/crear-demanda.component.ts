@@ -56,6 +56,7 @@ export class crearDemandaComponent implements OnInit {
         await this.obtenerAreasServicio();
         await this.obtenerNecesidades();
         await this.obtenerTitulaciones();
+        console.log(this.areaServicio);
         this.dropdownSettings = {
             singleSelection: false,
             idField: 'id',
