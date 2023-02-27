@@ -146,7 +146,9 @@ const notificarPartenariadoCreado = async(req, res) =>{
             req.query.idPartenariado
         )
         daoNotificacion.notificarPartenariadoRellenado(notificacion);
-
+        return res.status(200).json({
+            ok:true
+        });
         
     } catch (error) {
         console.error(error);
@@ -158,6 +160,38 @@ const notificarPartenariadoCreado = async(req, res) =>{
     }
 }
 
+const notificacionDemandaRespaldado = async(req, res)=>{
+    try {
+        let notificacion = new TNotificacion(
+            "",
+            req.body.idDestino.id,
+            "",
+            "Demanda Respaldada",
+            "Enhorabuena un profesor ha respaldado su demanda",
+            "",
+            req.body.emailOrigen,
+            req.body.idAnuncio,
+            req.body.tituloAnuncio, 
+            0,
+            req.body.idPartenariado
+        )
+        daoNotificacion.crearNotificacionDemandaRespalda(notificacion);
+        return res.status(200).json({
+            ok:true
+        });
+        
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            ok:false,
+            msg:'Error inesperado(al intentar crear notificacionDemandaRespaldada)'
+        });
+        
+    }
+
+
+}
+
 module.exports ={
     obtenerNotificaciones,
     obtenerNotificacion,
@@ -165,5 +199,6 @@ module.exports ={
     rechazarSocio,
     aceptarSocio,
     notificarPartenariadoCreado,
+    notificacionDemandaRespaldado
 
 }

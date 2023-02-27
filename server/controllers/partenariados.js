@@ -17,38 +17,10 @@ const crearPartenariadoProfesor = async (req, res = response) => {
 
         let data = req.body;
         let id_oferta = data.id_oferta;
-
-        if (id_oferta == undefined) {
-            //Caso: no existe oferta
-            let areasServicio = [];
-            data.ofertaAreaServicio.forEach((dato) => {
-                areasServicio.push(dato.id);
-            });
-            let oferta = new TOfertaServicio(
-                null,
-                data.titulo,
-                data.descripcion,
-                data.imagen,
-                null,
-                null,
-                data.asignaturaObjetivo,
-                data.cuatrimestre,
-                data.anioAcademico,
-                data.fecha_limite,
-                data.ofertaObservacionesTemporales,
-                req.current_user.uid,
-                areasServicio,
-                req.current_user.uid,
-                1
-            );
-            id_oferta = await dao_tentativa.crearOferta(oferta);
-        }
-
         let profesores = [];
         data.profesores.forEach((dato) => {
             profesores.push(dato.id);
         });
-
         let partenariado = new TPartenariado(
             null,
             data.titulo,
@@ -56,12 +28,11 @@ const crearPartenariadoProfesor = async (req, res = response) => {
             data.externos,
             data.responsable,
             profesores,
-            null,
+            data.id_demanda,
             id_oferta,
             'EN_CREACION'
         );
         let id = await dao_colaboracion.crearPartenariado(partenariado);
-        console.log(id);
 
         return res.status(200).json({
             ok: true,

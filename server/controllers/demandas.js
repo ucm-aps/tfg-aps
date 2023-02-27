@@ -169,6 +169,7 @@ const obtenerDemandas = async (req, res = response) => {
 const obtenerDemanda = async (req, res) => {
     try {
         const demanda = await daoDemanda.obtenerDemandaServicio(req.params.id);
+        console.log(demanda);
         return res.status(200).json({
             ok: true,
             demanda

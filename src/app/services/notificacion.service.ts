@@ -77,4 +77,11 @@ export class NotificacionService {
         );
     }
 
+    RespaldarDemanda(body: object) {
+        return this.http.post<{ok: boolean}>(`${base_url}/notificaciones/respaldarDemanda`,body, this.usuarioService.headers)
+        .pipe(
+            map((resp: {ok:boolean}) => resp.ok)
+        );
+    }
+
 }

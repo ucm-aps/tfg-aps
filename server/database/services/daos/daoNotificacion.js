@@ -272,6 +272,22 @@ function crearNotificacionPartenariadoHecho(notificacion){
         });
     })
 }
+
+function crearNotificacionDemandaRespalda(notificacion){
+    return crearNotificacion(notificacion).then(idNotificacion =>{
+        return knex('demandarespalda').insert({
+            idNotificacion: idNotificacion,
+            idPartenariado: notificacion.idPartenariado
+        }).then(result =>{
+            return result;
+        })
+    })
+    .catch(err =>{
+        console.log(err)
+        console.log("Se ha producido un error al intenta crear una notificacion en demandaRespalda");
+    })
+
+}
 function FinalizarPendienteNotificacion(idNotificacion){
     return knex('notificaciones').where({
         id:idNotificacion
@@ -311,6 +327,7 @@ function notificarPartenariadoRellenado(notificacion){
 
 }
 
+
 module.exports ={
     obtenerNotificaciones,
     cargarNotificacion,
@@ -320,5 +337,6 @@ module.exports ={
     crearNotificacionAceptadacionRechazada,
     crearNotificacionAceptadacionAceptada,
     notificarPartenariadoRellenado,
+    crearNotificacionDemandaRespalda
 
 }

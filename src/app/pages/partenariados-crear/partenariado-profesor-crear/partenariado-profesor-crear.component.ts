@@ -36,6 +36,8 @@ export class PartenariadoCrearProfesorComponent implements OnInit {
     public responsable_data: any;
     public crearPartenariadoProfesorForm: FormGroup;
     public crearDemandaForm: FormGroup;
+    public crearOfertaForm:FormGroup;
+    public crearNotificacionDemandaRespaldada:FormGroup;
     public writeProfesor: boolean;
     public areaServicio: any;
     public necesidadSocial: any;
@@ -65,7 +67,7 @@ export class PartenariadoCrearProfesorComponent implements OnInit {
             }
             else if(this.activatedRoute.snapshot.queryParams.demanda_id != undefined){
                 //Caso de que el profesor respalda, envia un notificacion e crea la oferta
-
+                this.load_demanda(this.activatedRoute.snapshot.queryParams.demanda_id );
             }
             else{
                 //Nunca se usa
@@ -204,6 +206,52 @@ export class PartenariadoCrearProfesorComponent implements OnInit {
 
     }
 
+    async load_demanda(demanda: string){
+
+        await this.obtenerDemanda(Number(demanda));
+        await this.obtenerProfesores();
+        await this.obtenerAreasServicio();
+        console.log(this.demanda);
+        this.oferta = new Oferta (null,null, null, null,null,null,null, null, null, null, null, null, null, null, null);
+        this.crearPartenariadoProfesorForm = this.fb.group({
+            anioAcademico: [this.oferta.anio_academico || '', Validators.required],
+            titulo: [this.demanda.titulo, Validators.required],
+            descripcion: [this.demanda.descripcion || '', Validators.required],
+            socio: [this.demanda.creador.nombre + ' ' + this.demanda.creador.apellidos || ''],
+            necesidadSocial: [this.demanda.necesidad_social || ''],
+            finalidad: [this.demanda.objetivo || ''],
+            comunidadBeneficiaria: [this.demanda.comunidadBeneficiaria || ''],
+            cuatrimestre: [this.oferta.cuatrimestre || '', Validators.required],
+            responsable: [null, Validators.required],
+            ciudad: [this.demanda.ciudad || ''],
+            externos: [false],
+            id_demanda: [this.demanda.id || ''],
+            id_oferta: [this.oferta.id || ''],
+            ofertaObservacionesTemporales: [this.oferta.observaciones || " "],
+            demandaObservacionesTemporales: [this.demanda.observacionesTemporales || ''],
+            asignaturaObjetivo: [this.oferta.asignatura_objetivo || 'Nada', Validators.required],
+            titulacionesLocales: [this.demanda.titulacion_local || ''],
+            ofertaAreaServicio: [this.oferta.area_servicio, Validators.required],
+            demandaAreaServicio: [this.demanda.area_servicio || ''],
+            periodo_definicion_fin: [this.demanda.periodoDefinicionFin || ''],
+            periodo_definicion_ini: [this.demanda.periodoDefinicionIni || ''],
+            periodo_ejecucion_fin: [this.demanda.periodoEjecucionFin || ''],
+            periodo_ejecucion_ini: [this.demanda.periodoEjecucionIni || ''],
+            profesores: [new FormControl(''), Validators.required],
+            fecha_limite: [this.oferta.fecha_limite, Validators.required],
+            fecha_fin: [this.demanda.fechaFin || ''],
+        });
+        this.dropdownSettings = {
+            singleSelection: false,
+            idField: 'id',
+            textField: 'nombreCompleto',
+            selectAllText: 'Select All',
+            unSelectAllText: 'UnSelect All',
+            itemsShowLimit: 10,
+            allowSearchFilter: true
+        };
+        
+    }
 
     async cargarPartenariado() {
         this.partenariado = new Partenariado('', '', '', '', '', '', '', '', null, null, null, null, null, null,null,null, null);
@@ -273,6 +321,9 @@ export class PartenariadoCrearProfesorComponent implements OnInit {
         await this.obtenerAreasServicio();
         await this.obtenerNecesidades();
         await this.obtenerTitulaciones();
+
+    }
+    async obtenerAreasServicio() {
         this.areaServiciodropdownSettings = {
             singleSelection: false,
             idField: 'id',
@@ -282,9 +333,6 @@ export class PartenariadoCrearProfesorComponent implements OnInit {
             itemsShowLimit: 10,
             allowSearchFilter: true
         };
-
-    }
-    async obtenerAreasServicio() {
         return this.demandaService.obtenerAreasServicio()
             .subscribe((resp: any) => {
                 this.areaServicio = resp.areasServicio;
@@ -350,15 +398,70 @@ export class PartenariadoCrearProfesorComponent implements OnInit {
         });
     }
 
-    observableEnviarPartenariado() {
+    async crearOferta()
+    {
+        let value = this.crearPartenariadoProfesorForm.value;
+        this.crearOfertaForm = this.fb.group({
+            titulo: [value.titulo, Validators.required],
+            descripcion:[value.descripcion, Validators.required],
+            imagen:[value.imagen, Validators.required],
+            asignatura:[value.asignaturaObjetivo, Validators.required],
+            cuatrimestre:[this.valorCuatrimestre(value.cuatrimestre), Validators.required],
+            anio_academico:[value.anioAcademico, Validators.required],
+            fecha_limite:[value.fecha_limite, Validators.required],
+            observaciones:[value.ofertaObservacionesTemporales, Validators.required],
+            area_servicio:[value.ofertaAreaServicio, Validators.required],
+            creador:[this.usuarioService.usuario.uid]
+
+
+        });
+
+        await this.ofertaService.crearOferta(this.crearOfertaForm.value).pipe(first()).toPromise().then((resp: any) => {
+            this.crearPartenariadoProfesorForm.get('id_oferta').setValue(resp.oferta.id[0]);
+
+        }, err => {
+            console.log(err);
+            let msg = [];
+            if (err.error.errors) {
+                Object.values(err.error.errors).forEach(error_entry => {
+                    msg.push(error_entry['msg']);
+                });
+            } else {
+                msg.push(err.error.msg);
+            }
+            Swal.fire('Error', msg.join('<br>'), 'error');
+            this.formSubmitted = false;
+            this.formSending = false;
+        });
+
+    }
+
+    async observableEnviarPartenariado() {
+        if(this.oferta.id == null)  await this.crearOferta();
+        console.log(this.crearPartenariadoProfesorForm.value);
         this.partenariadoService.crearPartenariadoProfesor(this.crearPartenariadoProfesorForm.value).subscribe(async resp => {
             if(resp.ok){
                 Swal.fire('Ok', 'Partenariado creado correctamente', 'success');
                 this.router.routeReuseStrategy.shouldReuseRoute = () => false;
                 this.router.onSameUrlNavigation = 'reload';
-                this.notificacionService.AceptarSocio(this.notificacion.id, resp.id[0]).subscribe((ok)=>{
+                if(this.activatedRoute.snapshot.queryParams.demanda_id == null){
+                    this.notificacionService.AceptarSocio(this.notificacion.id, resp.id[0]).subscribe((ok)=>{
 
-                });
+                    });
+                }
+                else{
+                    //resp.id id partenariado
+                    this.crearNotificacionDemandaRespaldada = this.fb.group({
+                        idDestino:[this.demanda.creador],
+                        emailOrigen:[this.usuarioService.usuario.email],
+                        idAnuncio:[this.demanda.id],
+                        idPartenariado:[resp.id],
+                        tituloAnuncio:[this.demanda.titulo]
+                    });
+                    this.notificacionService.RespaldarDemanda(this.crearNotificacionDemandaRespaldada.value).subscribe((ok)=>{
+                        alert('h');
+                    });
+                }
                 this.router.navigate(['/']);
 
                 this.formSubmitted = false;
@@ -438,6 +541,7 @@ export class PartenariadoCrearProfesorComponent implements OnInit {
         }
         this.crearPartenariadoProfesorForm.get('responsable').setValue(id_responsable);
         this.formSending = true;
+
         this.partenariado == undefined ? this.observableEnviarPartenariado() : this.crearDemanda();
     }
 
@@ -549,6 +653,16 @@ export class PartenariadoCrearProfesorComponent implements OnInit {
             });
     }
 
+    valorCuatrimestre(cuatrimestre:string):Number{
+        if (cuatrimestre == 'Primer cuatrimestre') {
+            return 1;
+        } else if (cuatrimestre == 'segundo') {
+            return 2;
+        } else {
+            return 3;
+        }
+    }
+
     get getItems() {
         return this.profesoresList.reduce((acc, curr) => {
             acc[curr.id] = curr;
@@ -563,6 +677,8 @@ export class PartenariadoCrearProfesorComponent implements OnInit {
             return acc;
         }, {});
     }
+
+
 
     onItemSelect(item: any) {
         console.log('onItemSelect', item);
