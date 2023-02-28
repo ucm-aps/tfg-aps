@@ -11,7 +11,7 @@
     </div>
 
     <div *ngIf="partenariado?.estado !== 'En negociación' " class="alert alert-warning" role="alert">
-        <strong>Atención: </strong> Esta PARTENARIADO ya no está en negociación. Se puede seguir viendo a modo de consulta. Si crees que este partenariado se ha cerrado por error, por favor, <a [routerLink]="['/sobre-ApS-UNED/contacta']" class="font-weight-bold">contacta con el Gestor</a> para que evalúe si puede proceder a abrirlo de nuevo.
+        <strong>Atención: </strong> Este PARTENARIADO ya no está en negociación. Se puede seguir viendo a modo de consulta. Si crees que este partenariado se ha cerrado por error, por favor, <a [routerLink]="['/sobre-ApS-UNED/contacta']" class="font-weight-bold">contacta con el Gestor</a> para que evalúe si puede proceder a abrirlo de nuevo.
     </div>
 
 
@@ -39,7 +39,7 @@
                 </div>
                 <hr/>
 
-                <p><strong>Fecha de registro de la partenariado:</strong> {{ partenariado.parsedCreatedAt }}</p>
+                <p><strong>Fecha de registro del partenariado:</strong> {{ partenariado.parsedCreatedAt }}</p>
                 <p><strong>Descripción:</strong> {{ partenariado.descripcion }}</p>
                 <p><strong>¿Quién es el responsable de la partenariado?:</strong></p>
                 <ul>
@@ -57,7 +57,6 @@
 
             </div>
  
-            <button [routerLink]="['/partenariados']" class='btn btn-info' style='width: 200px' type='button'>Volver al listado</button>
             <header *ngIf="partenariado.estado == 'En negociación'" class="card-header mb-2 border d-flex justify-content-between">
                 <h6 class="title mb-0"><strong>Escribir Mensaje</strong></h6>
             </header>
@@ -95,6 +94,8 @@
                 <hr/>
                 <p>{{ mensaje.texto }}</p>
             </div>
+
+            <button [routerLink]="['/partenariados']" class='btn btn-info' style='width: 200px' type='button'>Volver al listado</button>
 
         </div> <!--
 
