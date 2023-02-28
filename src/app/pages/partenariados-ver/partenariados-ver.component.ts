@@ -45,9 +45,11 @@ export class PartenariadosVerComponent implements OnInit {
     // ver o editar la partenariado
     this.partenariadoService.cargarPartenariados(this.offset, this.limit, this.getFiltros())
     .subscribe(({ total, filtradas, partenariados }) => { 
+
       this.partenariados = partenariados 
     });
   }  
+
 /* 
   cambiarEstado(estado: string) {
     this.partenariadoService.cambiarEstado(this.partenariado, estado)
