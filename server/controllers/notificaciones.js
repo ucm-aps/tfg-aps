@@ -172,7 +172,7 @@ const notificacionDemandaRespaldado = async(req, res)=>{
             req.body.emailOrigen,
             req.body.idAnuncio,
             req.body.tituloAnuncio, 
-            0,
+            1,
             req.body.idPartenariado
         )
         daoNotificacion.crearNotificacionDemandaRespalda(notificacion);
@@ -200,5 +200,5 @@ module.exports ={
     aceptarSocio,
     notificarPartenariadoCreado,
     notificacionDemandaRespaldado
-
+    
 }
