@@ -156,7 +156,6 @@ const getPartenariados = async (req, res) => {
 const getPartenariado = async (req, res) => {
     try {
         const partenariado = await dao_colaboracion.obtenerPartenariado(req.params.id);
-        console.log(partenariado);
         return res.status(200).json({
             ok: true,
             partenariado
@@ -173,77 +172,12 @@ const getPartenariado = async (req, res) => {
 const cambiarEstadoPartenariado = async (req, res) => {
     try {
         const id = req.params.id;
-        const partenariado = await Partenariado.findById(id)
-            .populate(
-                'profesores',
-                '_id nombre apellidos email sector universidad titulacion rol'
-            )
-            .populate(
-                'entidades',
-                '_id nombre apellidos email sector universidad titulacion rol'
-            )
-            .populate(
-                'proponedor',
-                '_id nombre apellidos email sector universidad titulacion rol'
-            )
-            .populate(
-                'creador',
-                '_id nombre apellidos email sector universidad titulacion rol'
-            )
-            .populate('archivos', '_id client_name');
-
-        const estado = req.body.estado;
-
-        if (!ESTADOS_PARTENARIADOS.includes(estado)) {
-            return res.status(200).json({
-                ok: false,
-                msg: 'El estado ' + estado + ' no es un estado admitido'
-            });
-        }
-
-        if (estado === 'En negociación' && !esGestor(req)) {
-            return res.status(200).json({
-                ok: false,
-                msg: 'Solo el gestor puede volver a abrir el partenariado'
-            });
-        }
-
-        partenariado.estado = estado;
-        await partenariado.save();
-
-        if (estado === 'Acordado') {
-            // creamos el proyecto a partir del partenariado
-            const proyecto = new Proyecto();
-
-            proyecto.estado = 'Abierto';
-            proyecto.titulo = partenariado.titulo;
-            proyecto.descripcion = partenariado.descripcion;
-            proyecto.rama = partenariado.rama;
-            proyecto.ciudad = partenariado.ciudad;
-            proyecto.partenariado = partenariado._id;
-            proyecto.profesores = partenariado.profesores;
-            proyecto.sociosComunitarios = partenariado.sociosComunitarios;
-            proyecto.mensajes = [];
-            proyecto.archivos = [];
-            proyecto.proponedor = partenariado.proponedor;
-            proyecto.creador = req.current_user.uid;
-
-            await proyecto.save();
-
-            // referencia cruzada
-            partenariado.proyecto = proyecto._id;
-            await partenariado.save();
-
-            return res.status(200).json({
-                ok: true,
-                partenariado,
-                proyecto
-            });
-        }
-
+        let partenariado = await dao_colaboracion.obtenerPartenariado(id);
+        partenariado.setEstado(req.body.estado);
+        await dao_colaboracion.actualizarEstado(partenariado);
+        console.log(partenariado);
         return res.status(200).json({
-            ok: true,
-            partenariado
+            ok: true
         });
     } catch (error) {
         console.error(error);

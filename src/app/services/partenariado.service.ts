@@ -29,7 +29,7 @@ export class PartenariadoService {
           partenariado.ciudad,
           //meter atributos 
           '',
-          [],
+          partenariado.profesores,
           null,
           '',
           [],  
@@ -74,8 +74,8 @@ export class PartenariadoService {
                     );
   } 
 
-  cambiarEstado(partenariado: Partenariado, estado: string) {
-    return this.http.put<{ ok: boolean, partenariado: Partenariado}>(`${ base_url }/partenariados/modificar-estado/${ partenariado._id }`, {estado}, this.usuarioService.headers)
+  cambiarEstado(id:string, estado: string) {
+    return this.http.put<{ ok: boolean, partenariado: Partenariado}>(`${ base_url }/partenariados/modificar-estado/${ id }`, {estado}, this.usuarioService.headers)
                     .pipe(
                       map( (resp) => { return resp; } )
                     );

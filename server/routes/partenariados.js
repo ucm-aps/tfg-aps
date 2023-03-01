@@ -3,7 +3,7 @@
 const { Router } = require('express');
 const { check } = require('express-validator');
 const { validarCampos } = require('./../middlewares/validar-campos');
-const { crearPartenariadoProfesor, crearPartenariadoSocioComunitario, getPartenariados, getPartenariado, actualizarPartenariado } = require('../controllers/partenariados');
+const { crearPartenariadoProfesor, crearPartenariadoSocioComunitario, getPartenariados, getPartenariado, actualizarPartenariado, cambiarEstadoPartenariado } = require('../controllers/partenariados');
 const { validarJWT, validarEsProfesor, validarEsSocioComunitario } = require('../middlewares/validar-jwt');
 
 const router = Router();
@@ -58,7 +58,7 @@ router.get('/', [],
 // obtener un partenariado
 router.get(
     '/:id', [
-        // validarJWT,
+        validarJWT,
         // validarEsProfesorOrSocioComunitarioOrEsGestor,
         //check('id', 'El id del partenariado debe ser válido').isMongoId(),
         // validarCampos
@@ -67,15 +67,15 @@ router.get(
 );
 
 // // modificar estado
-// router.put(
-//     '/modificar-estado/:id', [
-//         validarJWT,
-//         validarEsProfesorOrSocioComunitarioOrEsGestor,
-//         check('id', 'El id del partenariado debe ser válido').isMongoId(),
-//         validarCampos
-//     ],
-//     cambiarEstadoPartenariado
-// );
+router.put(
+    '/modificar-estado/:id', [
+        validarJWT,
+        //validarEsProfesorOrSocioComunitarioOrEsGestor,
+        //check('id', 'El id del partenariado debe ser válido').isMongoId(),
+        //validarCampos
+    ],
+    cambiarEstadoPartenariado
+);
 
 
 // // modificar estado

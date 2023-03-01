@@ -183,7 +183,7 @@ function obtenerPartenariado(id) {
         })
         .catch((err) => {
           console.log(err);
-          tconsole.log(
+          console.log(
             "Se ha producido un error al intentar obtener el partenariado con id ",
             id
           );
@@ -436,6 +436,7 @@ function actualizarColaboracion(colaboracion) {
           .where("id_colaboracion", colaboracion.getId())
           .del()
           .then(() => {
+            console.log(colaboracion.getProfesores());
             const fieldsToInsert = colaboracion.getProfesores()
               .map((profes) => ({
                 id_profesor: profes.id,
@@ -583,6 +584,17 @@ function actualizarNota(nota) {
   });
 }
 
+function actualizarEstado(partenariado){
+  return knex('partenariado').update({estado: partenariado.getEstado()})
+  .where({id: partenariado.id})
+  .catch((err) => {
+    console.log(err);
+    console.log(
+      "Se ha producido un error al intentar actualizar el usuario"
+    );
+  });
+}
+
 // OBTENER TODOS LOS ELEMENTOS ----------------------------------------------------------------------
 function obtenerTodosPartenariados() {
   return knex("colaboracion")
@@ -699,6 +711,7 @@ module.exports = {
   actualizarProyecto,
   actualizarPrevioPartenariado,
   actualizarNota,
+  actualizarEstado,
   eliminarColaboracion,
   eliminarPartenariado,
   eliminarProyecto,

@@ -5,12 +5,12 @@
         <strong>Ver Partenariado</strong>
         
     </h5>
-
+     <!-- Info de cargando
     <div *ngIf="partenariado?.proponedor.rol === 'ROL_SOCIO_COMUNITARIO' && this.usuarioService.usuario && this.usuarioService.usuario.esSocioComunitario" class="alert alert-warning" role="alert">
         <strong>Atención: </strong> Estás en la aplicación como <strong>Socio comunitario</strong>. Sólo un Profesor puede convertir este partenariado en PROYECTO.
-    </div>
+    </div>-->
 
-    <div *ngIf="partenariado?.estado !== 'En negociación' " class="alert alert-warning" role="alert">
+    <div *ngIf="partenariado?.estado !== 'EN_NEGOCIACION' " class="alert alert-warning" role="alert">
         <strong>Atención: </strong> Este PARTENARIADO ya no está en negociación. Se puede seguir viendo a modo de consulta. Si crees que este partenariado se ha cerrado por error, por favor, <a [routerLink]="['/sobre-ApS-UNED/contacta']" class="font-weight-bold">contacta con el Gestor</a> para que evalúe si puede proceder a abrirlo de nuevo.
     </div>
 
@@ -21,9 +21,9 @@
         <fa-icon [icon]="['fas', 'sync']" [spin]="true"></fa-icon>
         <p class="mb-">Por favor, espere</p>
     </div>
+    
 
-
-    <div *ngIf="partenariado?.estado !== 'EN_CREACION'" class="row">
+    <div *ngIf="partenariado.estado !== 'EN_CREACION'"  class="row">
 
         <div class="col-9">
 
@@ -76,7 +76,7 @@
                     <input (click)="enviarMensaje()" [disabled]="this.mensaje == ''" [value]="'Enviar mensaje'" class="btn btn-success float-right" type="submit">
                 </div>
             </div>
-
+            <!--
             <header class="card-header mb-2 border d-flex justify-content-between">
                 <h6 class="title mb-0"><strong>Histórico de mensajes del partenariado</strong></h6>
             </header>
@@ -93,7 +93,7 @@
                 </div>
                 <hr/>
                 <p>{{ mensaje.texto }}</p>
-            </div>
+            </div>-->
 
             <button [routerLink]="['/partenariados']" class='btn btn-info' style='width: 200px' type='button'>Volver al listado</button>
 

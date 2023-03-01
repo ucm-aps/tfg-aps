@@ -438,7 +438,6 @@ export class PartenariadoCrearProfesorComponent implements OnInit {
 
     async observableEnviarPartenariado() {
         if(this.oferta.id == null)  await this.crearOferta();
-        console.log(this.crearPartenariadoProfesorForm.value);
         this.partenariadoService.crearPartenariadoProfesor(this.crearPartenariadoProfesorForm.value).subscribe(async resp => {
             if(resp.ok){
                 Swal.fire('Ok', 'Partenariado creado correctamente', 'success');
@@ -459,7 +458,9 @@ export class PartenariadoCrearProfesorComponent implements OnInit {
                         tituloAnuncio:[this.demanda.titulo]
                     });
                     this.notificacionService.RespaldarDemanda(this.crearNotificacionDemandaRespaldada.value).subscribe((ok)=>{
-                        alert('h');
+                    });
+                    this.partenariadoService.cambiarEstado(resp.id, "EN_NEGOCIACION").subscribe(ok=>{
+
                     });
                 }
                 this.router.navigate(['/']);
@@ -492,6 +493,9 @@ export class PartenariadoCrearProfesorComponent implements OnInit {
         this.partenariadoService.actualizarPartenariado(this.crearPartenariadoProfesorForm.value, this.partenariado._id).subscribe(async resp => {
             if(resp){
                 this.notificacionService.crearpartenariadoRellenado(this.partenariado._id).subscribe(async ok =>{
+
+                });
+                this.partenariadoService.cambiarEstado(this.partenariado._id, "EN_NEGOCIACION").subscribe(ok =>{
 
                 });
                 Swal.fire('Ok', 'Partenariado actualizado correctamente', 'success');
