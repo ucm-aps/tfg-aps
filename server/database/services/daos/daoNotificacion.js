@@ -40,7 +40,12 @@ function cargarNotificacion(idNotificacion){
                 if(result == undefined){
                     return obtenerNotificacionAceptacionRechazada(idNotificacion).then(result =>{
                         if(result == undefined){
-                            return obtenerNotificacionPartenariadoHecho(idNotificacion);
+                            return obtenerNotificacionPartenariadoHecho(idNotificacion).then(result =>{
+                                if(result == undefined){
+                                    return obtenerNotificacionDemandaRespaldada(idNotificacion)
+                                } 
+                                return result;
+                            });
                         }
                         return result;
                     });
@@ -152,6 +157,32 @@ function obtenerNotificacionAceptacionRechazada(idNotificacion){
 
 function obtenerNotificacionPartenariadoHecho(idnotificacion){
     return knex('notificaciones').join("partenariadorellenado", "notificaciones.id","=", "partenariadorellenado.idNotificacion")
+    .where({idNotificacion: idnotificacion})
+    .select('*').then(resultado =>{
+        if(resultado.length == 0) return;
+        console.log(resultado);
+        return new transferNotificacion(
+            resultado[0].id,
+            resultado[0].idDestino,
+            resultado[0].leido,
+            resultado[0].titulo,
+            resultado[0].mensaje,
+            resultado[0].fecha_fin,
+            null,
+            null,
+            null,
+            resultado[0].pendiente,
+            resultado[0].idPartenariado
+        );
+    })
+    .catch(err =>{
+        console.log(err)
+        console.log("Se ha producido un error al intenta obtener notificacion de partenariadorellenado");
+    })
+}
+
+function obtenerNotificacionDemandaRespaldada(idnotificacion){
+    return knex('notificaciones').join("demandarespalda", "notificaciones.id","=", "demandarespalda.idNotificacion")
     .where({idNotificacion: idnotificacion})
     .select('*').then(resultado =>{
         if(resultado.length == 0) return;
