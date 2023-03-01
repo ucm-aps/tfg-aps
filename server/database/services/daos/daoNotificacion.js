@@ -256,6 +256,14 @@ function obtenerNotificacionAceptacionAceptadaPorIdPartenariado(idPartenariado){
     });
 }
 
+function obtenerNotificacionDemandaRespaldadaPorIdPartenariado(idPartenariado){
+    return knex('demandarespalda').select('*')
+    .where({idPartenariado:idPartenariado}).catch(err =>{
+        console.log(err)
+        console.log("Se ha producido un error al intenta obtener notificacion de demandaRespalda por idPartenariado");
+    });
+}
+
 
 
 function crearNotificacionAceptadacionRechazada(notificacion, idNotificacionOferta){
@@ -341,6 +349,11 @@ function notificarPartenariadoRellenado(notificacion){
                         //Suponiendo que No importa por que ruta va creando un partenariado para cada notificacion 
                         return obtenerNotificacionAceptacionAceptadaPorIdPartenariado(notificacion.idPartenariado).then(notificacionFinalizado=>{
                             console.log(notificacionFinalizado);
+                            if(notificacionFinalizado.length == 0){
+                                return obtenerNotificacionDemandaRespaldadaPorIdPartenariado(notificacion.idPartenariado).then(notificacionFinalizado=>{
+                                    return FinalizarPendienteNotificacion(notificacionFinalizado[0].idNotificacion);
+                                })
+                            }
                             return FinalizarPendienteNotificacion(notificacionFinalizado[0].idNotificacion);
                         });
 

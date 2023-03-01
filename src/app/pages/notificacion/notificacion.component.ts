@@ -68,6 +68,7 @@ export class NotificacionComponent implements OnInit{
     }
 
     CompletarPartenariado(){
+        console.log(this.notificacion);
         return this.router.navigate(['partenariados/profesor/crear'], { queryParams: { idPartenariado: this.notificacion.idPartenariado, idOferta: this.notificacion.idAnuncio } });
     }
 

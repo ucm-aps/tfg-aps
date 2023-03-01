@@ -61,17 +61,22 @@ export class PartenariadoCrearProfesorComponent implements OnInit {
                 this.load_oferta(this.activatedRoute.snapshot.queryParams.notificacion)
                 
             }
-            else if(this.activatedRoute.snapshot.queryParams.idPartenariado != undefined){
+            else if(this.activatedRoute.snapshot.queryParams.idPartenariado != undefined && this.activatedRoute.snapshot.queryParams.idOferta != undefined){
                 //Caso de que el socio recibe que su pedicion es aceptada entonces completa el partenariado e crea la demanda
                 this.loadPartenariado(this.activatedRoute.snapshot.queryParams.idPartenariado, this.activatedRoute.snapshot.queryParams.idOferta);
             }
-            else if(this.activatedRoute.snapshot.queryParams.demanda_id != undefined){
+            else if(this.activatedRoute.snapshot.queryParams.demanda_id != undefined){ 
                 //Caso de que el profesor respalda, envia un notificacion e crea la oferta
-                this.load_demanda(this.activatedRoute.snapshot.queryParams.demanda_id );
+                this.load_demanda(this.activatedRoute.snapshot.queryParams.demanda_id ); 
+            }
+            else if(this.activatedRoute.snapshot.queryParams.idPartenariado != undefined){
+                //Caso de que el socio recibe el notificacion del demanda respaldada, completa el partenariado
+                this.load(this.activatedRoute.snapshot.queryParams.idPartenariado);
+
             }
             else{
                 //Nunca se usa
-                this.load(this.activatedRoute.snapshot.queryParams.demanda, this.activatedRoute.snapshot.queryParams.oferta);
+                //this.load(this.activatedRoute.snapshot.queryParams.demanda, this.activatedRoute.snapshot.queryParams.oferta);
             }
         });
     }
@@ -108,7 +113,51 @@ export class PartenariadoCrearProfesorComponent implements OnInit {
         
     }
 
-    async load(demanda: number, oferta: number) {
+    async load(partenariado:string){
+        await this.obtenerPartenariado(partenariado);
+        await this.obtenerOferta(Number(this.partenariado.idOferta));
+        await this.obtenerDemanda(Number(this.partenariado.idDemanda));
+        this.crearPartenariadoProfesorForm = this.fb.group({
+            anioAcademico: [this.oferta.anio_academico || '', Validators.required],
+            titulo: [this.partenariado.titulo || '', Validators.required],
+            descripcion: [this.partenariado.descripcion || '', Validators.required],
+            socio: [this.usuarioService.usuario.nombre + ' ' + this.usuarioService.usuario.apellidos || ''],
+            necesidadSocial: [this.demanda.necesidad_social || ''],
+            finalidad: [this.demanda.objetivo || ''],
+            comunidadBeneficiaria: [this.demanda.comunidadBeneficiaria || ''],
+            cuatrimestre: [this.oferta.cuatrimestre || '', Validators.required],
+            responsable: [this.obtenerNombreResponsable(this.partenariado.idresponsable).nombreCompleto , Validators.required],
+            ciudad: [this.demanda.ciudad || ''],
+            externos: [false],
+            id_demanda: [this.demanda.id || ''],
+            id_oferta: [this.oferta.id || ''],
+            ofertaObservacionesTemporales: [this.oferta.observaciones || " "],
+            demandaObservacionesTemporales: [this.demanda.observacionesTemporales || ''],
+            asignaturaObjetivo: [this.oferta.asignatura_objetivo || 'Nada', Validators.required],
+            titulacionesLocales: [this.demanda.titulacion_local || ''],
+            ofertaAreaServicio: [this.oferta.area_servicio, Validators.required],
+            demandaAreaServicio: [this.demanda.area_servicio || ''],
+            periodo_definicion_fin: [this.demanda.periodoDefinicionFin || ''],
+            periodo_definicion_ini: [this.demanda.periodoDefinicionIni || ''],
+            periodo_ejecucion_fin: [this.demanda.periodoEjecucionFin || ''],
+            periodo_ejecucion_ini: [this.demanda.periodoEjecucionIni || ''],
+            profesores: [new FormControl(''), Validators.required],
+            fecha_limite: [this.oferta.fecha_limite, Validators.required],
+            fecha_fin: [this.demanda.fechaFin || ''],
+        });
+
+        this.dropdownSettings = {
+            singleSelection: false,
+            idField: 'id',
+            textField: 'nombreCompleto',
+            selectAllText: 'Select All',
+            unSelectAllText: 'UnSelect All',
+            itemsShowLimit: 10,
+            allowSearchFilter: true
+        };
+    }
+
+    /*async load(demanda: number, oferta: number) {
         await this.cargarPartenariado();
         await this.obtenerOferta(oferta);
         await this.obtenerDemanda(demanda);
@@ -155,7 +204,7 @@ export class PartenariadoCrearProfesorComponent implements OnInit {
             itemsShowLimit: 10,
             allowSearchFilter: true
         };
-    }
+    }*/
 
     async loadPartenariado(idPartenariado, idOferta){
         await this.obtenerPartenariado(idPartenariado);
@@ -379,8 +428,7 @@ export class PartenariadoCrearProfesorComponent implements OnInit {
             titulacion_local:[value.titulacionesLocales, Validators.required]
         });
         this.demandaService.crearDemanda(this.crearDemandaForm.value).subscribe(resp =>{
-            this.crearPartenariadoProfesorForm.value.id_demanda = resp.demanda.id;
-            this.actualizarPartenariado();
+            this.crearPartenariadoProfesorForm.get('id_demanda').setValue(resp.demanda.id[0]);
 
         }, err => {
             console.log(err);
@@ -490,6 +538,7 @@ export class PartenariadoCrearProfesorComponent implements OnInit {
     }
 
     async actualizarPartenariado() {
+        if(this.demanda.id == null)  await this.crearDemanda();
         this.partenariadoService.actualizarPartenariado(this.crearPartenariadoProfesorForm.value, this.partenariado._id).subscribe(async resp => {
             if(resp){
                 this.notificacionService.crearpartenariadoRellenado(this.partenariado._id).subscribe(async ok =>{
@@ -546,7 +595,7 @@ export class PartenariadoCrearProfesorComponent implements OnInit {
         this.crearPartenariadoProfesorForm.get('responsable').setValue(id_responsable);
         this.formSending = true;
 
-        this.partenariado == undefined ? this.observableEnviarPartenariado() : this.crearDemanda();
+        this.partenariado == undefined ? this.observableEnviarPartenariado() : this.actualizarPartenariado();
     }
 
 
