@@ -69,6 +69,7 @@ export class PartenariadoService {
     return this.http.get<{ total: Number, filtradas: Number, partenariados: Partenariado[]}>(`${ base_url }/partenariados?skip=${ skip }&limit=${ limit }&filtros=${ encodeURIComponent( JSON.stringify(filtros)) }`, this.usuarioService.headers)
                     .pipe(
                       map( resp => {
+                        console.log(resp.partenariados);
                          return { total: resp.total, filtradas: resp.filtradas, partenariados: this.mapearPartenariados(resp.partenariados) }; 
                         })
                     );

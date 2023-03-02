@@ -143,6 +143,7 @@ function obtenerColaboracion(id_colab) {
             p2 = Object.assign({}, prof);
             p.push(p2["id_profesor"]);
           }
+          console.log(colab);
           return new transferColaboracion(
             id_colab,
             colab[0]["titulo"],
