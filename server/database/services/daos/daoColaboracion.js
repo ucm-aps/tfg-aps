@@ -179,7 +179,23 @@ function obtenerPartenariado(id) {
             (profesores = colaboracion.getProfesores()),
             (id_demanda = partenariado[0]["id_demanda"]),
             (id_oferta = partenariado[0]["id_oferta"]),
-            (estado = partenariado[0]["estado"])
+            (estado = (function() {
+              // Obtener el valor del estado
+              let estado = partenariado[0]["estado"];
+
+              // Asignar una etiqueta según el valor del estado
+              if (estado === "EN_CREACION") {
+                return "En creación";
+              } else if (estado === "EN_NEGOCIACION") {
+                return "En negociación";
+              } else if (estado === "ACORDADO") {
+                return "Acordado";
+              } else if (estado === "SUSPENDIDO") {
+                return "Suspendido";
+              } else {
+                return "Estado desconocido";
+              }
+            })())
           );
         })
         .catch((err) => {
