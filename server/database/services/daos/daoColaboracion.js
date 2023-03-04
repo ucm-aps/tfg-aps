@@ -49,6 +49,7 @@ function crearPartenariado(partenariado) {
         })
         .then(() => {
           console.log("Se ha creado un partenariado con id ", id);
+          return id;
         })
         .catch((err) => {
           console.log(err);
@@ -56,7 +57,7 @@ function crearPartenariado(partenariado) {
             "Se ha producido un error al crear el partenariado que tiene id ",
             id
           );
-          return knex("colaboracion").where("id", id).del();
+          return id;
         });
     })
     .catch((err) => {
@@ -142,6 +143,7 @@ function obtenerColaboracion(id_colab) {
             p2 = Object.assign({}, prof);
             p.push(p2["id_profesor"]);
           }
+          console.log(colab);
           return new transferColaboracion(
             id_colab,
             colab[0]["titulo"],
@@ -182,7 +184,7 @@ function obtenerPartenariado(id) {
         })
         .catch((err) => {
           console.log(err);
-          tconsole.log(
+          console.log(
             "Se ha producido un error al intentar obtener el partenariado con id ",
             id
           );
@@ -296,7 +298,7 @@ function contarPartenariados() {
 }
 
 function contarIniciativas() {
-  return knex("iniciativa")
+  return knex("oferta_servicio")
     .count("*")
     .then((result) => {
       return result[0]["count(*)"];
@@ -435,10 +437,10 @@ function actualizarColaboracion(colaboracion) {
           .where("id_colaboracion", colaboracion.getId())
           .del()
           .then(() => {
-            const fieldsToInsert = colaboracion
-              .getProfesores()
+            console.log(colaboracion.getProfesores());
+            const fieldsToInsert = colaboracion.getProfesores()
               .map((profes) => ({
-                id_profesor: profes,
+                id_profesor: profes.id,
                 id_colaboracion: colaboracion.getId(),
               }));
             return knex("profesor_colaboracion")
@@ -583,6 +585,17 @@ function actualizarNota(nota) {
   });
 }
 
+function actualizarEstado(partenariado){
+  return knex('partenariado').update({estado: partenariado.getEstado()})
+  .where({id: partenariado.id})
+  .catch((err) => {
+    console.log(err);
+    console.log(
+      "Se ha producido un error al intentar actualizar el usuario"
+    );
+  });
+}
+
 // OBTENER TODOS LOS ELEMENTOS ----------------------------------------------------------------------
 function obtenerTodosPartenariados() {
   return knex("colaboracion")
@@ -699,6 +712,7 @@ module.exports = {
   actualizarProyecto,
   actualizarPrevioPartenariado,
   actualizarNota,
+  actualizarEstado,
   eliminarColaboracion,
   eliminarPartenariado,
   eliminarProyecto,

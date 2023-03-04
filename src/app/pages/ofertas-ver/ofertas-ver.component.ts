@@ -4,6 +4,7 @@ import { OfertaService } from 'src/app/services/oferta.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import Swal from 'sweetalert2';
+import { NotificacionService } from './../../services/notificacion.service';
 
 @Component({
     selector: 'app-ofertas-ver',
@@ -14,7 +15,7 @@ export class OfertasVerComponent implements OnInit {
 
     public oferta: Oferta;
 
-    constructor(public ofertaService: OfertaService, public activatedRoute: ActivatedRoute, public router: Router, public usuarioService: UsuarioService) {
+    constructor(public ofertaService: OfertaService, public activatedRoute: ActivatedRoute, public router: Router, public usuarioService: UsuarioService, public notificacionService : NotificacionService) {
     }
 
     ngOnInit(): void {
@@ -29,15 +30,17 @@ export class OfertasVerComponent implements OnInit {
                 return this.router.navigateByUrl(`/ofertas`);
             }
             this.oferta = this.ofertaService.mapearOfertas([oferta])[0];
+            console.log(this.oferta);
         });
     }
 
-    crearPartenariado() {
+    aceptarOferta() {
         Swal.fire(
-            'Atención',
-            'Antes de crear un partenariado debes completar los datos de la demanda',
-            'warning'
+            'Enhorabuena',
+            'Ya ha enviado su pedicion',
+            'success'
         );
-        return this.router.navigate(['/demandas/crear'], { queryParams: { oferta_id: this.oferta.id } });
+        this.notificacionService.crearNotificacionOfertaAceptada(this.oferta.id, this.usuarioService.usuario.uid).subscribe(res =>{
+        });
     }
 }

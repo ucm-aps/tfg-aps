@@ -1,8 +1,38 @@
+
 <div class="btn-group btn-group-toggle" data-toggle="buttons">
     <label class="btn btn-secondary active">
-      <input type="radio" name="options" id="active" autocomplete="off" checked> Active
+      <input (change)="cargarNotificacion()" type="radio" name="options" id="active" autocomplete="off"> Active
     </label>
     <label class="btn btn-secondary">
-      <input type="radio" name="options" id="disable" autocomplete="off"> Disabled
+      <input (change)="DesactivarNotificacion()" type="radio" name="options" id="active" autocomplete="off" checked> Disabled
     </label> 
+
+    <h6 class="title mb-0">
+      Notificaciones
+      <span
+          *ngIf="!cargando"
+          class="leading-none"
+      >
+          <small class="font-weight-bold"
+              >(total: {{ totalNotificaciones }})</small>
+      </span>
+  </h6>
+  
+  </div>
+
+  
+  <div class="Listanotificaciones ml-3">
+
+    <div class="bg-white" 
+    *ngFor="let notificacion of notificaciones" >
+      <a [routerLink]="['/mi-notificacion/', notificacion.id]">
+      <div class="row font-weight-bolder notificacion"
+      *ngIf="!notificacion.leido">
+        <div class="col-lg-3 col-md-2 col-sm-2 ">{{ notificacion.titulo }}</div>
+        <div class="col-lg-8 col-md-4 col-sm-3">{{ notificacion.mensaje }}</div>
+        <div class="col-1">{{ notificacion.fecha }}</div>
+
+      </div>
+      </a>
+    </div>
   </div>

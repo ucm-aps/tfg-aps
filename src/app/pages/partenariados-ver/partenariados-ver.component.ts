@@ -15,7 +15,6 @@ import { FileUploadService } from 'src/app/services/file-upload.service';
 export class PartenariadosVerComponent implements OnInit {
 
   public partenariado: Partenariado;
-  public partenariados: Partenariado[];
   public offset = 0;
   public limit = 50;
   public mensaje: string;
@@ -28,8 +27,8 @@ export class PartenariadosVerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-     this.activatedRoute.params.subscribe( ({ }) => {
-      this.cargarPartenariado();
+     this.activatedRoute.params.subscribe( ({id }) => {
+      this.cargarPartenariado(id);
     }); 
   } 
 
@@ -40,14 +39,19 @@ export class PartenariadosVerComponent implements OnInit {
   }
 
   
-  cargarPartenariado() {
+  cargarPartenariado(id:string) {
 
     // ver o editar la partenariado
-    this.partenariadoService.cargarPartenariados(this.offset, this.limit, this.getFiltros())
-    .subscribe(({ total, filtradas, partenariados }) => { 
-      this.partenariados = partenariados 
+    this.partenariadoService.cargarPartenariado(id).subscribe((partenariado : Partenariado) =>{
+      if(!partenariado){
+        return this.router.navigateByUrl(`/mi-resumen`);
+      }
+      this.partenariado = partenariado;
+      console.log(this.partenariado);
+
     });
   }  
+
 /* 
   cambiarEstado(estado: string) {
     this.partenariadoService.cambiarEstado(this.partenariado, estado)

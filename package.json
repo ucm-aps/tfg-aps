@@ -63,6 +63,7 @@
         "ngx-chips": "^2.2.2",
         "ngx-mat-autocomplete-control": "^2.0.3",
         "ngx-mat-select-search": "^3.2.0",
+        "node": "^19.0.1",
         "nodemailer": "^6.4.15",
         "nodemon": "^2.0.20",
         "popper.js": "^1.16.1",

@@ -98,6 +98,26 @@ const getUsuario = async (req, res) => {
     }
 }
 
+const getUsuarioPorEmail = async(req, res) =>{
+    try{
+        const email = req.params.email;
+        let usuario = await dao_usuario.obtenerUsuarioSinRolPorEmail(email);
+        let usuarioPath = await dao_usuario.getPathAvatar(usuario.id);
+        usuario.origin_img = usuarioPath;
+        console.log(usuario);
+        return res.status(200).json({
+            ok:true,
+            usuario
+        });
+    } catch (error) {
+        console.error(error);
+
+        return res.status(500).json({
+            ok: false,
+            msg: 'Error inesperado',
+        });
+    }
+}
 
 const getUsuarioPath = async (req, res) => {
     try {
@@ -453,5 +473,6 @@ module.exports = {
     crearUsuario,
     actualizarUsuario,
     borrarUsuario,
-    obtenerProfesores
+    obtenerProfesores,
+    getUsuarioPorEmail
 }
