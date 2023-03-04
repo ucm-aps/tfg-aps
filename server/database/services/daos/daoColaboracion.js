@@ -182,7 +182,7 @@ function obtenerPartenariado(id) {
             (estado = (function() {
               // Obtener el valor del estado
               let estado = partenariado[0]["estado"];
-          
+
               // Asignar una etiqueta según el valor del estado
               if (estado === "EN_CREACION") {
                 return "En creación";
