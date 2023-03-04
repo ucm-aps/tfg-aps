@@ -52,7 +52,7 @@ router.post(
     actualizarPartenariado
 );
 // listar partenariados
-router.get('/', [],
+router.get('/', [validarJWT],
     getPartenariados);
 
 // obtener un partenariado

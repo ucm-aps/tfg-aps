@@ -49,7 +49,7 @@ router.post(
 
 // obtener una oferta
 router.get(
-    '/:id', [],
+    '/:id', [validarJWT],
     obtenerOferta
 );
 module.exports = router;
