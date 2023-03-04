@@ -172,6 +172,7 @@ function crearDemanda(demanda) {
                                 'Se ha introducido la demanda con id ',
                                 id_anuncio[0]
                             );
+                            return id_anuncio[0];
                         });
                 })
                 .catch((err) => {
@@ -229,27 +230,33 @@ function obtenerDemandaServicio(id_demanda) {
                                             titulaciones_ref.push(titulacion['nombre']);
                                         }
                                         necesidad_social = necesidad_social[0]['nombre'];
-                                        return new transferDemandaServicio(
-                                            demanda[0]['id'],
-                                            anuncio.getTitulo(),
-                                            anuncio.getDescripcion(),
-                                            anuncio.getImagen(),
-                                            anuncio.getCreated_at(),
-                                            anuncio.getUpdated_at(),
-                                            socio.getNombre() + ' ' + socio.getApellidos(),
-                                            demanda[0]['ciudad'],
-                                            demanda[0]['finalidad'],
-                                            demanda[0]['periodo_definicion_ini'],
-                                            demanda[0]['periodo_definicion_fin'],
-                                            demanda[0]['periodo_ejecucion_ini'],
-                                            demanda[0]['periodo_ejecucion_fin'],
-                                            demanda[0]['fecha_fin'],
-                                            demanda[0]['observaciones_temporales'],
-                                            necesidad_social,
-                                            titulaciones_ref,
-                                            demanda[0]['comunidad_beneficiaria'],
-                                            anuncio.dummy
-                                        );
+                                        return obtenerAreaServicio(id_demanda).then(areasServicio=>{
+                                            let areas =[];
+                                            areasServicio.forEach(n => areas.push(n.nombre));
+                                            return new transferDemandaServicio(
+                                                demanda[0]['id'],
+                                                anuncio.getTitulo(),
+                                                anuncio.getDescripcion(),
+                                                anuncio.getImagen(),
+                                                anuncio.getCreated_at(),
+                                                anuncio.getUpdated_at(),
+                                                socio,
+                                                demanda[0]['ciudad'],
+                                                demanda[0]['finalidad'],
+                                                demanda[0]['periodo_definicion_ini'],
+                                                demanda[0]['periodo_definicion_fin'],
+                                                demanda[0]['periodo_ejecucion_ini'],
+                                                demanda[0]['periodo_ejecucion_fin'],
+                                                demanda[0]['fecha_fin'],
+                                                demanda[0]['observaciones_temporales'],
+                                                necesidad_social,
+                                                titulaciones_ref,
+                                                areas,
+                                                demanda[0]["comunidad_beneficiaria"],
+                                                anuncio.dummy
+                                            );
+                                            
+                                        })
                                     });
                                 });
                         });
@@ -498,6 +505,10 @@ function obtenerTitulacionLocal(id_demanda) {
             );
             throw err;
         });
+}
+
+function obtenerAreaServicioDemanda(demanda){
+    return knex('areaservicio_anuncioservicio').where({id_anuncio:demanda});
 }
 
 function obtenerListaTitulacionLocal() {

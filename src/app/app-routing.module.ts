@@ -59,11 +59,16 @@ import { PartenariadoCrearProfesorComponent } from './pages/partenariados-crear/
 import { ProyectosComponent } from './pages/proyectos/proyectos.component';
 import { ProyectosVerComponent } from './pages/proyectos-ver/proyectos-ver.component';
 
+//Notificacion
+import { NotificacionComponent } from './pages/notificacion/notificacion.component';
+
 // varios y error pages routes
 import { CondicionesComponent } from './pages/condiciones/condiciones.component';
 import { Code404Component } from './errors/code404/code404.component';
 import { ResumenComponent } from './pages/resumen/resumen.component';
 
+//Perfil
+import {PerfilComponent } from './pages/perfil/perfil.component';
 
 const routes: Routes = [
 
@@ -185,7 +190,13 @@ const routes: Routes = [
 
             //Resumen
             { path: 'mi-resumen', component: ResumenComponent, data: { titulo: 'Resumen' } },
-
+            
+            
+            
+            //Notificacion
+            { path: 'mi-notificacion/:id', component: NotificacionComponent, data: { titulo: 'Notificacion'}},
+            //Ver-Perfil
+            { path: 'ver-perfil/:email', component:PerfilComponent, data :{ titulo: 'Ver Perfil'}},
             // varios
             {
                 path: 'registro/condiciones-de-uso',
@@ -199,7 +210,7 @@ const routes: Routes = [
 
 @NgModule({
     imports: [
-        RouterModule.forRoot(routes, { useHash: true })
+    RouterModule.forRoot(routes, { useHash: true })
     ],
     exports: [RouterModule]
 })

@@ -219,10 +219,13 @@
                                     <div *ngIf="campoNoValido('titulacionLocal')" class='col'>{{ campoNoValido('titulacionLocal') }}</div>
                                 </div>
 
-                                <div class='ml-auto mb-2'>
+                                <div class='mr-auto mb-2'>
                                     <input *ngIf='!this.Demanda_id' [disabled]='this.formSending || (this.formSubmitted && this.createDemandForm.invalid)' [value]="this.formSending ? 'Creando...' : 'Crear demanda'" class='btn btn-default btn-secondary m-4' type='submit'>
                                     <input *ngIf='this.Demanda_id' [disabled]='this.formSending || (this.formSubmitted && this.createDemandForm.invalid)' [value]="this.formSending ? 'Actualizando...' : 'Actualizar demanda'" class='btn btn-default btn-secondary m-4' type='submit'>
                                     <label *ngIf='createDemandForm.errors'>{{ createDemandForm.errors?.dates | json }}</label>
+                                </div>
+                                <div class='mb-2'>
+                                    <a [routerLink]="['/demandas']" class='btn btn-default btn-secondary m-4' role="button">Volver</a>
                                 </div>
                             </div>
 

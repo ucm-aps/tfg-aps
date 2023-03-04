@@ -613,7 +613,7 @@ function obtenerAreaServicio(id_anuncio) {
             for (id_area of id_areas) {
                 areas.push(id_area["id_area"]);
             }
-            return knex.select("*").from("anuncio_servicio").whereIn("id", areas);
+            return knex('area_servicio').select("*").whereIn("id", areas);
         })
         .catch((err) => {
             console.log(
