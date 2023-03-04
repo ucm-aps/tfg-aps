@@ -48,6 +48,7 @@ export class PartenariadosVerComponent implements OnInit {
       }
       this.partenariado = partenariado;
       console.log(this.partenariado);
+      console.log("Holaaaaaaa");
 
     });
   }  

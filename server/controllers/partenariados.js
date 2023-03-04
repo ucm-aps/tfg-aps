@@ -138,7 +138,6 @@ const crearPartenariadoSocioComunitario = async (req, res = response) => {
 const getPartenariados = async (req, res) => {
     try {
         let partenariados = await daoPartenariados.obtenerPartenariados(req.query.limit, req.query.skip, req.query.filtros);
-        console.log(partenariados); 
         return res.status(200).json({
             ok: true,
             partenariados,
@@ -156,6 +155,7 @@ const getPartenariados = async (req, res) => {
 const getPartenariado = async (req, res) => {
     try {
         const partenariado = await dao_colaboracion.obtenerPartenariado(req.params.id);
+        console(partenariado);
         return res.status(200).json({
             ok: true,
             partenariado
