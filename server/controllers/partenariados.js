@@ -155,7 +155,6 @@ const getPartenariados = async (req, res) => {
 const getPartenariado = async (req, res) => {
     try {
         const partenariado = await dao_colaboracion.obtenerPartenariado(req.params.id);
-        console(partenariado);
         return res.status(200).json({
             ok: true,
             partenariado
