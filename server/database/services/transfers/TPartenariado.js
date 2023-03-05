@@ -5,8 +5,8 @@ class TPartenariado extends TColaboracion {
     id_oferta;
     estado;
 
-    constructor(id, titulo, descripcion, admite_externos, responsable, profesores, id_demanda, id_oferta, estado){
-        super(id, titulo, descripcion, admite_externos, responsable, profesores);
+    constructor(id, titulo, descripcion, admite_externos, responsable, profesores, id_demanda, id_oferta, estado, ciudad){
+        super(id, titulo, descripcion, admite_externos, responsable, profesores, ciudad);
         this.id_demanda = id_demanda;
         this.id_oferta = id_oferta;
         this.estado = estado;
@@ -47,6 +47,12 @@ class TPartenariado extends TColaboracion {
     }
     setProfesores(profesor){
         this.profesores = profesor; 
+    }
+    getCiudad(){
+        return this.ciudad;
+    }
+    setCiudad(ciudad){
+        this.ciudad = ciudad;
     }
 }
 module.exports = TPartenariado;
