@@ -19,7 +19,7 @@ function obtenerPartenariados(limit, offset, filters) {
         .raw(query)
         .then((res) => { 
 
-            return res[0].map(x => new transferPartenariado(x.partenariado_id,x.finalidad,x.observaciones_temporales,false,x.creador,[],x.id_demanda,x.id_oferta,x.estado,x.ciudad));
+            return res[0].map(x => new transferPartenariado(x.partenariado_id,x.finalidad,x.observaciones_temporales,false,x.creador,[],x.id_demanda,x.id_oferta,x.estado));
         })
         .catch((err) => {
             console.log(err);

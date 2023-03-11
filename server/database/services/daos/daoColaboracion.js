@@ -165,34 +165,17 @@ function obtenerColaboracion(id_colab) {
 
 function obtenerPartenariado(id) {
   return obtenerColaboracion(id)
-    .then(async (colaboracion) => {
+    .then((colaboracion) => {
       return knex("partenariado")
         .where({ id: id })
         .select("*")
-        .then(async (partenariado) => {
-          // Obtener el ID de la demanda
-          const idDemanda = partenariado[0]["id_demanda"];
-
-          // Obtener la ciudad correspondiente a la demanda
-          const demanda = await knex("demanda_servicio")
-            .where({ id: idDemanda })
-            .select("ciudad")
-            .first();
-
-
-          const responsable = await knex("colaboracion")
-          .leftJoin("profesor", "colaboracion.responsable", "profesor.id")
-          .leftJoin("usuario", "profesor.id", "usuario.id")
-          .where({ "colaboracion.id": id })
-          .select("usuario.origin_login")
-          .first();
-
+        .then((partenariado) => {
           return new transferPartenariado(
             (id = colaboracion.getId()),
             (titulo = colaboracion.getTitulo()),
             (descripcion = colaboracion.getDescripcion()),
             (admite_externos = colaboracion.getAdmite()),
-            (idresponsable = responsable),
+            (idresponsable = colaboracion.getResponsable()),
             (profesores = colaboracion.getProfesores()),
             (id_demanda = partenariado[0]["id_demanda"]),
             (id_oferta = partenariado[0]["id_oferta"]),
@@ -212,8 +195,7 @@ function obtenerPartenariado(id) {
               } else {
                 return "Estado desconocido";
               }
-            })()),
-            (ciudad = demanda.ciudad)
+            })())
           );
         })
         .catch((err) => {
