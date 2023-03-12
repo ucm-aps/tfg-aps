@@ -39,7 +39,7 @@
                 </div>
                 <hr/>
 
-                <p><strong>Fecha de registro del partenariado:</strong> {{ partenariado.parsedCreatedAt }}</p>
+                <p><strong>Fecha de registro del partenariado:</strong> {{ partenariado.idresponsable.createdAt | date:"dd-MM-yyyy" }}</p>
                 <p><strong>Descripción:</strong> {{ partenariado.descripcion }}</p>
                 <p><strong>Responsable del partenariado:</strong></p>
                 <ul>
