@@ -59,7 +59,6 @@ export class PartenariadosVerComponent implements OnInit {
   cargarNombreProfesorResponsable(id){
     this.usuarioService.cargarUsuario(id).subscribe((usuario: Usuario)=>{
       this.profesorResponsable = usuario;
-      console.log(usuario);
     })
   }
 

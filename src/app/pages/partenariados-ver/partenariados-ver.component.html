@@ -23,7 +23,7 @@
     </div>
     
 
-    <div *ngIf="partenariado.estado !== 'EN_CREACION'"  class="row">
+    <div *ngIf="partenariado?.estado !== 'EN_CREACION'"  class="row">
 
         <div class="col-9">
 
@@ -41,17 +41,16 @@
 
                 <p><strong>Fecha de registro del partenariado:</strong> {{ partenariado.parsedCreatedAt }}</p>
                 <p><strong>Descripción:</strong> {{ partenariado.descripcion }}</p>
-                <p><strong>Responsable del partenariado:</strong> {{partenariado.idresponsable.nombre}} {{partenariado.idresponsable.apellidos}} </p>
+                <p><strong>Responsable del partenariado:</strong></p>
                 <ul>
-                    <li><strong><em>Nombre y Apellidos: </em></strong>{{ partenariado.proponedor.nombre}} {{ partenariado.proponedor.apellidos}}</li>
+                    <li><strong><em>Nombre y Apellidos: </em></strong>{{ partenariado.idresponsable.nombre}} {{ partenariado.idresponsable.apellidos}}</li>
                     <li>
                         <strong><em>
-                            <span *ngIf="['ROL_ESTUDIANTE', 'ROL_PROFESOR', 'ROL_GESTOR'].includes(partenariado.proponedor.rol)">Universidad / Titulación: </span>
-                            <span *ngIf="['ROL_ESTUDIANTE'].includes(partenariado.proponedor.rol)">Sector: </span>
+                            <span *ngIf="['ROL_ESTUDIANTE', 'ROL_PROFESOR', 'ROL_GESTOR'].includes(partenariado.idresponsable.rol)">Universidad / Titulación: </span>
+                            <span *ngIf="['ROL_ESTUDIANTE'].includes(partenariado.idresponsable.rol)">Sector: </span>
                         </em></strong>
-                        {{ partenariado.proponedor.additionalInfoPlain || 'Sin información'}}
                     </li>
-                    <li><strong><em>Rol en la aplicación: </em></strong>{{ partenariado.proponedor.displayRol}}</li>
+                    <!-- <li><strong><em>Rol en la aplicación: </em></strong>{{ partenariado.idResponsable.rol}}</li> -->
                 </ul>
 
 
