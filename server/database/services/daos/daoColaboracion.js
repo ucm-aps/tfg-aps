@@ -3,6 +3,7 @@ const transferColaboracion = require("../transfers/TColaboracion");
 const transferPartenariado = require("../transfers/TPartenariado");
 const transferProyecto = require("../transfers/TProyecto");
 const TNotas = require("../transfers/TNotas");
+const daoUsuario = require("../daos/daoUsuario");
 
 // CREAR ---------------------------------------------------------------------------------------------------------
 function crearColaboracion(colaboracion) {
@@ -186,13 +187,15 @@ function obtenerPartenariado(id) {
           .where({ "colaboracion.id": id })
           .select("usuario.origin_login")
           .first();
+
+          let profesorresponsable = await daoUsuario.obtenerUsuarioSinRolPorId(colaboracion.getResponsable());
           
           return new transferPartenariado(
             (id = colaboracion.getId()),
             (titulo = colaboracion.getTitulo()),
             (descripcion = colaboracion.getDescripcion()),
             (admite_externos = colaboracion.getAdmite()),
-            (idresponsable = colaboracion.getResponsable()),
+            (idresponsable = profesorresponsable),
             (profesores = colaboracion.getProfesores()),
             (id_demanda = partenariado[0]["id_demanda"]),
             (id_oferta = partenariado[0]["id_oferta"]),
