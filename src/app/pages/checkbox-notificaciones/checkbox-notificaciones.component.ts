@@ -12,13 +12,12 @@ import { UsuarioService } from '../../services/usuario.service';
 })
 export class CheckboxNotificacionesComponent implements OnInit {
   public offset = 0;
-  public limit = 2; // Cambia este valor para ajustar el número de notificaciones por página.
+  public limit = 10; // Cambia este valor para ajustar el número de notificaciones por página.
   public filterUsuario = {};
   public totalNotificaciones = 0;
   public notificaciones: Notificacion[] = [];
   public totalNotificacionesBuscadas = 0;
   public cargando = false;
-  public paginacion = 1; // Define la página actual.
 
   constructor(
     public notificacionService: NotificacionService,
@@ -49,24 +48,6 @@ export class CheckboxNotificacionesComponent implements OnInit {
 
   DesactivarNotificacion(): void {
     this.notificaciones = [];
-  }
-
-  // Cambia a la página siguiente.
-  siguientePagina() {
-    if (this.paginacion * this.limit < this.totalNotificaciones) {
-      this.paginacion++;
-      this.offset = (this.paginacion - 1) * this.limit;
-      this.cargarNotificacion();
-    }
-  }
-
-  // Cambia a la página anterior.
-  paginaAnterior() {
-    if (this.paginacion > 1) {
-      this.paginacion--;
-      this.offset = (this.paginacion - 1) * this.limit;
-      this.cargarNotificacion();
-    }
   }
 
 }
