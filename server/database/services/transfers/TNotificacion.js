@@ -6,11 +6,14 @@ class TNotificacion{
     mensaje;
     fecha_fin;
     emailOrigen;
-    idAnuncio;
-    tituloAnuncio;
+    idOferta;
+    tituloOferta;
+    idDemanda;
+    tituloDemanda;
     pendiente;
     idPartenariado;
-    constructor(id, idDestino, leido, titulo, mensaje, fecha_fin, emailOrigen, idAnuncio, tituloAnuncio, pendiente, idPartenariado){
+    idMatching;
+    constructor(id, idDestino, leido, titulo, mensaje, fecha_fin, emailOrigen, idOferta, tituloOferta, pendiente, idPartenariado, idDemanda, tituloDemanda){
         this.id=id;
         this.idDestino=idDestino;
         this.leido=leido;
@@ -18,8 +21,10 @@ class TNotificacion{
         this.mensaje= mensaje;
         this.fecha_fin = fecha_fin;
         this.emailOrigen = emailOrigen;
-        this.idAnuncio = idAnuncio;
-        this.tituloAnuncio = tituloAnuncio;
+        this.idOferta = idOferta;
+        this.tituloOferta = tituloOferta;
+        this.idDemanda = idDemanda;
+        this.tituloDemanda = tituloDemanda;
         this.pendiente = pendiente;
         this.idPartenariado = idPartenariado;
     }

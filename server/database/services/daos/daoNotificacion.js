@@ -9,6 +9,7 @@ const daoColaboracion = require("./daoColaboracion")
 const transferNotificacion = require('../transfers/TNotificacion');
 const { ConsoleReporter } = require("jasmine");
 const { not } = require("@angular/compiler/src/output/output_ast");
+const TNotificacion = require("../transfers/TNotificacion");
 
 //Obtener toda las notificaciones
 
@@ -42,7 +43,12 @@ function cargarNotificacion(idNotificacion){
                         if(result == undefined){
                             return obtenerNotificacionPartenariadoHecho(idNotificacion).then(result =>{
                                 if(result == undefined){
-                                    return obtenerNotificacionDemandaRespaldada(idNotificacion)
+                                    return obtenerNotificacionDemandaRespaldada(idNotificacion).then(result =>{
+                                        if(result == undefined){
+                                            return obtenerNotificacionMatching(idNotificacion);
+                                        }
+                                        return result;
+                                    })
                                 } 
                                 return result;
                             });
@@ -224,14 +230,14 @@ function crearNotificacion(notificacion){
 }
 
 function crearNotificacionOfertaAceptada(notificacion, idSocio){
-    return daoOferta.obtenerOfertaServicio(notificacion.idAnuncio)
+    return daoOferta.obtenerOfertaServicio(notificacion.idOferta)
     .then(result =>{
         notificacion.idDestino = result.creador.id;
         console.log(notificacion);
         crearNotificacion(notificacion).then(idNotificacion =>{
             return knex('ofertaaceptada').insert({
                 idNotificacion:idNotificacion,
-                idOferta:notificacion.idAnuncio,
+                idOferta:notificacion.idOferta,
                 idSocio:idSocio
             })})
     }).catch(err =>{
@@ -262,6 +268,30 @@ function obtenerNotificacionDemandaRespaldadaPorIdPartenariado(idPartenariado){
         console.log(err)
         console.log("Se ha producido un error al intenta obtener notificacion de demandaRespalda por idPartenariado");
     });
+}
+
+function obtenerNotificacionMatching(idnotificacion){
+    return knex('notificaciones').join("notificacionmatching", "notificaciones.id","=", "notificacionmatching.idNotificacion")
+    .where({idNotificacion: idnotificacion})
+    .select('*').then(async resultado=>{
+        if(resultado.length == 0) return;
+        return new transferNotificacion(
+            resultado[0].id,
+            resultado[0].idDestino,
+            resultado[0].leido,
+            resultado[0].titulo,
+            resultado[0].mensaje,
+            resultado[0].fecha_fin,
+            null,
+            resultado[0].idOferta,
+            await daoOferta.obtenerOfertaServicio(resultado[0].idOferta).then(result => result.getTitulo()),
+            resultado[0].pendiente,
+            null,
+            resultado[0].idDemanda,
+            await daoDemanda.obtenerDemandaServicio(resultado[0].idDemanda).then(result => result.getTitulo()),
+        );
+
+    })
 }
 
 
@@ -327,6 +357,31 @@ function crearNotificacionDemandaRespalda(notificacion){
     })
 
 }
+
+function crearNotificacionMatching(idOferta, iddestinatario, idDemanda){
+    let Notificacion = new TNotificacion(
+        "",
+        iddestinatario,
+        "",
+        "Se ha producido matching!!",
+        "Enhorabuena se ha producido un matching",
+        "",
+        "",
+        idDemanda,
+        "",
+        1,
+        "",""
+    )
+    return crearNotificacion(Notificacion).then(idNotificacion =>{
+        return knex('notificacionmatching').insert({
+            idNotificacion: idNotificacion,
+            idOferta: idOferta,
+            idDemanda: idDemanda
+        }).then(result =>{
+            return result;
+        })
+    })
+}
 function FinalizarPendienteNotificacion(idNotificacion){
     return knex('notificaciones').where({
         id:idNotificacion
@@ -352,7 +407,7 @@ function notificarPartenariadoRellenado(notificacion){
                             if(notificacionFinalizado.length == 0){
                                 return obtenerNotificacionDemandaRespaldadaPorIdPartenariado(notificacion.idPartenariado).then(notificacionFinalizado=>{
                                     return FinalizarPendienteNotificacion(notificacionFinalizado[0].idNotificacion);
-                                })
+                                });
                             }
                             return FinalizarPendienteNotificacion(notificacionFinalizado[0].idNotificacion);
                         });
@@ -372,6 +427,8 @@ function notificarPartenariadoRellenado(notificacion){
 }
 
 
+
+
 module.exports ={
     obtenerNotificaciones,
     cargarNotificacion,
@@ -381,6 +438,8 @@ module.exports ={
     crearNotificacionAceptadacionRechazada,
     crearNotificacionAceptadacionAceptada,
     notificarPartenariadoRellenado,
-    crearNotificacionDemandaRespalda
+    crearNotificacionDemandaRespalda,
+    crearNotificacionMatching
+    
 
 }

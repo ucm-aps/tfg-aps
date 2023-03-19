@@ -12,7 +12,7 @@ import { UsuarioService } from '../../services/usuario.service';
 })
 export class CheckboxNotificacionesComponent implements OnInit {
   public offset = 0;
-  public limit = 10; // Cambia este valor para ajustar el número de notificaciones por página.
+  public limit = 400; // Cambia este valor para ajustar el número de notificaciones por página.
   public filterUsuario = {};
   public totalNotificaciones = 0;
   public notificaciones: Notificacion[] = [];

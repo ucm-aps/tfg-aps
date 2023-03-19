@@ -14,10 +14,12 @@ export class Notificacion{
         public mensaje:string,
         public fecha_fin:string,
         public emailOrigen:string,
-        public idAnuncio:string,
-        public tituloAnuncio:string,
+        public idOferta:string,
+        public tituloOferta:string,
         public pendiente:string,
-        public idPartenariado:string
+        public idPartenariado:string,
+        public idDemanda:string,
+        public tituloDemanda:string,
     ){}
 
     get parsedDateCrear(){

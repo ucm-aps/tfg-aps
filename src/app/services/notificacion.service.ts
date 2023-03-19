@@ -26,10 +26,12 @@ export class NotificacionService {
                 notificacion.mensaje,
                 notificacion.fecha_fin,
                 notificacion.emailOrigen,
-                notificacion.idAnuncio,
-                notificacion.tituloAnuncio,
+                notificacion.idOferta,
+                notificacion.tituloOferta,
                 notificacion.pendiente,
-                notificacion.idPartenariado
+                notificacion.idPartenariado,
+                notificacion.idDemanda,
+                notificacion.tituloDemanda
             )
         );
     }

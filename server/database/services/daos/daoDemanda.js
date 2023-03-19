@@ -74,6 +74,7 @@ function obtenerAnuncioServicio(id_anuncio) {
                 for (area of areas_servicio) {
                     areas.push(area['nombre']);
                 }
+                console.log(id_anuncio);
                 return new transferAnuncioServicio(
                     id_anuncio,
                     anuncio[0]['titulo'],
