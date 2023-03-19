@@ -80,7 +80,8 @@ CREATE TABLE `partenariadorellenado` (
 
 CREATE TABLE `notificacionmatching` (
   `idNotificacion` int(11) NOT NULL,
-  `idPartenariado` int(11) NOT NULL,
+  `idOferta` int(11) NOT NULL,
+  `idDemanda` int(11) NOT NULL,
   PRIMARY KEY (`idNotificacion`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -2990,7 +2991,8 @@ COMMIT;
 --
 ALTER TABLE `notificacionmatching`
   ADD CONSTRAINT `notificacionmatching_ibfk_1` FOREIGN KEY (`idNotificacion`) REFERENCES `notificaciones` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `notificacionmatching_ibfk_2` FOREIGN KEY (`idPartenariado`) REFERENCES `partenariado` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `notificacionmatching_ibfk_2` FOREIGN KEY (`idOferta`) REFERENCES `matching` (`id_oferta`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `notificacionmatching_ibfk_3` FOREIGN KEY (`idDemanda`) REFERENCES `matching` (`id_demanda`) ON DELETE CASCADE ON UPDATE CASCADE;
   
 COMMIT;
 
