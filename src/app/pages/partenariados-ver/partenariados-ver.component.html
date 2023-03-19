@@ -23,7 +23,7 @@
     </div>
     
 
-    <div *ngIf="partenariado.estado !== 'EN_CREACION'"  class="row">
+    <div *ngIf="partenariado?.estado !== 'EN_CREACION'"  class="row">
 
         <div class="col-9">
 
@@ -34,24 +34,23 @@
 
             <div class="card my-2 p-3">
                 <div class="d-flex justify-content-between">
-                    <div><strong>Rama de conocimiento:</strong> {{ partenariado.rama }}</div>
+                    <div><strong>Rama de conocimiento:</strong> {{ partenariado.idresponsable.area_conocimiento[0] }}</div>
                     <div><strong>Ciudad:</strong> {{ partenariado.ciudad }}</div>
                 </div>
                 <hr/>
 
-                <p><strong>Fecha de registro del partenariado:</strong> {{ partenariado.parsedCreatedAt }}</p>
+                <p><strong>Fecha de registro del partenariado:</strong> {{ partenariado.idresponsable.createdAt | date:"dd-MM-yyyy" }}</p>
                 <p><strong>Descripción:</strong> {{ partenariado.descripcion }}</p>
-                <p><strong>¿Quién es el responsable de la partenariado?:</strong></p>
+                <p><strong>Responsable del partenariado:</strong></p>
                 <ul>
-                    <li><strong><em>Nombre y Apellidos: </em></strong>{{ partenariado.proponedor.nombre}} {{ partenariado.proponedor.apellidos}}</li>
+                    <li><strong><em>Nombre y Apellidos: </em></strong>{{ partenariado.idresponsable.nombre}} {{ partenariado.idresponsable.apellidos}}</li>
                     <li>
                         <strong><em>
-                            <span *ngIf="['ROL_ESTUDIANTE', 'ROL_PROFESOR', 'ROL_GESTOR'].includes(partenariado.proponedor.rol)">Universidad / Titulación: </span>
-                            <span *ngIf="['ROL_ESTUDIANTE'].includes(partenariado.proponedor.rol)">Sector: </span>
+                            <span *ngIf="['ROL_ESTUDIANTE', 'ROL_PROFESOR', 'ROL_GESTOR'].includes(partenariado.idresponsable.rol)">Universidad / Titulación: </span>
+                            <span *ngIf="['ROL_ESTUDIANTE'].includes(partenariado.idresponsable.rol)">Sector: </span>
                         </em></strong>
-                        {{ partenariado.proponedor.additionalInfoPlain || 'Sin información'}}
                     </li>
-                    <li><strong><em>Rol en la aplicación: </em></strong>{{ partenariado.proponedor.displayRol}}</li>
+                    <!-- <li><strong><em>Rol en la aplicación: </em></strong>{{ partenariado.idResponsable.rol}}</li> -->
                 </ul>
 
 
@@ -97,7 +96,7 @@
 
             <button [routerLink]="['/partenariados']" class='btn btn-info' style='width: 200px' type='button'>Volver al listado</button>
 
-        </div> <!--
+        </div> 
 
         <div class="col-3">
 
@@ -193,7 +192,7 @@
                 </div>
 
             </div>
-        </div> -->
+        </div> 
     </div>
 </div>
 <app-footer></app-footer>

@@ -5,13 +5,14 @@
     >
         <strong>{{ pageTitle }}</strong>
         <a
-            *ngIf="ofertaCrearGuard.canActivate(null, null)"
-            [routerLink]="['/ofertas/crear']"
-            class="btn btn-primary border-light btn-sm"
-            role="button"
-        >
-            Crear Oferta
-        </a>
+        *ngIf="ofertaCrearGuard.canActivate(null, null) && (!this.usuarioService.usuario || !this.usuarioService.usuario.esSocioComunitario)"
+        [routerLink]="['/ofertas/crear']"
+        class="btn btn-primary border-light btn-sm"
+        role="button"
+      >
+        Crear Oferta
+      </a>
+      
     </h5>
 
     <div

@@ -6,6 +6,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import Swal from 'sweetalert2';
 import * as moment from 'moment';
 import { FileUploadService } from 'src/app/services/file-upload.service';
+import { Usuario } from './../../models/usuario.model';
 
 @Component({
   selector: 'app-partenariados-ver',
@@ -18,6 +19,7 @@ export class PartenariadosVerComponent implements OnInit {
   public offset = 0;
   public limit = 50;
   public mensaje: string;
+  private profesorResponsable;
 
   public filterCreador = '';
 
@@ -47,10 +49,18 @@ export class PartenariadosVerComponent implements OnInit {
         return this.router.navigateByUrl(`/mi-resumen`);
       }
       this.partenariado = partenariado;
+      this.cargarNombreProfesorResponsable(this.partenariado.idresponsable);
       console.log(this.partenariado);
+      console.log("Holaaaaaaa");
 
     });
-  }  
+  }
+  
+  cargarNombreProfesorResponsable(id){
+    this.usuarioService.cargarUsuario(id).subscribe((usuario: Usuario)=>{
+      this.profesorResponsable = usuario;
+    })
+  }
 
 /* 
   cambiarEstado(estado: string) {

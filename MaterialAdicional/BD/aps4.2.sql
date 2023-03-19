@@ -78,6 +78,13 @@ CREATE TABLE `partenariadorellenado` (
   PRIMARY KEY (`idNotificacion`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+CREATE TABLE `notificacionmatching` (
+  `idNotificacion` int(11) NOT NULL,
+  `idOferta` int(11) NOT NULL,
+  `idDemanda` int(11) NOT NULL,
+  PRIMARY KEY (`idNotificacion`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 --
 -- Estructura de tabla para la tabla `anuncio_servicio`
 --
@@ -2976,6 +2983,16 @@ ALTER TABLE `demandarespalda`
 ALTER TABLE `partenariadorellenado`
   ADD CONSTRAINT `partenariadorellenado_ibfk_1` FOREIGN KEY (`idNotificacion`) REFERENCES `notificaciones` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `partenariadorellenado_ibfk_2` FOREIGN KEY (`idPartenariado`) REFERENCES `partenariado` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  
+COMMIT;
+
+--
+-- Filtros para la tabla `notificacionmatching`
+--
+ALTER TABLE `notificacionmatching`
+  ADD CONSTRAINT `notificacionmatching_ibfk_1` FOREIGN KEY (`idNotificacion`) REFERENCES `notificaciones` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `notificacionmatching_ibfk_2` FOREIGN KEY (`idOferta`) REFERENCES `matching` (`id_oferta`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `notificacionmatching_ibfk_3` FOREIGN KEY (`idDemanda`) REFERENCES `matching` (`id_demanda`) ON DELETE CASCADE ON UPDATE CASCADE;
   
 COMMIT;
 
