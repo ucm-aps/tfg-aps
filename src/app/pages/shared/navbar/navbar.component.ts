@@ -13,7 +13,7 @@ import { NotificacionService } from 'src/app/services/notificacion.service';
             ]
 })
 export class NavbarComponent implements OnDestroy {
-
+    public totalNotificaciones = 0;
     public routeExtraData$: Subscription;
     public notificaciones: Notificacion[];
 
@@ -73,9 +73,11 @@ export class NavbarComponent implements OnDestroy {
 
     cargarNotificacion(){
         this.notificacionService.cargarNotificaciones(this.usuarioService.usuario.uid).subscribe(({ total,  notificaciones }) => {
+            this.totalNotificaciones = total.valueOf();
             this.notificaciones = notificaciones;
             this.notificaciones.map(n => n.leido == "1");
         });
 
     }
+
 }
