@@ -56,9 +56,9 @@ export class PartenariadoCrearProfesorComponent implements OnInit {
     async ngOnInit() {
         this.writeProfesor = this.usuarioService.usuario.rol == 'ROL_SOCIO_COMUNITARIO' ? true : false;
         this.activatedRoute.params.subscribe(({ id }) => {
-            if(this.activatedRoute.snapshot.queryParams.oferta != undefined && this.activatedRoute.snapshot.queryParams.demanda != undefined){
+            if(this.activatedRoute.snapshot.queryParams.oferta != undefined && this.activatedRoute.snapshot.queryParams.demanda_id != undefined){
                 //Caso en que el matching ha sido aceptada
-                this.loadMatching(this.activatedRoute.snapshot.queryParams.oferta, this.activatedRoute.snapshot.queryParams.demanda);
+                this.loadMatching(this.activatedRoute.snapshot.queryParams.oferta, this.activatedRoute.snapshot.queryParams.demanda_id);
             }
             else if(this.activatedRoute.snapshot.queryParams.notificacion != undefined){
                 //En el caso de que el profesor recibe la pedicion del socio y acepta empieza creando el partenariado
@@ -551,6 +551,7 @@ export class PartenariadoCrearProfesorComponent implements OnInit {
                         idPartenariado:[resp.id],
                         tituloAnuncio:[this.demanda.titulo]
                     });
+                    console.log(this.crearNotificacionDemandaRespaldada.value);
                     this.notificacionService.RespaldarDemanda(this.crearNotificacionDemandaRespaldada.value).subscribe((ok)=>{
                     });
                     this.partenariadoService.cambiarEstado(resp.id, "EN_NEGOCIACION").subscribe(ok=>{
