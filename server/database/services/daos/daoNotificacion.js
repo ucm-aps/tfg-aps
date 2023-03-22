@@ -192,20 +192,23 @@ function obtenerNotificacionDemandaRespaldada(idnotificacion){
     .where({idNotificacion: idnotificacion})
     .select('*').then(resultado =>{
         if(resultado.length == 0) return;
-        console.log(resultado);
-        return new transferNotificacion(
-            resultado[0].id,
-            resultado[0].idDestino,
-            resultado[0].leido,
-            resultado[0].titulo,
-            resultado[0].mensaje,
-            resultado[0].fecha_fin,
-            null,
-            null,
-            null,
-            resultado[0].pendiente,
-            resultado[0].idPartenariado
-        );
+        return daoColaboracion.obtenerColaboracion(resultado[0].idPartenariado).then(partenariado =>{
+            return daoUsuario.obtenerUsuarioSinRolPorId(partenariado.responsable).then(origen =>{
+                return new transferNotificacion(
+                    resultado[0].id,
+                    resultado[0].idDestino,
+                    resultado[0].leido,
+                    resultado[0].titulo,
+                    resultado[0].mensaje,
+                    resultado[0].fecha_fin,
+                    origen["correo"],
+                    null,
+                    null,
+                    resultado[0].pendiente,
+                    resultado[0].idPartenariado
+                );
+            })
+        })
     })
     .catch(err =>{
         console.log(err)
