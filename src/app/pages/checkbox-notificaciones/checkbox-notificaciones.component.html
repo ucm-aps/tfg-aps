@@ -6,15 +6,14 @@
 
         <div class="card-header">
           <div class="btn-group btn-group-toggle" data-toggle="buttons">
-            <label for="activas" class="btn btn-outline-primary active" (click)="cargarNotificacion()">
-              <input type="radio" name="options" id="activas" autocomplete="off" checked> Activas
+            <label class="btn btn-outline-primary active">
+              <input (change)="cargarNotificacion()" type="radio" name="options" id="active" autocomplete="off"> Activas
             </label>
-            <label for="desactivadas" class="btn btn-outline-primary" (click)="DesactivarNotificacion()">
-              <input type="radio" name="options" id="desactivadas" autocomplete="off"> Desactivadas
+            <label class="btn btn-outline-primary">
+              <input (change)="DesactivarNotificacion()" type="radio" name="options" id="active" autocomplete="off" checked> Desactivadas
             </label>
           </div>
         </div>
-        
 
         <div class="card-body">
 
