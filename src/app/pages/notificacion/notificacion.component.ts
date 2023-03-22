@@ -68,7 +68,7 @@ export class NotificacionComponent implements OnInit{
 
     }
     AceptacionMatching(){
-        return this.router.navigate(['partenariados/profesor/crear'], { queryParams: { notificacion: this.notificacion.id, oferta : this.notificacion.idOferta, demanda : this.notificacion.idDemanda } });
+        return this.router.navigate(['partenariados/profesor/crear'], { queryParams: { notificacion: this.notificacion.id, oferta : this.notificacion.idOferta, demanda_id : this.notificacion.idDemanda } });
 
     }
 

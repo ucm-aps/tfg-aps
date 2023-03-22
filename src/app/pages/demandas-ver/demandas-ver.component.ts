@@ -35,11 +35,6 @@ export class DemandasVerComponent implements OnInit {
     }
 
     crearPartenariado() {
-        Swal.fire(
-            'Atención',
-            'Antes de crear un partenariado debes completar los datos de la oferta',
-            'warning'
-        );
         return this.router.navigate(['/partenariados/profesor/crear'], { queryParams: { demanda_id: this.demanda.id } });
     }
 }
