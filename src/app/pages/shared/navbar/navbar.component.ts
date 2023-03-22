@@ -22,7 +22,6 @@ export class NavbarComponent implements OnDestroy {
             .subscribe(({titulo}) => {
                 document.title = titulo;
             });
-        this.cargarNotificacion();
     }
 
     ngOnDestroy(): void {
