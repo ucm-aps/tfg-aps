@@ -12,8 +12,8 @@ let matching = require("./controllers/matching.js")
 let config = require("./configuracion.json");
 
 match = (async function() {
-    let oferta = await daoOferta.obtenerOfertaServicio(110);
-    let demanda = await daoDemanda.obtenerDemandaServicio(109);
+    let oferta = await daoOferta.obtenerOfertaServicio(108);
+    let demanda = await daoDemanda.obtenerDemandaServicio(107);
     matching.hacerMatch("../tfg-aps/server/configuracion.txt", oferta, demanda);
   });
 
