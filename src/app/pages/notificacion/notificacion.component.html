@@ -29,7 +29,8 @@
                     <div><strong>Fecha:</strong> {{ notificacion.fecha_fin | date:"dd-MM-yyyy" }}</div>
                 </div>
                 <hr />
-                <p *ngIf="notificacion.emailOrigen != null"><strong>Enviado por: </strong> <a [routerLink]="['/ver-perfil/', notificacion.emailOrigen]">{{ notificacion.emailOrigen }}</a></p>
+                <p *ngIf="notificacion.idPartenariado == null && notificacion.emailOrigen != null"><strong>Enviado por: </strong> <a [routerLink]="['/ver-perfil/', notificacion.emailOrigen]">{{ notificacion.emailOrigen }}</a></p>
+                <p *ngIf="notificacion.idPartenariado != null && notificacion.emailOrigen != null"><strong>Responsable: </strong> <a [routerLink]="['/ver-perfil/', notificacion.emailOrigen]">{{ notificacion.emailOrigen }}</a></p>
                 <p><strong>Mensaje: </strong> {{ notificacion.mensaje }}</p>
                 <p *ngIf="notificacion.idOferta != null"><strong>Oferta: </strong> <a [routerLink]="['/ofertas/ver/', notificacion.idOferta]">{{ notificacion.tituloOferta }} </a></p>
                 <p *ngIf="notificacion.idDemanda != null"><strong>Demanda: </strong> <a [routerLink]="['/demandas/ver/', notificacion.idDemanda]">{{ notificacion.tituloDemanda }} </a></p>
