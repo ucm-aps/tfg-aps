@@ -46,18 +46,18 @@
                         <input class="form-group" disabled value = "{{usuario.universidad}}">
                     </div>
 
-                    <!--<div class="form-group" *ngIf="['ROL_PROFESOR'].includes(usuario.rol)">
-                        <label for="form-group"> Area/s de conocimiento</label>
-                    </div>-->
+                    <div class="form-group" *ngIf="['ROL_PROFESOR'].includes(usuario.rol)">
+                        <label for="form-group" disabled value="{{usuario.areaConocimiento}}"> Area/s de conocimiento</label>
+                    </div>
 
-                    <div class="form-group" *ngIf="['ROL_ESTUDIANTE'].includes(usuario.rol)">
+                    <div class="form-group" *ngIf="['ROL_ESTUDIANTE', 'ROL_PROFESOR'].includes(usuario.rol)">
                         <label for="titulacion"> Titulación </label>
-                        <input class="form-control" disabled value = "{{usuario.titulacion}}">
+                        <input class="form-group" disabled value = "{{usuario.titulacion}}">
                     </div>
 
                     <div class="form-group" *ngIf="['ROL_PROFESOR'].includes(usuario.rol)">
                         <label for="facultad"> Facultad / Escuela </label>
-                        <input class="form-group" disbled value = "{{usuario.facultad}}">
+                        <input class="form-group" disabled value = "{{usuario.facultad}}">
                     </div>
 
                     <div class="form-group" *ngIf="['ROL_GESTOR', 'ROL_SOCIO_COMUNITARIO'].includes(usuario.rol)">
