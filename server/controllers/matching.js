@@ -2,6 +2,9 @@ let fs = require('fs');
 const path = require("path");
 const dao_tentativa = require("./../database/services/daos/daoTentativa");
 const dao_usuario = require("./../database/services/daos/daoUsuario");
+const daoNotificacion = require("./../database/services/daos/daoNotificacion");
+const daoOferta = require("./../database/services/daos/daoOferta");
+const daoDemanda = require("./../database/services/daos/daoDemanda");
 const transferOfertaServicio = require("../database/services/transfers/TOfertaServicio");
 const transferDemandaServicio = require("../database/services/transfers/TDemandaServicio");
 const { date } = require('faker');
@@ -298,17 +301,19 @@ function hacerMatch(fichero,oferta, demanda){
         console.log(valores);
         return matchDefinitivo(oferta, demanda, valores[0], valores[1], valores[2], valores[3], valores[4]).then(function(res){
     
-            if(res >= 0.5){
-                return dao_tentativa.crearMatch(oferta.getId(), demanda.getId(), res); //hacer funcion en DAO para insertar en tabla matching
+            if(res.toFixed(2) >= 0.5){
+                dao_tentativa.crearMatch(oferta.getId(), demanda.getId(), res.toFixed(2)); //hacer funcion en DAO para insertar en tabla matching
+                return daoNotificacion.crearNotificacionMatching(oferta.getId(),oferta.getCreador().id, demanda.getId());
             }
             else {
                 console.log("No es match");
-                return dao_tentativa.crearMatch(oferta.getId(), demanda.getId(), res);
+                return dao_tentativa.crearMatch(oferta.getId(), demanda.getId(), res.toFixed(2));
             }
         }); 
       })
     
 }
+
 
 module.exports = {
     comprobarAreasServicio,

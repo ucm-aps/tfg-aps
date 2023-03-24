@@ -241,18 +241,17 @@
                             <div class='col'>
                                 <div class='form-group'>
                                     <label for='observaciones'
-                                    >Si tiene alguna peticion especial en
-                                        cuanto a las fechas, escribala
-                                        aqui</label
+                                    >Observaciones: Escriba aqui las peticiones especiales *</label
                                     >
                                     <textarea
-                                        class='form-control'
-                                        formControlName='observaciones'
-                                        id='observaciones'
-                                        name='observaciones'
-                                        placeholder='Escribe cualquier observación temporal que consideres adecuada'
-                                        rows='8'
-                                    ></textarea>
+                                    class='form-control'
+                                    formControlName='observaciones'
+                                    id='observaciones'
+                                    name='observaciones'
+                                    placeholder='Escribe cualquier observación temporal que consideres adecuada'
+                                    rows='8'
+                                    required
+                                ></textarea>
                                 </div>
                             </div>
                         </div>
@@ -441,6 +440,12 @@
                                 >
                                     {{ campoNoValido("anio_academico") }}
                                 </div>
+                                <div
+                                *ngIf="campoNoValido('observaciones')"
+                                class='col'
+                            >
+                                {{ campoNoValido("observaciones") }}
+                            </div>
                                 <!-- <div *ngIf="campoNoValido('observaciones')" class="col">{{ campoNoValido('observaciones') }}</div> -->
                                 <!-- <div *ngIf="campoNoValido('terminos_aceptados')" class="col">{{ campoNoValido('terminos_aceptados') }}</div> -->
                             </div>

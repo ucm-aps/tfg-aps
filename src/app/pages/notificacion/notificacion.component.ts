@@ -35,6 +35,7 @@ export class NotificacionComponent implements OnInit{
                 return this.router.navigateByUrl(`/mi-resumen`);
             }
             this.notificacion = this.notificacionService.mapearNotificaciones([notificacion])[0];
+            console.log(this.notificacion);
             
             if(this.notificacion.idPartenariado != null){
                 this.PartenariadoService.cargarPartenariado(this.notificacion.idPartenariado).subscribe((partenariado: Partenariado)=>{
@@ -66,10 +67,14 @@ export class NotificacionComponent implements OnInit{
         return this.router.navigate(['partenariados/profesor/crear'], { queryParams: { notificacion: this.notificacion.id } });
 
     }
+    AceptacionMatching(){
+        return this.router.navigate(['partenariados/profesor/crear'], { queryParams: { notificacion: this.notificacion.id, oferta : this.notificacion.idOferta, demanda_id : this.notificacion.idDemanda } });
+
+    }
 
     CompletarPartenariado(){
         console.log(this.notificacion);
-        return this.router.navigate(['partenariados/profesor/crear'], { queryParams: { idPartenariado: this.notificacion.idPartenariado, idOferta: this.notificacion.idAnuncio } });
+        return this.router.navigate(['partenariados/profesor/crear'], { queryParams: { idPartenariado: this.notificacion.idPartenariado, idOferta: this.notificacion.idOferta } });
     }
 
 

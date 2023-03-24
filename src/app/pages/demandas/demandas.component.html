@@ -2,7 +2,7 @@
 <div class="container mt-4 animate__animated animate__fadeIn animate__faster">
     <h5 class="px-4 py-2 mb-4 text-white display-block bg-secondary d-flex justify-content-between">
         <strong>Demandas</strong>
-        <a *ngIf="demandaCrearGuard.canActivate(null,null)" [routerLink]="['/demandas/crear']" class="btn btn-primary border-light btn-sm" role="button">Crear Demanda</a>
+        <a *ngIf="demandaCrearGuard.canActivate(null,null) && (!this.usuarioService.usuario || !this.usuarioService.usuario.esProfesor)" [routerLink]="['/demandas/crear']" class="btn btn-primary border-light btn-sm" role="button">Crear Demanda</a>
     </h5>
 
     <div *ngIf="!this.usuarioService.usuario" class="alert alert-warning" role="alert">

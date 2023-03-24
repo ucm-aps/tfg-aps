@@ -1,38 +1,52 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-12 p-0 mx-0">
 
-<div class="btn-group btn-group-toggle" data-toggle="buttons">
-    <label class="btn btn-secondary active">
-      <input (change)="cargarNotificacion()" type="radio" name="options" id="active" autocomplete="off"> Active
-    </label>
-    <label class="btn btn-secondary">
-      <input (change)="DesactivarNotificacion()" type="radio" name="options" id="active" autocomplete="off" checked> Disabled
-    </label> 
+      <div class="card shadow-sm">
 
-    <h6 class="title mb-0">
-      Notificaciones
-      <span
-          *ngIf="!cargando"
-          class="leading-none"
-      >
-          <small class="font-weight-bold"
-              >(total: {{ totalNotificaciones }})</small>
-      </span>
-  </h6>
-  
-  </div>
+        <div class="card-header">
+          <div class="btn-group btn-group-toggle" data-toggle="buttons">
+            <label for="activas" class="btn btn-outline-primary active" (click)="cargarNotificacion()">
+              <input type="radio" name="options" id="activas" autocomplete="off" checked> Activas
+            </label>
+            <label for="desactivadas" class="btn btn-outline-primary" (click)="DesactivarNotificacion()">
+              <input type="radio" name="options" id="desactivadas" autocomplete="off"> Desactivadas
+            </label>
+          </div>
+        </div>
+        
 
-  
-  <div class="Listanotificaciones ml-3">
+        <div class="card-body">
 
-    <div class="bg-white" 
-    *ngFor="let notificacion of notificaciones" >
-      <a [routerLink]="['/mi-notificacion/', notificacion.id]">
-      <div class="row font-weight-bolder notificacion"
-      *ngIf="!notificacion.leido">
-        <div class="col-lg-3 col-md-2 col-sm-2 ">{{ notificacion.titulo }}</div>
-        <div class="col-lg-8 col-md-4 col-sm-3">{{ notificacion.mensaje }}</div>
-        <div class="col-1">{{ notificacion.fecha }}</div>
+          <h4 class="card-title mb-3">Notificaciones <small class="font-weight-bold"
+            >(total: {{ totalNotificaciones }})</small></h4>
+
+          <div *ngIf="cargando" class="text-center my-5">
+            <div class="spinner-border" role="status"></div>
+            <span class="sr-only">Cargando...</span>
+          </div>
+
+          <div *ngIf="!cargando && notificaciones.length == 0" class="text-center my-5">
+            <p class="card-text">No tienes notificaciones.</p>
+          </div>
+
+          <div *ngIf="!cargando && notificaciones.length > 0" style="max-height: 300px; overflow-y: auto;">
+            <div class="list-group">
+              <a *ngFor="let notificacion of notificaciones.slice(offset, offset + limit)" [routerLink]="['/mi-notificacion/', notificacion.id]" class="list-group-item list-group-item-action">
+                <div class="d-flex w-100 justify-content-between">
+                  <h5 class="mb-1">{{ notificacion.titulo }}</h5>
+                  <small>{{ notificacion.fecha }}</small>
+                </div>
+                <p class="mb-1">{{ notificacion.mensaje }}</p>
+              </a>
+            </div>
+          </div>
+          
+
+        </div>
 
       </div>
-      </a>
+
     </div>
   </div>
+</div>

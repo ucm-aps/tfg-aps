@@ -7,17 +7,17 @@ const { validarJWT, validarEsProfesor, validarEsSocioComunitario } = require('..
 const router = Router();
 
 
-router.get('/',[], obtenerNotificaciones);
+router.get('/',[validarJWT], obtenerNotificaciones);
 
-router.get('/ver/:id',[], obtenerNotificacion);
+router.get('/ver/:id',[validarJWT], obtenerNotificacion);
 
-router.get('/crearOfertaAceptada',[], crearNotificacionOfertaAceptada);
+router.get('/crearOfertaAceptada',[validarJWT], crearNotificacionOfertaAceptada);
 
-router.get('/respuesta/aceptar',[], aceptarSocio);
+router.get('/respuesta/aceptar',[validarJWT], aceptarSocio);
 
-router.get('/respuesta/rechazar',[], rechazarSocio);
+router.get('/respuesta/rechazar',[validarJWT], rechazarSocio);
 
-router.get('/partenariadohecho',[], notificarPartenariadoCreado);
+router.get('/partenariadohecho',[validarJWT], notificarPartenariadoCreado);
 
 router.post('/respaldarDemanda',[validarJWT], notificacionDemandaRespaldado);
 

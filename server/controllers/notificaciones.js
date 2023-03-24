@@ -75,6 +75,7 @@ const crearNotificacionOfertaAceptada = async (req, res = response) =>{
 const rechazarSocio = async(req, res = response) =>{
     try{
         let ofertaAceptada = await new daoNotificacion.obtenerNotificacionOfertaAceptada(req.query.idNotificacion);
+        console.log(ofertaAceptada);
         const notificacion = new TNotificacion(
             null,
             ofertaAceptada[0].idSocio,
@@ -93,7 +94,7 @@ const rechazarSocio = async(req, res = response) =>{
         });
         
     }catch(err){
-        console.error(error);
+        console.error(err);
         return res.status(500).json({
             ok:false,
             msg:'Error inesperado(al intentar rechazaSocio)'
@@ -170,10 +171,11 @@ const notificacionDemandaRespaldado = async(req, res)=>{
             "Enhorabuena un profesor ha respaldado su demanda",
             "",
             req.body.emailOrigen,
-            req.body.idAnuncio,
-            req.body.tituloAnuncio, 
+            "","",
             1,
-            req.body.idPartenariado
+            req.body.idPartenariado,
+            req.body.idDemanda,
+            req.body.tituloDemanda, 
         )
         daoNotificacion.crearNotificacionDemandaRespalda(notificacion);
         return res.status(200).json({

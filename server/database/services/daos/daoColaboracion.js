@@ -3,6 +3,7 @@ const transferColaboracion = require("../transfers/TColaboracion");
 const transferPartenariado = require("../transfers/TPartenariado");
 const transferProyecto = require("../transfers/TProyecto");
 const TNotas = require("../transfers/TNotas");
+const daoUsuario = require("../daos/daoUsuario");
 
 // CREAR ---------------------------------------------------------------------------------------------------------
 function crearColaboracion(colaboracion) {
@@ -165,21 +166,56 @@ function obtenerColaboracion(id_colab) {
 
 function obtenerPartenariado(id) {
   return obtenerColaboracion(id)
-    .then((colaboracion) => {
+    .then(async (colaboracion) => {
       return knex("partenariado")
         .where({ id: id })
         .select("*")
-        .then((partenariado) => {
+        .then(async (partenariado) => {
+          // Obtener el ID de la demanda
+          const idDemanda = partenariado[0]["id_demanda"];
+
+          // Obtener la ciudad correspondiente a la demanda
+          const demanda = await knex("demanda_servicio")
+            .where({ id: idDemanda })
+            .select("ciudad")
+            .first();
+
+
+          const responsable = await knex("colaboracion")
+          .leftJoin("profesor", "colaboracion.responsable", "profesor.id")
+          .leftJoin("usuario", "profesor.id", "usuario.id")
+          .where({ "colaboracion.id": id })
+          .select("usuario.origin_login")
+          .first();
+
+          let profesorresponsable = await daoUsuario.obtenerUsuarioSinRolPorId(colaboracion.getResponsable());
+          
           return new transferPartenariado(
             (id = colaboracion.getId()),
             (titulo = colaboracion.getTitulo()),
             (descripcion = colaboracion.getDescripcion()),
             (admite_externos = colaboracion.getAdmite()),
-            (responsable = colaboracion.getResponsable()),
+            (idresponsable = profesorresponsable),
             (profesores = colaboracion.getProfesores()),
             (id_demanda = partenariado[0]["id_demanda"]),
             (id_oferta = partenariado[0]["id_oferta"]),
-            (estado = partenariado[0]["estado"])
+            (estado = (function() {
+              // Obtener el valor del estado
+              let estado = partenariado[0]["estado"];
+
+              // Asignar una etiqueta según el valor del estado
+              if (estado === "EN_CREACION") {
+                return "En creación";
+              } else if (estado === "EN_NEGOCIACION") {
+                return "En negociación";
+              } else if (estado === "ACORDADO") {
+                return "Acordado";
+              } else if (estado === "SUSPENDIDO") {
+                return "Suspendido";
+              } else {
+                return "Estado desconocido";
+              }
+            })())
           );
         })
         .catch((err) => {
@@ -470,7 +506,6 @@ function actualizarPartenariado(partenariado) {
             .update({
               id_demanda: partenariado.getId_Demanda(),
               id_oferta: partenariado.getId_Oferta(),
-              estado: partenariado.getEstado(),
             })
             .then(() => {
               console.log(

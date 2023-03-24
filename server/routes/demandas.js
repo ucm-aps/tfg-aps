@@ -6,7 +6,7 @@ const { opcionalJWT, validarJWT, validarEsSocioComunitarioOrEsGestor } = require
 
 const router = Router();
 
-router.get('/', [], obtenerDemandas);
+router.get('/', [validarJWT], obtenerDemandas);
 
 // Obtener areas de servicio
 router.get(
@@ -39,7 +39,7 @@ router.get(
 );
 
 router.get(
-    '/:id', [],
+    '/:id', [validarJWT],
     obtenerDemanda
 );
 
