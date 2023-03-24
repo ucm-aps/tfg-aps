@@ -42,7 +42,7 @@ CREATE TABLE `aceptacionaceptada` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `notificaciones` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `idDestino` int(11) NOT NULL,
   `leido` tinyint(1) NOT NULL DEFAULT 0,
   `titulo` varchar(200) NOT NULL,
