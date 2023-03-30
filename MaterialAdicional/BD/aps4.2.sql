@@ -42,7 +42,7 @@ CREATE TABLE `aceptacionaceptada` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE `notificaciones` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `idDestino` int(11) NOT NULL,
   `leido` tinyint(1) NOT NULL DEFAULT 0,
   `titulo` varchar(200) NOT NULL,
@@ -730,7 +730,7 @@ CREATE TABLE `matching` (
   `id_oferta` int(11) NOT NULL,
   `id_demanda` int(11) NOT NULL,
   `procesado` tinyint(1) NOT NULL,
-  `emparejamiento` decimal(1,0) NOT NULL
+  `emparejamiento` decimal(5,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -2983,8 +2983,6 @@ ALTER TABLE `demandarespalda`
 ALTER TABLE `partenariadorellenado`
   ADD CONSTRAINT `partenariadorellenado_ibfk_1` FOREIGN KEY (`idNotificacion`) REFERENCES `notificaciones` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `partenariadorellenado_ibfk_2` FOREIGN KEY (`idPartenariado`) REFERENCES `partenariado` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-  
-COMMIT;
 
 --
 -- Filtros para la tabla `notificacionmatching`

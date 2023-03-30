@@ -35,12 +35,21 @@ export class OfertasVerComponent implements OnInit {
     }
 
     aceptarOferta() {
-        Swal.fire(
-            'Enhorabuena',
-            'Ya ha enviado su pedicion',
-            'success'
-        );
         this.notificacionService.crearNotificacionOfertaAceptada(this.oferta.id, this.usuarioService.usuario.uid).subscribe(res =>{
+            if(res){
+                Swal.fire(
+                    'Enhorabuena',
+                    'Ya ha enviado su pedicion',
+                    'success'
+                );
+            }
+            else{
+                Swal.fire(
+                    'Error',
+                    'No se ha enviado su pedicion',
+                    'warning'
+                );
+            }
         });
     }
 }

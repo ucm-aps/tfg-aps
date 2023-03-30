@@ -506,7 +506,6 @@ function actualizarPartenariado(partenariado) {
             .update({
               id_demanda: partenariado.getId_Demanda(),
               id_oferta: partenariado.getId_Oferta(),
-              estado: partenariado.getEstado(),
             })
             .then(() => {
               console.log(

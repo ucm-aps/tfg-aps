@@ -1,130 +1,87 @@
 <app-navbar></app-navbar>
+    <div class="container mt-4 animate__animated animate__fadeIn animate__faster">
+        <main class="container">
+        <h1>Visualización del perfil</h1>
+            <section role="main">
+                <fieldset class="p-4 mb-2" *ngIf="usuario">
+                    <legend class="mb-0 px-2"><strong>Información personal</strong></legend>
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="nombre">Nombre</label>
+                                <input class="form-group" disabled value="{{usuario.nombre}}">
+                            </div>
 
-<div class="container">
-    <div class = "border">
-        <div class="d-flex justify-content-between">
-            <p class="text-decoration-underline font-weight-bold">Imagen de perfil</p>
-        </div>
-        <div class="d-flex justify-content-between">
-            <div class="text-center ml-4">
-                <img src ="avatar.png" class="rounded-circle" width="96" height="96" alt="preview" />
-            </div>
-            <div>
-                <div class="form-group  mr-2">
-                    <label ><strong>Nombre: </strong></label>
-                    <div>
-                        <label >{{usuario.nombre}}</label>
+                            <div class="form-group">
+                                <label for="apellidos">Apellidos</label>
+                                <input class="form-group" disabled value="{{usuario.apellidos}}">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="telefono">Número de teléfono</label>
+                                <input class="form-group" disabled value="{{usuario.telefono}}">
+                            </div>
+                        </div>
+
+                        <div class="col">
+                            <div class="border m-2 p-2">
+                                <div class="d-flex justify-content-between">
+                                    <p class="text-decoration-underline font-weight-bold">Imagen de perfil</p>
+                                </div>
+
+                                <div class="d-flex justify-content-between">
+                                    <div class="text-center ml-4">
+                                        <img src ="avatar.png" class="rounded-circle" width="96" height="96" alt="preview" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-    
-                <div class="form-group flex-fill ml-2">
-                    <label for="apellidos">Apellidos</label>
-                    <p>{{usuario.apellidos}}</p>
-                </div>
-    
-                <div class="form-group flex-fill ml-2">
-                    <label for="telefono">Número de teléfono</label>
-                    <p>{{usuario.telefono}}</p>
-                </div>
+                </fieldset>
 
-            </div>
-        </div>
+                <fieldset class="p-4 mb-2" *ngIf="usuario.rol !== ''">
+                <legend class="mb-0 px-2"><strong>Información de perfil</strong></legend>
+                    <div class="form-group" *ngIf="['ROL_ESTUDIANTE', 'ROL_PROFESOR'].includes(usuario.rol)">
+                        <label for="universidad">Universidad</label>
+                        <input class="form-group" disabled value = "{{usuario.universidad}}">
+                    </div>
 
+                    <div class="form-group" *ngIf="['ROL_PROFESOR'].includes(usuario.rol)">
+                        <label for="form-group" disabled value="{{usuario.areaConocimiento}}"> Area/s de conocimiento</label>
+                    </div>
+
+                    <div class="form-group" *ngIf="['ROL_ESTUDIANTE', 'ROL_PROFESOR'].includes(usuario.rol)">
+                        <label for="titulacion"> Titulación </label>
+                        <input class="form-group" disabled value = "{{usuario.titulacion}}">
+                    </div>
+
+                    <div class="form-group" *ngIf="['ROL_PROFESOR'].includes(usuario.rol)">
+                        <label for="facultad"> Facultad / Escuela </label>
+                        <input class="form-group" disabled value = "{{usuario.facultad}}">
+                    </div>
+
+                    <div class="form-group" *ngIf="['ROL_GESTOR', 'ROL_SOCIO_COMUNITARIO'].includes(usuario.rol)">
+                        <label for="sector">Sector</label>
+                        <input class="form-group" disabled value="{{usuario.sector}}">
+                    </div>
+
+                    <div class="form-group" *ngIf="['ROL_GESTOR', 'ROL_SOCIO_COMUNITARIO'].includes(usuario.rol)">
+                        <label for="url">URL</label>
+                        <input class="form-group" disabled value="{{usuario.url}}">
+                    </div>
+
+                    <div class="form-group" *ngIf="['ROL_GESTOR', 'ROL_SOCIO_COMUNITARIO'].includes(usuario.rol)">
+                        <label for="mision">Mision</label>
+                        <input class="form-group" disabled value="{{usuario.mision}}">
+                    </div>
+
+                    <div class="form-group" *ngIf="['ROL_GESTOR', 'ROL_SOCIO_COMUNITARIO'].includes(usuario.rol)">
+                        <label for="nombreSocioComunitario">Nombre socio comunitario</label>
+                        <input class="form-group" disabled value="{{usuario.nombreSocioComunitario}}">
+                    </div>
+                </fieldset>
+            </section>
+        </main>
     </div>
-    <fieldset class="p-4 mb-2" *ngIf="usuario.rol !== ''">
-        <legend class="mb-0 px-2"><strong>Informacion de perfil</strong></legend>
-        <div class="form-group" *ngIf="['ROL_ESTUDIANTE', 'ROL_PROFESOR'].includes(usuario.rol)">
-            <label for="universidad">Universidad</label>
-            <!-- <input name="universidad" type="text" id="universidad" class="form-control" autocorrect="off" autocapitalize="none" spellcheck="false" placeholder="Introduzca su universidad" [class.is-invalid] = "registerForm.get('universidad').invalid && registerForm.get('universidad').touched" formControlName="universidad"> -->
-            <input name="universidad" type="text" id="universidad"  list="codes"  formControlName="universidad"  class="form-control" [class.is-invalid] = "profileForm.get('universidad').invalid && profileForm.get('universidad').touched" placeholder="Introduzca su universidad">
-            <datalist id="codes">
-            <option *ngFor="let c of codeList" [value]="c.nombre" ></option>
-            </datalist>
-            <small class="text-danger" *ngIf="noListMatch()">Debe elegir una universidad valida</small>
-
-        </div>
-
-        <div class="form-group" *ngIf="['ROL_PROFESOR'].includes(usuario.rol)">
-            <label for="areaConocimiento">Area/s de conocimiento</label>
-            <ng-multiselect-dropdown
-            name="areaConocimiento"
-            [settings]="dropdownSettings"
-            [placeholder]="'Selecciona la/s area/s de conocimiento'"
-            [data]="areasList"
-            [(ngModel)]="areasUsuario"
-            formControlName="areaConocimiento"
-            >
-            <ng-template
-                #optionsTemplate
-                let-item
-                let-option="option"
-                let-id="id"
-                let-isSelected="isSelected"
-            >
-                <div
-                style="
-                    padding: 1px 10px;
-                    margin-right: 10px;
-                    right: 2px;
-                    top: -2px;
-                "
-                >
-                <label
-                    style="color: #333; min-width: 130px; font-weight: normal;"
-                    [ngStyle]="{ 'font-weight': isSelected? 'bold':' normal','color': getItems[id].isDisabled? 'lightgrey': ''}"
-                    >{{getItems[id].nombre}}</label
-                >
-                </div>
-            </ng-template>
-            <ng-template #optionSelectedTemplate let-option="option" let-id="id">
-                <div>
-                {{option}}
-                </div>
-            </ng-template>
-            </ng-multiselect-dropdown>
-
-        </div>
-
-
-        <div class="form-group" *ngIf="['ROL_ESTUDIANTE'].includes(usuario.rol)">
-            <label for="titulacion">
-                <ng-container *ngIf="usuario.rol === 'ROL_ESTUDIANTE';">
-                    Titulación
-                </ng-container>
-            </label>
-            <input name="titulacion" type="text" id="titulacion" class="form-control" autocorrect="off" autocapitalize="none" spellcheck="false" placeholder="Introduzca su titulación" [class.is-invalid] = "profileForm.get('titulacion').invalid && profileForm.get('titulacion').touched"  formControlName="titulacion">
-
-        </div>
-
-        <div class="form-group" *ngIf="['ROL_PROFESOR'].includes(usuario.rol)">
-            <label for="facultad">
-                <ng-container *ngIf="usuario.rol === 'ROL_PROFESOR';">
-                    Facultad / Escuela
-                </ng-container>
-            </label>
-            <input name="facultad" type="text" id="facultad" class="form-control" autocorrect="off" autocapitalize="none" spellcheck="false" placeholder="Introduzca su facultad" [class.is-invalid] = "profileForm.get('facultad').invalid && profileForm.get('facultad').touched"  formControlName="facultad">
-
-        </div>
-
-        <div class="form-group" *ngIf="['ROL_GESTOR', 'ROL_SOCIO_COMUNITARIO'].includes(usuario.rol)">
-            <label for="sector">Sector</label>
-            <input name="sector" type="text" id="sector" class="form-control" autocorrect="off" autocapitalize="none" spellcheck="false" placeholder="{{usuario.sector}}" formControlName="sector" readonly>
-        </div>
-
-        <div class="form-group" *ngIf="['ROL_GESTOR', 'ROL_SOCIO_COMUNITARIO'].includes(usuario.rol)">
-            <label for="url">URL</label>
-            <input name="url" type="text" id="url" class="form-control" autocorrect="off" autocapitalize="none" spellcheck="false" placeholder="{{usuario.url}}" formControlName="url" readonly>
-        </div>
-
-        <div class="form-group" *ngIf="['ROL_GESTOR', 'ROL_SOCIO_COMUNITARIO'].includes(usuario.rol)">
-            <label for="mision">Mision</label>
-            <input name="sector" type="text" id="sector" class="form-control" autocorrect="off" autocapitalize="none" spellcheck="false" placeholder="{{usuario.mision}}" formControlName="sector" readonly>
-        </div>
-
-        <div class="form-group" *ngIf="['ROL_GESTOR', 'ROL_SOCIO_COMUNITARIO'].includes(usuario.rol)">
-            <label for="nombreSocioComunitario">Nombre socio comunitario</label>
-            <input name="nombreSocioComunitario" type="text" id="nombreSocioComunitario" class="form-control" autocorrect="off" autocapitalize="none" spellcheck="false" placeholder="{{usuario.nombreSocioComunitario}}" formControlName="nombreSocioComunitario" readonly>
-        </div>
-    </fieldset>
-</div>
 <app-footer></app-footer>
+
