@@ -55,44 +55,10 @@
 
 
             </div>
- 
-            <header *ngIf="partenariado.estado == 'En negociación'" class="card-header mb-2 border d-flex justify-content-between">
-                <h6 class="title mb-0"><strong>Escribir Mensaje</strong></h6>
-            </header>
+            
+            <a *ngIf="['ROL_SOCIO_COMUNITARIO'].includes(this.usuarioService.usuario.rol)" aria-label="Chat on WhatsApp" href="https://wa.me/{{this.partenariado.idresponsable.telefono}}"> <img alt="Chat on WhatsApp" src="https://scontent-mad2-1.xx.fbcdn.net/v/t39.8562-6/302524815_3448899778679909_2843186333341006023_n.png?_nc_cat=104&ccb=1-7&_nc_sid=6825c5&_nc_ohc=zebXP5zuH6gAX_xflIH&_nc_ht=scontent-mad2-1.xx&oh=00_AfBppcy-keMN-audzWMCyCiDjJwKoF2gZTzZgPoVxvXU8w&oe=6436294F" width="200" height="40"  /> </a>
 
-            <header *ngIf="partenariado.estado != 'En negociación'" class="card-header mb-2 border d-flex justify-content-between">
-                <h6 class="title mb-0"><strong>El partenariado ya no está en negociación y no se pueden escribir mensajes </strong></h6>
-            </header>
-
-            <div *ngIf="partenariado.estado == 'En negociación'" class="card my-2 p-3">
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label for="mensaje">Mensaje</label>
-                        <textarea [(ngModel)]="mensaje" class="form-control" id="mensaje" name="mensaje" placeholder="Escribe un mensaje" rows="3"></textarea>
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <input (click)="enviarMensaje()" [disabled]="this.mensaje == ''" [value]="'Enviar mensaje'" class="btn btn-success float-right" type="submit">
-                </div>
-            </div>
-            <!--
-            <header class="card-header mb-2 border d-flex justify-content-between">
-                <h6 class="title mb-0"><strong>Histórico de mensajes del partenariado</strong></h6>
-            </header>
-
-
-            <div *ngIf="!numeroMensajes()" class="card my-2 p-3">
-                Aún no hay ningún mensaje...
-            </div>
-
-            <div *ngFor="let mensaje of partenariado.mensajes" class="card my-2 p-3">
-                <div class="d-flex justify-content-between">
-                    <div><strong>Autor:</strong> {{ mensaje.nombre }} {{ mensaje.apellidos }} <{{ mensaje.email }}> [{{ mensaje.rol}}]</div>
-                    <div><strong>Fecha:</strong> {{ parseFecha(mensaje.fecha) }}</div>
-                </div>
-                <hr/>
-                <p>{{ mensaje.texto }}</p>
-            </div>-->
+            <a *ngIf="['ROL_PROFESOR'].includes(this.usuarioService.usuario.rol)" aria-label="Chat on WhatsApp" href="https://wa.me/{{this.socio.telefono}}"> <img alt="Chat on WhatsApp" src="https://scontent-mad2-1.xx.fbcdn.net/v/t39.8562-6/302524815_3448899778679909_2843186333341006023_n.png?_nc_cat=104&ccb=1-7&_nc_sid=6825c5&_nc_ohc=zebXP5zuH6gAX_xflIH&_nc_ht=scontent-mad2-1.xx&oh=00_AfBppcy-keMN-audzWMCyCiDjJwKoF2gZTzZgPoVxvXU8w&oe=6436294F" width="200" height="40"  /> </a>
 
             <button [routerLink]="['/partenariados']" class='btn btn-info' style='width: 200px' type='button'>Volver al listado</button>
 

@@ -94,7 +94,7 @@ async function emparejar(oferta, demanda){
     console.log("comprobacionAreasServicioConocimiento ", comprobacionAreasServicioConocimiento);
     
     var comprobacion_AreasServicioDemanda_TitulacionesProfesor
-     = await comprobarAreaServicioTitulaciones(areasServicio_demanda, titulaciones_profesor);
+    = await comprobarAreaServicioTitulaciones(areasServicio_demanda, titulaciones_profesor);
     console.log("comprobacionAreasServicioDemanda titulaciones ",comprobacion_AreasServicioDemanda_TitulacionesProfesor);
 
     var comprobacion_AreasServicioOferta_TitulacionesDemanda
@@ -299,10 +299,11 @@ function hacerMatch(fichero,oferta, demanda){
           valores.push(d[2]);
         }
         console.log(valores);
-        return matchDefinitivo(oferta, demanda, valores[0], valores[1], valores[2], valores[3], valores[4]).then(function(res){
+        return matchDefinitivo(oferta, demanda, valores[0], valores[1], valores[2], valores[3], valores[4]).then(async function(res){
     
             if(res.toFixed(2) >= 0.5){
-                dao_tentativa.crearMatch(oferta.getId(), demanda.getId(), res.toFixed(2)); //hacer funcion en DAO para insertar en tabla matching
+                
+                await dao_tentativa.crearMatch(oferta.getId(), demanda.getId(), res.toFixed(2)); //hacer funcion en DAO para insertar en tabla matching
                 return daoNotificacion.crearNotificacionMatching(oferta.getId(),oferta.getCreador().id, demanda.getId());
             }
             else {

@@ -7,6 +7,8 @@ import Swal from 'sweetalert2';
 import * as moment from 'moment';
 import { FileUploadService } from 'src/app/services/file-upload.service';
 import { Usuario } from './../../models/usuario.model';
+import { DemandaService } from './../../services/demanda.service';
+import { Demanda } from 'src/app/models/demanda.model';
 
 @Component({
   selector: 'app-partenariados-ver',
@@ -19,11 +21,12 @@ export class PartenariadosVerComponent implements OnInit {
   public offset = 0;
   public limit = 50;
   public mensaje: string;
+  private socio;
   private profesorResponsable;
 
   public filterCreador = '';
 
-  constructor(public partenariadoService: PartenariadoService, public fileUploadService: FileUploadService, public usuarioService: UsuarioService, public router: Router, public activatedRoute: ActivatedRoute) {
+  constructor(public partenariadoService: PartenariadoService, public fileUploadService: FileUploadService, public usuarioService: UsuarioService, public demandaService: DemandaService, public router: Router, public activatedRoute: ActivatedRoute) {
     this.mensaje = '';
     this.filterCreador = this.usuarioService.usuario.uid
   }
@@ -51,7 +54,7 @@ export class PartenariadosVerComponent implements OnInit {
       this.partenariado = partenariado;
       this.cargarNombreProfesorResponsable(this.partenariado.idresponsable);
       console.log(this.partenariado);
-      console.log("Holaaaaaaa");
+      this.cargarSocioPorDemanda(this.partenariado.idDemanda);
 
     });
   }
@@ -61,6 +64,13 @@ export class PartenariadosVerComponent implements OnInit {
       this.profesorResponsable = usuario;
     })
   }
+
+  cargarSocioPorDemanda(idDemanda){
+    this.demandaService.cargarDemanda(idDemanda).subscribe((demanda: Demanda) =>{
+      this.socio = demanda.creador;
+    });
+  }
+
 
 /* 
   cambiarEstado(estado: string) {
