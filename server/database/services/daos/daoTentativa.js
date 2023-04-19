@@ -329,6 +329,15 @@ function obtenerAreaServicioConocimientoPorArea(servicios) {
       });
 }
 
+function existe(id_oferta, id_demanda){
+  return knex.from("matching").where("id_oferta" ,"=", id_oferta).andWhere("id_demanda", "=", id_demanda).catch((err) => {
+    console.log(err);
+    console.log(
+        "Se ha producido un error al intentar obtener datos de la tabla matching_areas"
+    );
+  });
+}
+
 module.exports = {
   crearIniciativa,
   crearMatch,
@@ -338,6 +347,7 @@ module.exports = {
   obtenerListaNecesidadSocial,
   eliminarIniciativa,
   obtenerAreaServicioTitulacionPorArea,
-  obtenerAreaServicioConocimientoPorArea
+  obtenerAreaServicioConocimientoPorArea,
+  existe
 
 };

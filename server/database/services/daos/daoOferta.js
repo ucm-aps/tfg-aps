@@ -375,6 +375,30 @@ function obtenerTodasOfertasServicio(limit, offset, filters) {
         });
 }
 
+function obtenerTodasOfertasServicioMatching(){
+    return knex("anuncio_servicio")
+    .join(
+        "oferta_servicio",
+        "anuncio_servicio.id",
+        "=",
+        "oferta_servicio.id"
+    ).then(async result=> {
+        let ofertas = [];
+        for(let Oferta of result){
+            ofertas.push(await obtenerOfertaServicio(Oferta["id"]));
+        }
+        return ofertas;
+
+    })
+    .catch((err) => {
+        console.log(err);
+        console.log(
+            "Se ha producido un error al intentar obtener de la base de datos todas las ofertas de servicio "
+        );
+    });
+
+}
+
 function actualizarOfertaServicio(oferta) {
     return obtenerAnuncioServicio(oferta.getId()).then((copia_anuncio) => {
         return actualizarAnuncio(oferta)
@@ -757,4 +781,5 @@ module.exports = {
     eliminarAnuncio,
     contarTodasOfertasServicio,
     obtenerAnuncioPorAreaServicio,
+    obtenerTodasOfertasServicioMatching
 };
