@@ -64,8 +64,8 @@ function cargarNotificacion(idNotificacion){
 }
 
 function obtenerOfertaAceptadaServicio(idNotificacion){
-    return knex('notificaciones').join("ofertaaceptada", "notificaciones.id","=", "ofertaAceptada.idNotificacion")
-    .where({id: idNotificacion})
+    return knex('notificaciones').join("ofertaaceptada", "notificaciones.id","=", "ofertaaceptada.idNotificacion")
+    .where({"ofertaaceptada.idNotificacion": idNotificacion})
     .select('*').then((resultado) => {
         if(resultado.length == 0) return;
         return daoUsuario.obtenerUsuarioSinRolPorId(resultado[0].idSocio)
