@@ -62,8 +62,7 @@ export class NavbarComponent implements OnDestroy {
 
     mostrarDemandasDeServicio() {
         return this.usuarioService.usuario && (this.usuarioService.usuario.esGestor
-            || this.usuarioService.usuario.esProfesor
-            || this.usuarioService.usuario.esSocioComunitario);
+            || this.usuarioService.usuario.esProfesor);
     }
 
     mostrarPartenariados() {

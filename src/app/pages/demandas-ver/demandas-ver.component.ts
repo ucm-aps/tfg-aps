@@ -13,6 +13,7 @@ import Swal from 'sweetalert2';
 export class DemandasVerComponent implements OnInit {
 
     public demanda: Demanda;
+    public area: any;
 
     constructor(public demandaService: DemandaService, public activatedRoute: ActivatedRoute, public router: Router, public usuarioService: UsuarioService) {
     }
@@ -31,6 +32,8 @@ export class DemandasVerComponent implements OnInit {
                 return this.router.navigateByUrl(`/demandas`);
             }
             this.demanda = this.demandaService.mapearDemandas([demanda])[0];
+            this.area = demanda.area_servicio;
+            console.log(this.demanda)
         });
     }
 
