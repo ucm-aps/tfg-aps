@@ -228,7 +228,8 @@ function obtenerTodasOfertasServicio(limit, offset, filters) {
     let fil = JSON.parse(filters);
     let creator_id = fil.creador || true;
     let tag_filter = fil.tags.length ? fil.tags : []; // tomamos los tags name para buscarlo en la tabla de relaciones si esta vacio este array entonces lo que vot hacer es usar un pivote de -1 para conseguir un true en la parte dekl condcional
-    
+    let fecha = fil.fecha;
+    console.log(fil);
 
     return knex("anuncio_servicio")
         .join(
@@ -265,6 +266,7 @@ function obtenerTodasOfertasServicio(limit, offset, filters) {
             "datos_personales_interno.nombre",
             "datos_personales_interno.apellidos"
         )
+        .where({"oferta_servicio.anio_academico": fil.fecha})
         .whereIn("cuatrimestre", fil.cuatrimestre)
         .where("titulo", "like", "%" + fil.terminoBusqueda + "%") 
         .modify(function(queryBuilder) {
@@ -279,7 +281,7 @@ function obtenerTodasOfertasServicio(limit, offset, filters) {
             .join('tags','tags.id','=','oferta_demanda_tags.tag_id')
             .whereRaw(`oferta_demanda_tags.object_id = oferta_servicio.id`)
             .whereIn('tags.nombre', tag_filter)
-        }) 
+        })
         .limit(limit)
         .offset(offset)
         .modify(function(queryBuilder) {
@@ -299,6 +301,11 @@ function obtenerTodasOfertasServicio(limit, offset, filters) {
                     "areaservicio_anuncioservicio.id_anuncio",
                     "area_servicio.nombre as area"
                 )
+                .modify((queryBuilder) => {
+                    if (fil.areaServicio && fil.areaServicio.length > 0) {
+                        queryBuilder.where("area_servicio.nombre", fil.areaServicio[0].nombre);
+                    }
+                })
                 .then((areas) => {
                     return knex
                         .select("*")
@@ -308,6 +315,17 @@ function obtenerTodasOfertasServicio(limit, offset, filters) {
                                 .readByOfertaIDs(datos_ofertas.map((x) => x.id)) // tomamos solo los tags que nos interesa dependiendo de las ofetas
                                 .then((tags) => {
                                     let transfer_ofertas = [];
+                                    console.log(datos_ofertas);
+                                    datos_ofertas = datos_ofertas.filter((oferta) => {
+                                        let encontrado = false;
+                                        areas.some((n) => {
+                                          if (oferta["id"] === n.id_anuncio) {
+                                            encontrado = true;
+                                            return true;
+                                          }
+                                        });
+                                        return encontrado ? oferta : null;
+                                      });
 
                                     datos_ofertas.forEach((datos) => {
                                         let nombre = datos["nombre"];

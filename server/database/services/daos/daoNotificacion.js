@@ -242,7 +242,13 @@ function crearNotificacionOfertaAceptada(notificacion, idSocio){
                 idNotificacion:idNotificacion,
                 idOferta:notificacion.idOferta,
                 idSocio:idSocio
-            })})
+            })}).catch(err=>{
+                console.log(err);
+                console.log("Intentando borrar notificacion creada");
+                borrarNotificacion(idNotificacion);
+                console.log("Borrado");
+                console.log("Se ha producido un error al intenta notificar una notificacion de OfertaAceptada");
+            })
     }).catch(err =>{
         console.log(err)
         console.log("Se ha producido un error al intenta crear una notificacion en ofertaaceptada");
@@ -307,6 +313,12 @@ function crearNotificacionAceptadacionRechazada(notificacion, idNotificacionOfer
         }).then(result =>{
             FinalizarPendienteNotificacion(idNotificacionOferta);
             return result;
+        }).catch(err=>{
+            console.log(err);
+            console.log("Intentando borrar notificacion creada");
+            borrarNotificacion(idNotificacion);
+            console.log("Borrado");
+            console.log("Se ha producido un error al intenta notificar una notificacion de AceptacionRechazada");
         })
     }).catch(err =>{
         console.log(err)
@@ -324,6 +336,12 @@ function crearNotificacionAceptadacionAceptada(notificacion, idNotificacionOfert
         }).then(result=>{
             FinalizarPendienteNotificacion(idNotificacionOferta);
             return result;
+        }).catch(err=>{
+            console.log(err);
+            console.log("Intentando borrar notificacion creada");
+            borrarNotificacion(idNotificacion);
+            console.log("Borrado");
+            console.log("Se ha producido un error al intenta notificar una notificacion de AceptacionAceptada");
         })
     })
     .catch(err =>{
@@ -341,7 +359,13 @@ function crearNotificacionPartenariadoHecho(notificacion){
         }).then(result => {
             //Suponiendo que No importa por que ruta va creando un partenariado para cada notificacion 
             return result;
-        });
+        }).catch(err=>{
+            console.log(err);
+            console.log("Intentando borrar notificacion creada");
+            borrarNotificacion(idNotificacion);
+            console.log("Borrado");
+            console.log("Se ha producido un error al intenta notificar una notificacion de PartenariadoHecho");
+        })
     })
 }
 
@@ -352,6 +376,12 @@ function crearNotificacionDemandaRespalda(notificacion){
             idPartenariado: notificacion.idPartenariado
         }).then(result =>{
             return result;
+        }).catch(err=>{
+            console.log(err);
+            console.log("Intentando borrar notificacion creada");
+            borrarNotificacion(idNotificacion);
+            console.log("Borrado");
+            console.log("Se ha producido un error al intenta notificar una notificacion de DemandaRespaldada");
         })
     })
     .catch(err =>{
@@ -382,7 +412,13 @@ function crearNotificacionMatching(idOferta, iddestinatario, idDemanda){
             idDemanda: idDemanda
         }).then(result =>{
             return result;
-        })
+        }).catch(err=>{
+            console.log(err);
+            console.log("Intentando borrar notificacion creada");
+            borrarNotificacion(idNotificacion);
+            console.log("Borrado");
+            console.log("Se ha producido un error al intenta notificar una notificacion de matching");
+        });
     })
 }
 function FinalizarPendienteNotificacion(idNotificacion){
@@ -413,9 +449,21 @@ function notificarPartenariadoRellenado(notificacion){
                                 });
                             }
                             return FinalizarPendienteNotificacion(notificacionFinalizado[0].idNotificacion);
+                        }).catch(err=>{
+                            console.log(err);
+                            console.log("Intentando borrar notificacion creada");
+                            borrarNotificacion(idNotificacion);
+                            console.log("Borrado");
+                            console.log("Se ha producido un error al intenta notificar una notificacion de partenariadoRellenado");
                         });
 
                     });
+                }).catch(err=>{
+                    console.log(err);
+                    console.log("Intentando borrar notificacion creada");
+                    borrarNotificacion(idNotificacion);
+                    console.log("Borrado");
+                    console.log("Se ha producido un error al intenta notificar una notificacion de partenariadoRellenado");
                 });
             });
 
@@ -427,6 +475,15 @@ function notificarPartenariadoRellenado(notificacion){
         console.log("Se ha producido un error al intenta notificar una notificacion de partenariadoRellenado");
     })
 
+}
+
+function borrarNotificacion(idNotificacion){
+    return knex('notificaciones').where({"id":idNotificacion}).delete()
+    .catch(err=>{
+        console.log(err)
+        console.log("Se ha producido un error al intenta borrar un notificacion");
+
+    })
 }
 
 
