@@ -34,13 +34,14 @@ export class OfertasComponent implements OnInit {
   public profesores: Profesor[]
 
   public terminoBusqueda = ''
+  public Fecha='2021'
   public totalOfertasBuscadas = 0
 
   public cargando = false
   public cargandoTimeOut
 
   public filterProfesores = {}
-  public filterAreaServicio = {}
+  public filterAreaServicio = ''
   public filterCuatrimestre = [1, 2, 3]
   public filterCreador = ''
   public tags = []
@@ -123,6 +124,7 @@ export class OfertasComponent implements OnInit {
       areaServicio: this.filterAreaServicio,
       creador: this.filterCreador,
       tags: this.tagInput.map(x => x.value),
+      fecha:this.Fecha,
     }
   }
 

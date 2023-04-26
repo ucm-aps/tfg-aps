@@ -34,7 +34,7 @@
         class="alert alert-warning"
         role="alert"
     >
-        <strong>Atención: </strong> Estás en la aplicación como <strong>INVITADO</strong>Solo podrás acceder a
+        <strong>Atención: </strong> Estás en la aplicación como <strong>INVITADO</strong>. Solo podrás acceder a
         esta información después de hacer login en <a [routerLink]="['/login']">esta página de
         login</a>. Si no estás registrado, regístrate en <a [routerLink]="['/registro']">esta página
         de registro</a>
@@ -84,7 +84,7 @@
                     <div class="card-body">
                         <ng-multiselect-dropdown
                                 [data]="profesores"
-                                [placeholder]="'Seleccione el profedor'"
+                                [placeholder]="'Seleccione el profesor'"
                                 [settings]="dropdownSettings"
                                 (onSelect)="onItemProfesor($event)" 
                             >
@@ -178,7 +178,8 @@
                                 [data]="areasServicio"
                                 [placeholder]="'Seleccione el area de implementación'"
                                 [settings]="dropdownSettings"
-                                (onSelect)="onItemSelectedArea($event)"
+                                [(ngModel)]="filterAreaServicio"
+                                (ngModelChange)="cargarOfertas()"
                                 name="area_servicio"
                             >
                                 <ng-template
@@ -232,7 +233,10 @@
                     </header>
                     <div class="card-body">
                         <input
-                            aria-label="FEcha"
+                            (keyup)="cargarOfertas()"
+                            (search)="cargarOfertas()"
+                            [(ngModel)]="Fecha"
+                            aria-label="Fecha"
                             class="form-control"
                             id="fecha"
                             name="fecha"
