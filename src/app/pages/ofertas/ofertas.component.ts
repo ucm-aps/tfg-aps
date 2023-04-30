@@ -123,8 +123,7 @@ export class OfertasComponent implements OnInit {
       ),
       areaServicio: this.filterAreaServicio,
       creador: this.filterCreador,
-      tags: this.tagInput.map(x => x.value),
-      fecha:this.Fecha,
+      tags: this.tagInput.map(x => x.value)
     }
   }
 

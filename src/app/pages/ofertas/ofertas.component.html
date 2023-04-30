@@ -86,7 +86,8 @@
                                 [data]="profesores"
                                 [placeholder]="'Seleccione el profesor'"
                                 [settings]="dropdownSettings"
-                                (onSelect)="onItemProfesor($event)" 
+                                [(ngModel)]="filterProfesores"
+                                (ngModelChange)="cargarOfertas()"
                             >
                                 <ng-template
                                     #optionsTemplate
@@ -227,7 +228,7 @@
                     </div>
                 </div>
 
-                <div class="filtro">
+                <!--<div class="filtro">
                     <header class="card-header border-top rounded-0">
                         <h6 class="title mb-0">Año Académico</h6>
                     </header>
@@ -244,7 +245,7 @@
                             value="2021"
                         />
                     </div>
-                </div>
+                </div>-->
 
                 <div class="filtro">
                     <header class="card-header border-top rounded-0">
