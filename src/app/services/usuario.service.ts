@@ -6,6 +6,7 @@ import { RegisterForm } from '../interfaces/register-form.interface';
 import { LoginForm } from '../interfaces/login-form.interface';
 import { Router } from '@angular/router';
 import { Usuario } from '../models/usuario.model';
+import { Profesor } from '../models/profesor.model';
 
 declare const gapi: any;
 
@@ -202,6 +203,12 @@ googleInit() {
                     .pipe(
                       map( (resp: {ok: boolean, path: string}) => resp.path )
                     );
+  }
+
+  getSocios(){
+    return this.http.get<{ ok: boolean, socios: Profesor[]}>(`${ base_url }/usuarios/socios`, this.headers)
+                    .pipe(
+                      map(resp =>{return {ok:resp.ok, socios: resp.socios}}));
   }
  
 }
