@@ -282,7 +282,6 @@ function contarTodasDemandasServicio() {
 
 function obtenerTodasDemandasServicio(limit, offset, filters) {
     let fil = JSON.parse(filters);
-    console.log(fil);
     return knex('anuncio_servicio')
         .join('demanda_servicio', 'anuncio_servicio.id', '=', 'demanda_servicio.id')
         .join(
@@ -326,6 +325,9 @@ function obtenerTodasDemandasServicio(limit, offset, filters) {
         .modify(function(queryBuilder) {
             if (fil.creador) {
                 queryBuilder.where('creador', fil.creador);
+            }
+            if(fil.entidadDemandante && fil.entidadDemandante.length > 0){
+                queryBuilder.where('creador', fil.entidadDemandante[0].id);
             }
         }) 
         .then((datos_demandas) => {

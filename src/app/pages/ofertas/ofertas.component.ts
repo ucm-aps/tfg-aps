@@ -156,6 +156,7 @@ export class OfertasComponent implements OnInit {
     this.partenarioService
       .obtenerProfesores()
       .subscribe(({ok, profesores}) => {
+        console.log(profesores);
         this.profesores = profesores 
       })
   }

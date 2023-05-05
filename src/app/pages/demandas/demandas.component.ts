@@ -10,6 +10,8 @@ import { ENTIDAD_DEMANDANTE} from '../../models/entidadDemandante.model';
 import { DemandaCrearGuard } from 'src/app/guards/demanda-crear.guard';
 import { Router } from '@angular/router';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
+import { Usuario } from 'src/app/models/usuario.model';
+import { Profesor } from 'src/app/models/profesor.model';
 
 @Component({
     selector: 'app-demandas', // Selector para definir objetos de la clase
@@ -31,6 +33,9 @@ export class DemandasComponent implements OnInit{
     public limit = 5;
     public paginaActual = 1;
     public offset = 0;
+    //Se ha usado como tipo de profesor por falta de tiempo 
+    //Se puede crear otro model para socio
+    public socios: Profesor[];
     
     public totalDemandas = 0;
     public demandas: Demanda[];
@@ -83,6 +88,7 @@ export class DemandasComponent implements OnInit{
     ngOnInit(): void {
         this.obtenerNecesidadesSociales();
         this.obtenerAreasServicio();
+        this.cargarSocios();
         this.cargarDemandas();
         this.dropdownSettings = {
             singleSelection: true,
@@ -112,6 +118,16 @@ export class DemandasComponent implements OnInit{
         });
     }
 
+    cargarSocios(): void {
+        this.usuarioService
+          .getSocios()
+          .subscribe(({ok, socios}) => {
+            console.log(socios);
+            this.socios = socios; 
+            return socios;
+          })
+      }
+
     getFiltros() {
         return {
             terminoBusqueda: this.terminoBusqueda,
@@ -136,6 +152,7 @@ export class DemandasComponent implements OnInit{
 
     async obtenerAreasServicio(){
         return this.demandaService.obtenerAreasServicio().subscribe((resp: any)=>{
+            console.log(resp.areasServicio)
             this.areasServicio = resp.areasServicio;
             return this.areasServicio;
         });
