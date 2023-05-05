@@ -43,7 +43,7 @@ export class DemandasComponent implements OnInit{
 
 
     public filterNecesidadSocial = {};
-    public filterAreaServicio = {};
+    public filterAreaServicio = '';
     public filterEntidadDemandante = {};
     public filterCreador = '';
 
@@ -55,8 +55,8 @@ export class DemandasComponent implements OnInit{
             //this.profesores.forEach(profesor => {this.filterProfesores[profesor] = false;})
             //NECESIDAD_SOCIAL.forEach(necesidadSocial => {this.filterNecesidadSocial[necesidadSocial] = false;});
             //ENTIDAD_DEMANDANTE.forEach(entidadDemandante => {this.filterEntidadDemandante[entidadDemandante] = false;});
-            AREA_SERVICIO.forEach(areaServicio => {this.filterAreaServicio[areaServicio] = false;});
-        if(this.router.url === '/mis-demandas'){
+            //AREA_SERVICIO.forEach(areaServicio => {this.filterAreaServicio[areaServicio] = false;});
+        if(this.router.url === '/mis-demandas' || this.usuarioService.usuario.rol === 'ROL_SOCIO_COMUNITARIO'){
             this.filterCreador = this.usuarioService.usuario.uid;
         }
     }
@@ -123,6 +123,7 @@ export class DemandasComponent implements OnInit{
     }
 
     cargarDemandas() {
+        console.log(this.getFiltros());
         this.demandaService
         .cargarDemandas(this.offset, this.limit, this.getFiltros())
         .subscribe( ({total, filtradas, demandas}) => {

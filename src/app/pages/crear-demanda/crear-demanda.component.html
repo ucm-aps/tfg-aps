@@ -126,8 +126,8 @@
                                 </div>
 
                                 <div class='form-group flex-fill ml-2'>
-                                    <label for='observacionTemporal'>Observación: escriba aquí el requisito especial a fecha, no si no tiene</label>
-                                    <input autocapitalize='none' autocorrect='off' class='form-control' formControlName='observaciones' id='observacionTemporal' name='observacionTemporal' placeholder='Introduzca la observacion' spellcheck='false' type='text' required>
+                                    <label for='observacionTemporal'>Si tiene algún requisito especial en cuanto a las fechas, escríbala aquí</label>
+                                    <input autocapitalize='none' autocorrect='off' class='form-control' formControlName='observaciones' id='observacionTemporal' name='observacionTemporal' placeholder='Introduzca la observacion' spellcheck='false' type='text'>
                                 </div>
                                 <div class='form-group'>
                                     <label for='necesidad_social'>Necesidad social a cumplir con esta demanda *</label>
@@ -217,10 +217,6 @@
                                     <div *ngIf="campoNoValido('necesidadSocial')" class='col'>{{ campoNoValido('necesidadSocial') }}</div>
                                     <div *ngIf="campoNoValido('comunidadBenficiaria')" class='col'>{{ campoNoValido('comunidadBeneficiaria') }}</div>
                                     <div *ngIf="campoNoValido('titulacionLocal')" class='col'>{{ campoNoValido('titulacionLocal') }}</div>
-                                    <div *ngIf="campoNoValido('observaciones')" class='col'>{{ campoNoValido('observaciones') }}</div>
-                                    <div *ngIf="campoNoValido('necesidad_social')" class='col'>{{ campoNoValido('necesidad_social') }}</div>
-                                    <div *ngIf="campoNoValido('comunidadBeneficiaria')" class='col'>{{ campoNoValido('comunidadBeneficiaria') }}</div>
-                                    <div *ngIf="campoNoValido('titulacion_local')" class='col'>{{ campoNoValido('titulacion_local') }}</div>
                                 </div>
 
                                 <div class='mr-auto mb-2'>

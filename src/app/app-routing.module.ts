@@ -155,7 +155,7 @@ const routes: Routes = [
             { path: 'ofertas', component: OfertasComponent, data: { titulo: 'Ofertas' } },
 
             //demandas
-            { path: 'demandas', component: DemandasComponent, data: { titulo: 'Demandas' } },
+            { path: 'mis-demandas', component: DemandasComponent, data: { titulo: 'Mis Demandas' } },
             // { path: 'mis-demandas', component: demandasComponent, data: { titulo: 'Mis Demandas' } },
             { path: 'demandas/ver/:id', component: DemandasVerComponent, data: { titulo: 'Ver Demanda' } },
             // { path: 'demandas/editar/:id', canActivate:[DemandaEditarGuard], component: DemandaEditarComponent, data: { titulo: 'Editar Demanda' } },
@@ -165,6 +165,7 @@ const routes: Routes = [
                 component: crearDemandaComponent,
                 data: { titulo: 'Crear Demanda' }
             },
+            { path: 'demandas', component: DemandasComponent, data: { titulo: 'Demandas' } },
 
             // Partenariados
             { path: 'partenariados', component: PartenariadosComponent, data: { titulo: 'Partenariados' } },

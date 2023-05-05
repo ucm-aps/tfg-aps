@@ -150,7 +150,7 @@ const crearDemanda = async (req, res = response) => {//continuar
 
 const obtenerDemandas = async (req, res = response) => {
     try {
-        let demandas = await daoDemanda.obtenerTodasDemandasServicio();
+        let demandas = await daoDemanda.obtenerTodasDemandasServicio(req.query.limit, req.query.skip, req.query.filtros);
         let total = await daoDemanda.contarTodasDemandasServicio();
         return res.status(200).json({
             ok: true,

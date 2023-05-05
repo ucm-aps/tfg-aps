@@ -41,7 +41,8 @@
                                 [data]="necesidades"
                                 [placeholder]="'Seleccione la necesidad social'"
                                 [settings]="dropdownSettings"
-                                (onSelect)="onItemSelected($event)"
+                                [(ngModel)]="filterNecesidadSocial"
+                                (ngModelChange)="cargarDemandas()"
                                 name="necesidad"
                             >
                                 <ng-template
@@ -109,7 +110,8 @@
                                 [data]="areasServicio"
                                 [placeholder]="'Seleccione el area de implementación'"
                                 [settings]="dropdownSettings"
-                                (onSelect)="onItemSelectedArea($event)"
+                                [(ngModel)]="filterAreaServicio"
+                                (ngModelChange)="cargarDemandas()"
                                 name="area_servicio"
                             >
                                 <ng-template

@@ -228,9 +228,7 @@ function obtenerTodasOfertasServicio(limit, offset, filters) {
     let fil = JSON.parse(filters);
     let creator_id = fil.creador || true;
     let tag_filter = fil.tags.length ? fil.tags : []; // tomamos los tags name para buscarlo en la tabla de relaciones si esta vacio este array entonces lo que vot hacer es usar un pivote de -1 para conseguir un true en la parte dekl condcional
-    let fecha = fil.fecha;
     console.log(fil);
-
     return knex("anuncio_servicio")
         .join(
             "oferta_servicio",
@@ -266,12 +264,14 @@ function obtenerTodasOfertasServicio(limit, offset, filters) {
             "datos_personales_interno.nombre",
             "datos_personales_interno.apellidos"
         )
-        .where({"oferta_servicio.anio_academico": fil.fecha})
         .whereIn("cuatrimestre", fil.cuatrimestre)
         .where("titulo", "like", "%" + fil.terminoBusqueda + "%") 
         .modify(function(queryBuilder) {
             if (fil.creador) {
                 queryBuilder.where('creador', fil.creador);
+            }
+            if(fil.profesores && fil.profesores.length > 0){
+                queryBuilder.where('creador', fil.profesores[0].id);
             }
         }) 
         .where(tag_filter.length, "=", 0)
