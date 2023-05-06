@@ -8,9 +8,9 @@
     <div *ngIf='!this.usuarioService.usuario' class='alert alert-warning' role='alert'>
         <strong>Atención: </strong> Estás en la aplicación como <strong>INVITADO</strong>. Sólo Profesores pueden presentar OFERTAS.
     </div>
-    <div *ngIf='this.usuarioService.usuario && this.usuarioService.usuario.esProfesor ' class='alert alert-warning' role='alert'>
+    <!--<div *ngIf='this.usuarioService.usuario && this.usuarioService.usuario.esProfesor ' class='alert alert-warning' role='alert'>
         <strong>Atención: </strong> Estás en la aplicación como <strong>PROFESOR</strong>, pero esta oferta ha sido presentada por otro profesor.
-    </div>
+    </div>-->
     <div *ngIf='this.usuarioService.usuario && this.usuarioService.usuario.esEstudiante ' class='alert alert-warning' role='alert'>
         <strong>Atención: </strong> Estás en la aplicación como <strong>ESTUDIANTE</strong>. Sólo Profesores pueden presentar OFERTAS.
     </div>

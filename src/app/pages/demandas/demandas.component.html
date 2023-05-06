@@ -30,7 +30,7 @@
                     </div>
                 </div>
 
-                <div class="filtro">
+                <div class="filtro" *ngIf="!this.usuarioService.usuario.esSocioComunitario">
                     <header class="card-header border-top rounded-0">
                         <h6 class="title mb-0">Entidad demandante </h6>
                     </header>
