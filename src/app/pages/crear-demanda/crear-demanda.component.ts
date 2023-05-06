@@ -71,16 +71,16 @@ export class crearDemandaComponent implements OnInit {
             descripcion: [this.Demanda.descripcion || '', Validators.required],
             imagen: this.Demanda.imagen,
             area_servicio: [this.Demanda.area_servicio || '', Validators.required],
-            ciudad: [this.Demanda.ciudad || '', Validators.required],
+            ciudad: [this.Demanda.ciudad || ''],
             objetivo: [this.Demanda.objetivo || '', Validators.required],
-            fechaDefinicionIni: [this.Demanda.periodoDefinicionIni || '', Validators.required],
-            fechaDefinicionFin: [this.Demanda.periodoDefinicionFin || '', Validators.required],
-            fechaEjecucionIni: [this.Demanda.periodoEjecucionIni || '', Validators.required],
-            fechaEjecucionFin: [this.Demanda.periodoDefinicionFin || '', Validators.required],
-            fechaFin: [this.Demanda.fechaFin || '', Validators.required],
+            fechaDefinicionIni: [this.Demanda.periodoDefinicionIni || null],
+            fechaDefinicionFin: [this.Demanda.periodoDefinicionFin || null],
+            fechaEjecucionIni: [this.Demanda.periodoEjecucionIni || null],
+            fechaEjecucionFin: [this.Demanda.periodoDefinicionFin || null],
+            fechaFin: [this.Demanda.fechaFin || null],
             necesidad_social: [this.Demanda.necesidad_social || '', Validators.required],
             comunidadBeneficiaria: [this.Demanda.comunidadBeneficiaria || '', Validators.required],
-            titulacion_local: [this.Demanda.titulacion_local || '', Validators.required],
+            titulacion_local: [this.Demanda.titulacion_local || ''],
             observaciones: this.Demanda.observacionesTemporales
         }, {
             validator: this.dateRangeValidator('fechaDefinicionIni', 'fechaDefinicionFin', 'fechaEjecucionIni', 'fechaEjecucionFin', 'fechaFin')
