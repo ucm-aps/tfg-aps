@@ -74,7 +74,7 @@
                 <button [routerLink]="['/ofertas']" class='btn btn-info' style='width: 200px' type='button'>Volver
                     al listado
                 </button>
-                <button *ngIf="this.usuarioService.usuario.esProfesor && this.usuarioService.usuario.esEstudiante" (click)='aceptarOferta()' class='btn btn-info' style='width: 200px' type='button'>Aceptar oferta</button>
+                <button *ngIf="!this.usuarioService.usuario.esProfesor && !this.usuarioService.usuario.esEstudiante" (click)='aceptarOferta()' class='btn btn-info' style='width: 200px' type='button'>Aceptar oferta</button>
             </div>
         </div>
     </div>
