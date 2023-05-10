@@ -56,11 +56,11 @@
 
             </div>
             
-            <a *ngIf="['ROL_SOCIO_COMUNITARIO'].includes(this.usuarioService.usuario.rol)" aria-label="Chat on WhatsApp" href="https://wa.me/{{this.partenariado.idresponsable.telefono}}"> <img alt="Chat on WhatsApp" src="https://scontent-mad2-1.xx.fbcdn.net/v/t39.8562-6/302524815_3448899778679909_2843186333341006023_n.png?_nc_cat=104&ccb=1-7&_nc_sid=6825c5&_nc_ohc=zebXP5zuH6gAX_xflIH&_nc_ht=scontent-mad2-1.xx&oh=00_AfBppcy-keMN-audzWMCyCiDjJwKoF2gZTzZgPoVxvXU8w&oe=6436294F" width="200" height="40"  /> </a>
+            <a *ngIf="['ROL_SOCIO_COMUNITARIO'].includes(this.usuarioService.usuario.rol)" aria-label="Chat on WhatsApp" href="https://wa.me/{{this.partenariado.idresponsable.telefono}}"> <img alt="Chat on WhatsApp" src="./assets/img/chatlogo.png" width="200" height="200"/> </a>
 
-            <a *ngIf="['ROL_PROFESOR'].includes(this.usuarioService.usuario.rol)" aria-label="Chat on WhatsApp" href="https://wa.me/{{this.socio.telefono}}"> <img alt="Chat on WhatsApp" src="https://scontent-mad2-1.xx.fbcdn.net/v/t39.8562-6/302524815_3448899778679909_2843186333341006023_n.png?_nc_cat=104&ccb=1-7&_nc_sid=6825c5&_nc_ohc=zebXP5zuH6gAX_xflIH&_nc_ht=scontent-mad2-1.xx&oh=00_AfBppcy-keMN-audzWMCyCiDjJwKoF2gZTzZgPoVxvXU8w&oe=6436294F" width="200" height="40"  /> </a>
+            <a *ngIf="['ROL_PROFESOR'].includes(this.usuarioService.usuario.rol)" aria-label="Chat on WhatsApp" href="https://wa.me/{{this.socio.telefono}}"> <img alt="Chat on WhatsApp" src="./assets/img/chatlogo.png" width="200" height="200"/> </a>
 
-            <button [routerLink]="['/partenariados']" class='btn btn-info' style='width: 200px' type='button'>Volver al listado</button>
+            <button [routerLink]="['/partenariados']" class='btn btn-info' style="width: 200px; margin-left: auto;" type='button'>Volver al listado</button>
 
         </div> 
 
