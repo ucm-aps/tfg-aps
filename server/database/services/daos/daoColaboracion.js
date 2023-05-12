@@ -502,6 +502,7 @@ function actualizarPartenariado(partenariado) {
     (copia_colaboracion) => {
       return actualizarColaboracion(partenariado)
         .then(() => {
+          console.log(partenariado);
           return knex("partenariado")
             .where("id", partenariado.getId())
             .update({

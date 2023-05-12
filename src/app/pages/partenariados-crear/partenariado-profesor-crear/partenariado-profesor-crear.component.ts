@@ -280,14 +280,14 @@ export class PartenariadoCrearProfesorComponent implements OnInit {
             asignaturaObjetivo: [this.oferta.asignatura_objetivo || 'Nada', Validators.required],
             titulacionesLocales: [this.demanda.titulacion_local || ''],
             ofertaAreaServicio: [this.oferta.area_servicio, Validators.required],
-            demandaAreaServicio: [this.demanda.area_servicio || ''],
-            periodo_definicion_fin: [this.demanda.periodoDefinicionFin || ''],
-            periodo_definicion_ini: [this.demanda.periodoDefinicionIni || ''],
-            periodo_ejecucion_fin: [this.demanda.periodoEjecucionFin || ''],
-            periodo_ejecucion_ini: [this.demanda.periodoEjecucionIni || ''],
+            demandaAreaServicio: [this.demanda.area_servicio || '', Validators.required],
+            periodo_definicion_fin: [this.demanda.periodoDefinicionFin || '',  Validators.required],
+            periodo_definicion_ini: [this.demanda.periodoDefinicionIni || '', Validators.required],
+            periodo_ejecucion_fin: [this.demanda.periodoEjecucionFin || '', Validators.required],
+            periodo_ejecucion_ini: [this.demanda.periodoEjecucionIni || '', Validators.required],
             profesores: [new FormControl(''), Validators.required],
             fecha_limite: [this.oferta.fecha_limite, Validators.required],
-            fecha_fin: [this.demanda.fechaFin || ''],
+            fecha_fin: [this.demanda.fechaFin || '', Validators.required],
         });
 
         this.dropdownSettings = {
