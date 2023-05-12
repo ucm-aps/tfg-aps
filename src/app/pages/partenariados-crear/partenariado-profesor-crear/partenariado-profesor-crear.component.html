@@ -100,7 +100,7 @@
                                         <div class='form-group'>
                                             <label for='ofertaObservacionesTemporales'>Si tiene algún requisito especial en cuanto a las fechas de la oferta, escríbala aquí</label>
                                             <input type='text' class='form-control' id='ofertaObservacionesTemporales'
-                                                   formControlName='ofertaObservacionesTemporales' [readonly]="writeProfesor || oferta.id != null">
+                                                   formControlName='ofertaObservacionesTemporales' >
                                         </div>
                                     </div>
                                 </div>
@@ -110,7 +110,7 @@
                                         <div class='form-group'>
                                             <label for='fecha_limite'>Fecha límite para terminar la definición del proyecto</label>
                                             <input type='date' class='form-control' id='fecha_limite'
-                                                   formControlName='fecha_limite' [readonly]="writeProfesor || oferta.id != null">
+                                                   formControlName='fecha_limite' >
                                         </div>
                                     </div>
                                 </div>
@@ -122,7 +122,7 @@
                                             <label for='anioAcademico'>Año academico objetivo</label>
                                             <input name='anioAcademico' type='text' id='anioAcademico'
                                                    class='form-control' autocorrect='off' autocapitalize='none'
-                                                   spellcheck='false' formControlName='anioAcademico' [readonly]="writeProfesor || oferta.id != null">
+                                                   spellcheck='false' formControlName='anioAcademico' >
                                         </div>
                                     </div>
                                 </div>
@@ -226,7 +226,7 @@
                                         <div class='form-group'>
                                             <label for='demandaObservacionesTemporales'>Requisito especial en cuanto a las fechas de la demanda.</label>
                                             <input type='text' class='form-control' id='demandaObservacionesTemporales'
-                                                   formControlName='demandaObservacionesTemporales' [readonly]="!writeProfesor || demanda.id != null">
+                                                   formControlName='demandaObservacionesTemporales' >
                                         </div>
                                     </div>
                                 </div>
@@ -247,7 +247,7 @@
                                             <label for='ciudad'>Localización/es donde se va/n a realizar el servicio</label>
                                             <input name='ciudad' type='text' id='ciudad' class='form-control'
                                                    autocorrect='off' autocapitalize='none' spellcheck='false'
-                                                   formControlName='ciudad' [readonly]="!writeProfesor || demanda.id != null">
+                                                   formControlName='ciudad' >
                                         </div>
                                     </div>
                                 </div>
@@ -257,7 +257,7 @@
                                         <div class='form-group'>
                                             <label for='necesidadSocial'>Necesidad social</label>
                                             <input [class.is-invalid]="crearPartenariadoProfesorForm.get('necesidadSocial').invalid && crearPartenariadoProfesorForm.get('necesidadSocial').touched"
-                                             class='form-control' formControlName='necesidadSocial' id='necesidadSocial' list='necesidades' name='necesidadSocial' [readonly]="!writeProfesor || demanda.id != null" placeholder='Introduzca la necesidad social' type='text'>
+                                             class='form-control' formControlName='necesidadSocial' id='necesidadSocial' list='necesidades' name='necesidadSocial'  placeholder='Introduzca la necesidad social' type='text'>
                                             <datalist id='necesidades'>
                                                 <option *ngFor='let n of necesidadSocial' [value]='n.nombre'></option>
                                             </datalist>
@@ -268,7 +268,7 @@
                                     <div class='col'>
                                         <div class='form-group'>
                                             <label for='finalidad'>Objetivo que va a cumplir la demanda</label>
-                                            <input name='finalidad' type='text' id='finalidad' [readonly]="!writeProfesor || demanda.id != null"
+                                            <input name='finalidad' type='text' id='finalidad'
                                                    class='form-control' autocorrect='off' autocapitalize='none'
                                                    spellcheck='false' formControlName='finalidad'>
                                         </div>
@@ -279,7 +279,7 @@
                                     <div class='col'>
                                         <div class='form-group'>
                                             <label for='comunidadBeneficiaria'>Comunidad beneficiaria</label>
-                                            <input name='comunidadBeneficiaria' type='text' [readonly]="!writeProfesor || demanda.id != null"
+                                            <input name='comunidadBeneficiaria' type='text' 
                                                    id='comunidadBeneficiaria' class='form-control' autocorrect='off'
                                                    autocapitalize='none' spellcheck='false'
                                                    formControlName='comunidadBeneficiaria'>
@@ -373,7 +373,7 @@
                                         <div class='form-group'>
                                             <label for='periodo_definicion_ini'>Comienzo del periodo de disponibilidad para trabajar en la definición
                                                 de un proyecto ApS</label>
-                                            <input name='periodo_definicion_ini' type='date' [readonly]="!writeProfesor || demanda.id != null"
+                                            <input name='periodo_definicion_ini' type='date' 
                                                    id='periodo_definicion_ini' class='form-control' autocorrect='off'
                                                    autocapitalize='none' spellcheck='false'
                                                    formControlName='periodo_definicion_ini'>
@@ -386,7 +386,7 @@
                                         <div class='form-group'>
                                             <label for='periodo_definicion_fin'>Fin del periodo de disponibilidad para trabajar en la definición
                                                 de un proyecto ApS</label>
-                                            <input name='periodo_definicion_fin' type='date' [readonly]="!writeProfesor || demanda.id != null"
+                                            <input name='periodo_definicion_fin' type='date' 
                                                    id='periodo_definicion_fin' class='form-control' autocorrect='off'
                                                    autocapitalize='none' spellcheck='false'
                                                    formControlName='periodo_definicion_fin'>
@@ -399,7 +399,7 @@
                                         <div class='form-group'>
                                             <label for='periodo_ejecucion_ini'>Comienzo del periodo de disponibilidad para trabajar en la realización
                                                 de un proyecto ApS</label>
-                                            <input name='periodo_ejecucion_ini' type='date' [readonly]="!writeProfesor || demanda.id != null"
+                                            <input name='periodo_ejecucion_ini' type='date' 
                                                    id='periodo_ejecucion_ini' class='form-control' autocorrect='off'
                                                    autocapitalize='none' spellcheck='false'
                                                    formControlName='periodo_ejecucion_ini'>
@@ -412,7 +412,7 @@
                                         <div class='form-group'>
                                             <label for='periodo_ejecucion_fin'>Fin del periodo de disponibilidad para trabajar en la realización
                                                 de un proyecto ApS</label>
-                                            <input name='periodo_ejecucion_fin' type='date' [readonly]="!writeProfesor || demanda.id != null"
+                                            <input name='periodo_ejecucion_fin' type='date' 
                                                    id='periodo_ejecucion_fin' class='form-control' autocorrect='off'
                                                    autocapitalize='none' spellcheck='false'
                                                    formControlName='periodo_ejecucion_fin'>
@@ -425,7 +425,7 @@
                                     <div class='col'>
                                         <div class='form-group'>
                                             <label for='fecha_fin'>Fecha límite para el fin de la realización del proyecto ApS</label>
-                                            <input name='fecha_fin' type='date' [readonly]="!writeProfesor || demanda.id != null" id='fecha_fin'
+                                            <input name='fecha_fin' type='date' id='fecha_fin'
                                                    class='form-control' autocorrect='off' autocapitalize='none'
                                                    spellcheck='false' formControlName='fecha_fin'>
                                         </div>
