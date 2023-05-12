@@ -460,13 +460,14 @@ function eliminarNota(id) {
 //ACTUALIZAR--------------------------------------------------------------------------------------------------------------------
 function actualizarColaboracion(colaboracion) {
   return obtenerColaboracion(colaboracion.getId()).then((copia) => {
+    console.log(colaboracion);
     return knex("colaboracion")
-      .where("id", colaboracion.getId())
+      .where({"id": colaboracion.getId()})
       .update({
         titulo: colaboracion.getTitulo(),
         descripcion: colaboracion.getDescripcion(),
         admite_externos: colaboracion.getAdmite(),
-        responsable: colaboracion.getResponsable(),
+        responsable: colaboracion.getResponsable().id,
       })
       .then(() => {
         return knex("profesor_colaboracion")
