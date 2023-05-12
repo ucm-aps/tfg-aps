@@ -18,7 +18,6 @@ export class PartenariadoService {
  
    mapearPartenariados( partenariados: any ): Partenariado[] {
     return partenariados.map( (partenariado) => {
-  
         return new Partenariado( 
           '',
           partenariado.id,
