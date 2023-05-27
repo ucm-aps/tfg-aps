@@ -39,14 +39,14 @@ export class OfertasVerComponent implements OnInit {
             if(res){
                 Swal.fire(
                     'Enhorabuena',
-                    'Ya ha enviado su pedicion',
+                    'Ya ha enviado su petición',
                     'success'
                 );
             }
             else{
                 Swal.fire(
                     'Error',
-                    'No se ha enviado su pedicion',
+                    'No se ha enviado su petición',
                     'warning'
                 );
             }
