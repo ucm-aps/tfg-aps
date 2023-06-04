@@ -61,12 +61,12 @@ export class PartenariadoCrearProfesorComponent implements OnInit {
                 this.loadMatching(this.activatedRoute.snapshot.queryParams.oferta, this.activatedRoute.snapshot.queryParams.demanda_id);
             }
             else if(this.activatedRoute.snapshot.queryParams.notificacion != undefined){
-                //En el caso de que el profesor recibe la pedicion del socio y acepta empieza creando el partenariado
+                //En el caso de que el profesor recibe la peticion del socio y acepta empieza creando el partenariado
                 this.load_oferta(this.activatedRoute.snapshot.queryParams.notificacion)
                 
             }
             else if(this.activatedRoute.snapshot.queryParams.idPartenariado != undefined && this.activatedRoute.snapshot.queryParams.idOferta != undefined){
-                //Caso de que el socio recibe que su pedicion es aceptada entonces completa el partenariado e crea la demanda
+                //Caso de que el socio recibe que su peticion es aceptada entonces completa el partenariado e crea la demanda
                 this.loadPartenariado(this.activatedRoute.snapshot.queryParams.idPartenariado, this.activatedRoute.snapshot.queryParams.idOferta);
             }
             else if(this.activatedRoute.snapshot.queryParams.demanda_id != undefined){ 

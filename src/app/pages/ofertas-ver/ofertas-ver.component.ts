@@ -38,7 +38,7 @@ export class OfertasVerComponent implements OnInit {
         this.notificacionService.crearNotificacionOfertaAceptada(this.oferta.id, this.usuarioService.usuario.uid).subscribe(res =>{
             if(res){
                 Swal.fire(
-                    'Enhorabuena',
+                    'Enhorabuena ',
                     'Ya ha enviado su petición',
                     'success'
                 );

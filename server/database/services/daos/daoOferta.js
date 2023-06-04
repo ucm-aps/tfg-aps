@@ -799,5 +799,6 @@ module.exports = {
     eliminarAnuncio,
     contarTodasOfertasServicio,
     obtenerAnuncioPorAreaServicio,
-    obtenerTodasOfertasServicioMatching
+    obtenerTodasOfertasServicioMatching,
+    obtenerCreadorOferta
 };

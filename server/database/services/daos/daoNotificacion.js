@@ -100,8 +100,9 @@ function obtenerNotificacionAceptacionAceptada(idNotificacion){
     .where({'aceptacionaceptada.idNotificacion': idNotificacion})
     .select('*').then((resultado) => {
         if(resultado.length == 0) return;
-        return daoOferta.obtenerAnuncioServicio(resultado[0].idOferta).then(Anuncio =>{
-            return daoUsuario.obtenerUsuarioSinRolPorId(resultado[0].idSocio)
+        return daoOferta.obtenerAnuncioServicio(resultado[0].idOferta).then(async Anuncio =>{
+            let idCreador = await daoOferta.obtenerCreadorOferta(Anuncio.id);
+            return daoUsuario.obtenerUsuarioSinRolPorId(idCreador)
             .then(Origen =>{
                 return new transferNotificacion(
                     resultado[0]["id"],
