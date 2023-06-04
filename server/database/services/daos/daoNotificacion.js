@@ -397,7 +397,7 @@ function crearNotificacionMatching(idOferta, iddestinatario, idDemanda){
         iddestinatario,
         "",
         "Se ha producido matching!!",
-        "Enhorabuena se ha producido un matching",
+        "Enhorabuena, se ha producido un matching",
         "",
         "",
         idDemanda,
